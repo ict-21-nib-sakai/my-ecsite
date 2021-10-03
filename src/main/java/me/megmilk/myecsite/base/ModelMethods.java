@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 
-abstract public class ModelMethods extends Model {
+abstract public class ModelMethods extends ModelAbstract {
     /**
      * 引数の内容から properties を組み立てて返す
      *

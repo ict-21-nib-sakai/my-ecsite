@@ -1,7 +1,7 @@
 package me.megmilk.myecsite.models;
 
+import me.megmilk.myecsite.base.ModelAbstract;
 import me.megmilk.myecsite.base.ModelMethods;
-import me.megmilk.myecsite.base.Model;
 
 import java.sql.*;
 import java.util.HashMap;
@@ -42,7 +42,7 @@ public class User extends ModelMethods {
         final String sql = buildSelectSql(TABLE_NAME, columns)
             + " AND email = ?";
 
-        try (final PreparedStatement statement = Model.prepareStatement(sql)) {
+        try (final PreparedStatement statement = ModelAbstract.prepareStatement(sql)) {
             statement.setString(1, email);
 
             try (final ResultSet resultSet = statement.executeQuery()) {
@@ -64,7 +64,7 @@ public class User extends ModelMethods {
         final String sql = buildSelectSql(TABLE_NAME, columns)
             + " AND id = ?";
 
-        try (final PreparedStatement statement = Model.prepareStatement(sql)) {
+        try (final PreparedStatement statement = ModelAbstract.prepareStatement(sql)) {
             statement.setInt(1, id);
 
             try (final ResultSet resultSet = statement.executeQuery()) {

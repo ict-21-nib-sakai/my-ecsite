@@ -1,11 +1,11 @@
 package me.megmilk.myecsite.models;
 
-import me.megmilk.myecsite.base.Model;
+import me.megmilk.myecsite.base.ModelAbstract;
 
 import java.sql.*;
 import java.util.HashMap;
 
-public class Category extends Model {
+public class Category extends ModelAbstract {
     /**
      * テーブル名
      */
@@ -41,7 +41,7 @@ public class Category extends Model {
         final String sql = buildSelectSql(TABLE_NAME, columns)
             + " AND id = ?";
 
-        try (final PreparedStatement statement = Model.prepareStatement(sql)) {
+        try (final PreparedStatement statement = ModelAbstract.prepareStatement(sql)) {
             statement.setInt(1, id);
 
             try (final ResultSet resultSet = statement.executeQuery()) {

@@ -8,7 +8,7 @@ import java.util.HashMap;
 /**
  * モデルのスーパークラス
  */
-abstract public class Model implements AutoCloseable {
+abstract public class ModelAbstract implements AutoCloseable {
     /**
      * データベース接続URL (サーバー, ポート, データベース名)
      */
@@ -36,18 +36,18 @@ abstract public class Model implements AutoCloseable {
 
     @Override
     public void close() throws SQLException {
-        if (null == Model.connection) {
+        if (null == ModelAbstract.connection) {
             // 接続されてなかったら何もしない
             return;
         }
 
-        if (Model.connection.isClosed()) {
+        if (ModelAbstract.connection.isClosed()) {
             // 接続が終了していたら何もしない
             return;
         }
 
         // 接続を終了する
-        Model.connection.close();
+        ModelAbstract.connection.close();
     }
 
     /**
@@ -66,11 +66,11 @@ abstract public class Model implements AutoCloseable {
      */
     private static Connection connect() throws SQLException {
         // JDBC ドライバを読み込む
-        Model.loadJdbcDriver();
+        ModelAbstract.loadJdbcDriver();
 
         // データベース接続し、キャッシュする
-        if (Model.connection == null || Model.connection.isClosed()) {
-            Model.connection = DriverManager.getConnection(
+        if (ModelAbstract.connection == null || ModelAbstract.connection.isClosed()) {
+            ModelAbstract.connection = DriverManager.getConnection(
                 URL,
                 USER,
                 PASSWORD
@@ -78,7 +78,7 @@ abstract public class Model implements AutoCloseable {
         }
 
         // キャッシュ済みの接続情報を返す
-        return Model.connection;
+        return ModelAbstract.connection;
     }
 
     /**
@@ -86,7 +86,7 @@ abstract public class Model implements AutoCloseable {
      */
     private static void loadJdbcDriver() {
         // JDBCドライバの読み込み済みの場合、何もしない。
-        if (Model.jdbcDriverLoaded) {
+        if (ModelAbstract.jdbcDriverLoaded) {
             return;
         }
 
@@ -94,7 +94,7 @@ abstract public class Model implements AutoCloseable {
         try {
             final Class<?> loadedDriver = Class.forName("org.postgresql.Driver");
 
-            Model.jdbcDriverLoaded = loadedDriver
+            ModelAbstract.jdbcDriverLoaded = loadedDriver
                 .getName()
                 .length() >= 1;
         } catch (ClassNotFoundException e) {
