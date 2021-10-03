@@ -1,11 +1,12 @@
 package me.megmilk.myecsite.models;
 
 import me.megmilk.myecsite.base.ModelAbstract;
+import me.megmilk.myecsite.base.ModelMethods;
 
 import java.sql.*;
 import java.util.HashMap;
 
-public class Category extends ModelAbstract {
+public class Category extends ModelMethods {
     /**
      * テーブル名
      */
@@ -19,7 +20,7 @@ public class Category extends ModelAbstract {
     /**
      * カラム名とその値
      */
-    private final HashMap<String, Object> properties = new HashMap<>();
+    private HashMap<String, Object> properties;
 
     /**
      * カラム名、そのエイリアス、その型を代入する
@@ -59,39 +60,7 @@ public class Category extends ModelAbstract {
      */
     public static Category make(ResultSet resultSet) throws SQLException {
         Category category = new Category();
-
-        for (String columnName : columns.keySet()) {
-            switch (columns.get(columnName).get("data_type")) {
-                case "integer":
-                    category.properties.put(
-                        columnName,
-                        resultSet.getInt(columns.get(columnName).get("alias"))
-                    );
-                    break;
-
-                case "character varying":
-                case "text":
-                    category.properties.put(
-                        columnName,
-                        resultSet.getString(columns.get(columnName).get("alias"))
-                    );
-                    break;
-
-                case "boolean":
-                    category.properties.put(
-                        columnName,
-                        resultSet.getBoolean(columns.get(columnName).get("alias"))
-                    );
-                    break;
-
-                case "timestamp without time zone":
-                    category.properties.put(
-                        columnName,
-                        resultSet.getTimestamp(columns.get(columnName).get("alias"))
-                    );
-                    break;
-            }
-        }
+        category.properties = setProperties(resultSet, columns);
 
         return category;
     }
