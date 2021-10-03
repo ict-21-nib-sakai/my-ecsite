@@ -4,7 +4,9 @@ import me.megmilk.myecsite.base.ModelAbstract;
 import me.megmilk.myecsite.base.ModelMethods;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Category extends ModelMethods {
     /**
@@ -51,6 +53,27 @@ public class Category extends ModelMethods {
                 }
 
                 return make(resultSet);
+            }
+        }
+    }
+
+    /**
+     * すべてのカテゴリを列挙
+     */
+    public static List<Category> enumerate() throws SQLException {
+        final String sql =
+            "SELECT " + buildAllColumns(TABLE_NAME, columns)
+            + " FROM " + TABLE_NAME;
+
+        try (final PreparedStatement statement = ModelAbstract.prepareStatement(sql)) {
+            try (final ResultSet resultSet = statement.executeQuery()) {
+                List<Category> categories = new ArrayList<>();
+                while (resultSet.next()) {
+                    final Category category = make(resultSet);
+                    categories.add(category);
+                }
+
+                return categories;
             }
         }
     }
