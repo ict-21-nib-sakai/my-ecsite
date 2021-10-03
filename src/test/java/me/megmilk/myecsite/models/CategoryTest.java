@@ -2,6 +2,8 @@ package me.megmilk.myecsite.models;
 
 import static org.junit.jupiter.api.Assertions.*;
 import java.sql.SQLException;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 
 public class CategoryTest {
@@ -26,5 +28,16 @@ public class CategoryTest {
         final Category category = Category.find(INVALID_ID);
 
         assertNull(category);
+    }
+
+    /**
+     * カテゴリが列挙されること
+     */
+    @Test
+    void enumerateTest1() throws SQLException {
+        final List<Category> categories = Category.enumerate();
+
+        assertNotNull(categories);
+        assertTrue(categories.size() >= 1);
     }
 }
