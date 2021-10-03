@@ -10,12 +10,16 @@ public class Item extends ModelMethods {
     /**
      * テーブル名
      */
-    private final static String TABLE_NAME = "items";
+    public final static String TABLE_NAME = "items";
 
     /**
      * カラム名, エイリアス, 型名
      */
     private static HashMap<String, HashMap<String, String>> columns = new HashMap<>();
+
+    public static HashMap<String, HashMap<String, String>> COLUMNS() {
+        return columns;
+    }
 
     /**
      * カラム名とその値
@@ -35,8 +39,15 @@ public class Item extends ModelMethods {
      * プライマリキーによる商品検索
      */
     public static Item find(int id) throws SQLException {
-        final String sql = buildSelectSql(TABLE_NAME, columns)
-            + " AND id = ?";
+        final String sql = "SELECT "
+            + buildAllColumns(TABLE_NAME, columns)
+            + " ," + Category.buildAllColumns(Category.TABLE_NAME, Category.COLUMNS())
+            + " FROM " + TABLE_NAME
+            + " INNER JOIN categories "
+            + " ON categories.id = " + TABLE_NAME + ".category_id"
+            + " WHERE " + TABLE_NAME + ".deleted_at is null"
+            + " AND categories.deleted_at is null"
+            + " AND " + TABLE_NAME + ".id = ?";
 
         try (final PreparedStatement statement = ModelAbstract.prepareStatement(sql)) {
             statement.setInt(1, id);
@@ -46,7 +57,14 @@ public class Item extends ModelMethods {
                     return null;
                 }
 
-                return make(resultSet);
+                final Item item = make(resultSet);
+                final Category category = Category.make(resultSet);
+
+                item
+                    .properties
+                    .put("category", category);
+
+                return item;
             }
         }
     }
@@ -107,5 +125,9 @@ public class Item extends ModelMethods {
 
     public Timestamp getDeleted_at() {
         return (Timestamp) properties.get("deleted_at");
+    }
+
+    public Category getCategory() {
+        return (Category) properties.get("category");
     }
 }
