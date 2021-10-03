@@ -22,23 +22,19 @@ public class User extends ModelMethods {
      */
     private HashMap<String, Object> properties;
 
-    /**
-     * カラム名、そのエイリアス、その型を代入する
-     */
-    public static void setupColumns() throws SQLException {
-        if (columns.size() >= 1) {
-            return;
+    // カラム名、そのエイリアス、その型を代入する
+    static {
+        try {
+            columns = enumColumns(TABLE_NAME);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-
-        columns = enumColumns(TABLE_NAME);
     }
 
     /**
      * email によるユーザー検索
      */
     public static User find(String email) throws SQLException {
-        setupColumns();
-
         final String sql = buildSelectSql(TABLE_NAME, columns)
             + " AND email = ?";
 
@@ -59,8 +55,6 @@ public class User extends ModelMethods {
      * プライマリキーによるユーザー検索
      */
     public static User find(int id) throws SQLException {
-        setupColumns();
-
         final String sql = buildSelectSql(TABLE_NAME, columns)
             + " AND id = ?";
 

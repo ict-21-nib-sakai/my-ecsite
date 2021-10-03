@@ -22,23 +22,19 @@ public class Category extends ModelMethods {
      */
     private HashMap<String, Object> properties;
 
-    /**
-     * カラム名、そのエイリアス、その型を代入する
-     */
-    public static void setupColumns() throws SQLException {
-        if (columns.size() >= 1) {
-            return;
+    // カラム名、そのエイリアス、その型を代入する
+    static {
+        try {
+            columns = enumColumns(TABLE_NAME);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-
-        columns = enumColumns(TABLE_NAME);
     }
 
     /**
      * プライマリキーによる検索
      */
     public static Category find(int id) throws SQLException {
-        setupColumns();
-
         final String sql = buildSelectSql(TABLE_NAME, columns)
             + " AND id = ?";
 
