@@ -4,9 +4,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 
-abstract public class Ab extends Model {
+abstract public class ModelMethods extends Model {
     /**
+     * 引数の内容から properties を組み立てて返す
      *
+     * @param resultSet SQL 実行結果。事前に .next() してあるオブジェクトを渡してください。
+     * @param columns   カラム名, エイリアス, 型名
      */
     protected static HashMap<String, Object> setProperties(
         ResultSet resultSet,

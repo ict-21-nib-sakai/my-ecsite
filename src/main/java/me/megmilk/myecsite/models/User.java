@@ -1,12 +1,12 @@
 package me.megmilk.myecsite.models;
 
-import me.megmilk.myecsite.base.Ab;
+import me.megmilk.myecsite.base.ModelMethods;
 import me.megmilk.myecsite.base.Model;
 
 import java.sql.*;
 import java.util.HashMap;
 
-public class User extends Ab {
+public class User extends ModelMethods {
     /**
      * テーブル名
      */
