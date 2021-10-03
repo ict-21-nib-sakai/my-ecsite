@@ -60,7 +60,7 @@ public class Category extends ModelMethods {
      */
     public static Category make(ResultSet resultSet) throws SQLException {
         Category category = new Category();
-        category.properties = setProperties(resultSet, columns);
+        category.properties = makeProperties(resultSet, columns);
 
         return category;
     }

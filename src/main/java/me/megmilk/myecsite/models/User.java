@@ -82,7 +82,7 @@ public class User extends ModelMethods {
      */
     public static User make(ResultSet resultSet) throws SQLException {
         User user = new User();
-        user.properties = setProperties(resultSet, columns);
+        user.properties = makeProperties(resultSet, columns);
 
         return user;
     }

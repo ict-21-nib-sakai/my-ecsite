@@ -11,7 +11,7 @@ abstract public class ModelMethods extends ModelAbstract {
      * @param resultSet SQL 実行結果。事前に .next() してあるオブジェクトを渡してください。
      * @param columns   カラム名, エイリアス, 型名
      */
-    protected static HashMap<String, Object> setProperties(
+    protected static HashMap<String, Object> makeProperties(
         ResultSet resultSet,
         HashMap<String, HashMap<String, String>> columns
     ) throws SQLException {
