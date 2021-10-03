@@ -130,7 +130,7 @@ public class User extends Model {
         return (String) properties.get("name");
     }
 
-    public boolean isSuspended() {
+    public boolean getSuspended() {
         return (boolean) properties.get("suspended");
     }
 
