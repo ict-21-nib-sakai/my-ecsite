@@ -10,12 +10,16 @@ public class Category extends ModelMethods {
     /**
      * テーブル名
      */
-    private final static String TABLE_NAME = "categories";
+    public final static String TABLE_NAME = "categories";
 
     /**
      * カラム名, エイリアス, 型名
      */
     private static HashMap<String, HashMap<String, String>> columns = new HashMap<>();
+
+    public static HashMap<String, HashMap<String, String>> COLUMNS() {
+        return columns;
+    }
 
     /**
      * カラム名とその値

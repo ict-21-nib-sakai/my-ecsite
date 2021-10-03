@@ -10,12 +10,16 @@ public class User extends ModelMethods {
     /**
      * テーブル名
      */
-    private final static String TABLE_NAME = "users";
+    public final static String TABLE_NAME = "users";
 
     /**
      * カラム名, エイリアス, 型名
      */
     private static HashMap<String, HashMap<String, String>> columns = new HashMap<>();
+
+    public static HashMap<String, HashMap<String, String>> COLUMNS() {
+        return columns;
+    }
 
     /**
      * カラム名とその値
