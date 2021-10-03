@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>0d2ef1f6-fc7c-4549-8559-051a8a714778.TABLE:my-ecsite.public.carts</OriginalElement>
+  <nodes>
+    <node x="353.27152899824256" y="446.4797891036903">0d2ef1f6-fc7c-4549-8559-051a8a714778.TABLE:my-ecsite.public.carts</node>
+    <node x="1151.8741212653783" y="-52.74165202108972">0d2ef1f6-fc7c-4549-8559-051a8a714778.TABLE:my-ecsite.public.orders</node>
+    <node x="718.5728251318103" y="-52.74165202108972">0d2ef1f6-fc7c-4549-8559-051a8a714778.TABLE:my-ecsite.public.order_details</node>
+    <node x="779.1415687725466" y="435.4797891036903">0d2ef1f6-fc7c-4549-8559-051a8a714778.TABLE:my-ecsite.public.users</node>
+    <node x="333.27152899824256" y="-52.74165202108972">0d2ef1f6-fc7c-4549-8559-051a8a714778.TABLE:my-ecsite.public.items</node>
+    <node x="-63.22522199611501" y="-52.74165202108972">0d2ef1f6-fc7c-4549-8559-051a8a714778.TABLE:my-ecsite.public.categories</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="0d2ef1f6-fc7c-4549-8559-051a8a714778.TABLE:my-ecsite.public.carts" target="0d2ef1f6-fc7c-4549-8559-051a8a714778.TABLE:my-ecsite.public.items" relationship="REFERENCES">
+      <point x="51.25" y="-83.5" />
+      <point x="507.02152899824256" y="556.6028119507907" />
+      <point x="439.17047451669606" y="556.6028119507907" />
+      <point x="439.17047451669606" y="246.25834797891028" />
+      <point x="0.0" y="149.5" />
+    </edge>
+    <edge source="0d2ef1f6-fc7c-4549-8559-051a8a714778.TABLE:my-ecsite.public.carts" target="0d2ef1f6-fc7c-4549-8559-051a8a714778.TABLE:my-ecsite.public.users" relationship="REFERENCES">
+      <point x="45.86203866432339" y="80.83040421792657" />
+      <point x="455.77152899824256" y="610.8101933216169" />
+      <point x="455.77152899824256" y="529.9797891036903" />
+      <point x="787.4033391915641" y="529.9797891036903" />
+      <point x="787.4033391915641" y="624.4797891036903" />
+      <point x="0.0" y="94.5" />
+    </edge>
+    <edge source="0d2ef1f6-fc7c-4549-8559-051a8a714778.TABLE:my-ecsite.public.order_details" target="0d2ef1f6-fc7c-4549-8559-051a8a714778.TABLE:my-ecsite.public.orders" relationship="REFERENCES">
+      <point x="146.52658172231952" y="-2.2258347978909967" />
+      <point x="1154.821616871705" y="39.53251318101928" />
+      <point x="1154.821616871705" y="75.19024604569407" />
+      <point x="1242.0398725834798" y="75.19024604569407" />
+      <point x="1242.0398725834798" y="158.25834797891028" />
+      <point x="0.0" y="105.5" />
+    </edge>
+    <edge source="0d2ef1f6-fc7c-4549-8559-051a8a714778.TABLE:my-ecsite.public.orders" target="0d2ef1f6-fc7c-4549-8559-051a8a714778.TABLE:my-ecsite.public.users" relationship="REFERENCES">
+      <point x="0.0" y="-105.5" />
+      <point x="1350.3741212653783" y="529.9797891036903" />
+      <point x="1011.81946628434" y="529.9797891036903" />
+      <point x="1011.81946628434" y="624.4797891036903" />
+      <point x="0.0" y="94.5" />
+    </edge>
+    <edge source="0d2ef1f6-fc7c-4549-8559-051a8a714778.TABLE:my-ecsite.public.items" target="0d2ef1f6-fc7c-4549-8559-051a8a714778.TABLE:my-ecsite.public.categories" relationship="REFERENCES">
+      <point x="0.0" y="-149.5" />
+      <point x="455.77152899824256" y="30.75834797891028" />
+      <point x="82.27477800388499" y="30.75834797891028" />
+      <point x="0.0" y="83.5" />
+    </edge>
+    <edge source="0d2ef1f6-fc7c-4549-8559-051a8a714778.TABLE:my-ecsite.public.order_details" target="0d2ef1f6-fc7c-4549-8559-051a8a714778.TABLE:my-ecsite.public.items" relationship="REFERENCES">
+      <point x="73.25" y="-94.5" />
+      <point x="938.3228251318103" y="33.31195079086109" />
+      <point x="462.8101933216169" y="33.31195079086109" />
+      <point x="462.8101933216169" y="214.4544156414762" />
+      <point x="455.77152899824256" y="214.4544156414762" />
+      <point x="0.0" y="149.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.7103620474406991" showDependencies="false" x="815.9147627416521" y="360.5131810193322" />
+  <SelectedNodes>
+    <node>0d2ef1f6-fc7c-4549-8559-051a8a714778.TABLE:my-ecsite.public.carts</node>
+    <node>0d2ef1f6-fc7c-4549-8559-051a8a714778.TABLE:my-ecsite.public.orders</node>
+    <node>0d2ef1f6-fc7c-4549-8559-051a8a714778.TABLE:my-ecsite.public.order_details</node>
+    <node>0d2ef1f6-fc7c-4549-8559-051a8a714778.TABLE:my-ecsite.public.users</node>
+    <node>0d2ef1f6-fc7c-4549-8559-051a8a714778.TABLE:my-ecsite.public.items</node>
+    <node>0d2ef1f6-fc7c-4549-8559-051a8a714778.TABLE:my-ecsite.public.categories</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Columns</Category>
+    <Category>Comments</Category>
+    <Category>Key columns</Category>
+    <Category>Virtual foreign keys</Category>
+  </Categories>
+</Diagram>
+
