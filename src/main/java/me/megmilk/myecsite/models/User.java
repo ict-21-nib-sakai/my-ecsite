@@ -1,11 +1,12 @@
 package me.megmilk.myecsite.models;
 
+import me.megmilk.myecsite.base.Ab;
 import me.megmilk.myecsite.base.Model;
 
 import java.sql.*;
 import java.util.HashMap;
 
-public class User extends Model {
+public class User extends Ab {
     /**
      * テーブル名
      */
@@ -19,7 +20,7 @@ public class User extends Model {
     /**
      * カラム名とその値
      */
-    private final HashMap<String, Object> properties = new HashMap<>();
+    private HashMap<String, Object> properties;
 
     /**
      * カラム名、そのエイリアス、その型を代入する
@@ -81,39 +82,7 @@ public class User extends Model {
      */
     public static User make(ResultSet resultSet) throws SQLException {
         User user = new User();
-
-        for (String columnName : columns.keySet()) {
-            switch (columns.get(columnName).get("data_type")) {
-                case "integer":
-                    user.properties.put(
-                        columnName,
-                        resultSet.getInt(columns.get(columnName).get("alias"))
-                    );
-                    break;
-
-                case "character varying":
-                case "text":
-                    user.properties.put(
-                        columnName,
-                        resultSet.getString(columns.get(columnName).get("alias"))
-                    );
-                    break;
-
-                case "boolean":
-                    user.properties.put(
-                        columnName,
-                        resultSet.getBoolean(columns.get(columnName).get("alias"))
-                    );
-                    break;
-
-                case "timestamp without time zone":
-                    user.properties.put(
-                        columnName,
-                        resultSet.getTimestamp(columns.get(columnName).get("alias"))
-                    );
-                    break;
-            }
-        }
+        user.properties = setProperties(resultSet, columns);
 
         return user;
     }
