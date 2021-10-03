@@ -1,0 +1,30 @@
+package me.megmilk.myecsite.models;
+
+import static org.junit.jupiter.api.Assertions.*;
+import java.sql.SQLException;
+import org.junit.jupiter.api.Test;
+
+public class CategoryTest {
+    /**
+     * プライマリキーを指定した検索ができること
+     */
+    @Test
+    void findTest1() throws SQLException {
+        final int TEST_ID = 1;
+        final Category category = Category.find(TEST_ID);
+
+        assertNotNull(category);
+        assertEquals(TEST_ID, category.getId());
+    }
+
+    /**
+     * 存在しないプライマリキーを指定した場合 null が返ってくること
+     */
+    @Test
+    void findTest2() throws SQLException {
+        final int INVALID_ID = Integer.MAX_VALUE;
+        final Category category = Category.find(INVALID_ID);
+
+        assertNull(category);
+    }
+}
