@@ -4,7 +4,9 @@ import me.megmilk.myecsite.base.ModelAbstract;
 import me.megmilk.myecsite.base.ModelMethods;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Item extends ModelMethods {
     /**
@@ -65,6 +67,44 @@ public class Item extends ModelMethods {
                     .put("category", category);
 
                 return item;
+            }
+        }
+    }
+
+    /**
+     * 商品名の部分一致による商品検索
+     */
+    public static List<Item> search(String itemName, int limit, int offset) throws SQLException {
+        final String sql = "SELECT "
+            + buildAllColumns(TABLE_NAME, columns)
+            + " ," + Category.buildAllColumns(Category.TABLE_NAME, Category.COLUMNS())
+            + " FROM " + TABLE_NAME
+            + " INNER JOIN categories "
+            + " ON categories.id = " + TABLE_NAME + ".category_id"
+            + " WHERE " + TABLE_NAME + ".deleted_at is null"
+            + " AND categories.deleted_at is null"
+            + " AND " + TABLE_NAME + ".name LIKE ?"
+            + " LIMIT ? OFFSET ?";
+
+        try (final PreparedStatement statement = prepareStatement(sql)) {
+            statement.setString(1, "%" + itemName + "%");
+            statement.setInt(2, limit);
+            statement.setInt(3, offset);
+
+            try (final ResultSet resultSet = statement.executeQuery()){
+                List<Item> items = new ArrayList<>();
+                while (resultSet.next()) {
+                    final Item item = make(resultSet);
+                    final Category category = Category.make(resultSet);
+
+                    item
+                        .properties
+                        .put("category", category);
+
+                    items.add(item);
+                }
+
+                return items;
             }
         }
     }
