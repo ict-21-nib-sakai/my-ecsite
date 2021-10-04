@@ -51,15 +51,10 @@ public class Item extends ModelMethods {
      * プライマリキーによる商品検索
      */
     public static Item find(int id) throws SQLException {
-        final String sql = "SELECT "
-            + buildAllColumns(TABLE_NAME, columns)
-            + " ," + Category.buildAllColumns(Category.TABLE_NAME, Category.COLUMNS())
-            + " FROM " + TABLE_NAME
-            + " INNER JOIN categories "
-            + " ON categories.id = " + TABLE_NAME + ".category_id"
-            + " WHERE " + TABLE_NAME + ".deleted_at is null"
-            + " AND categories.deleted_at is null"
-            + " AND " + TABLE_NAME + ".id = ?";
+        final String sql =
+            SQL_TEMPLATE
+                + " AND categories.deleted_at is null"
+                + " AND " + TABLE_NAME + ".id = ?";
 
         try (final PreparedStatement statement = ModelAbstract.prepareStatement(sql)) {
             statement.setInt(1, id);
