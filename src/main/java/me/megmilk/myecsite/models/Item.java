@@ -37,6 +37,16 @@ public class Item extends ModelMethods {
         }
     }
 
+    final static String SQL_TEMPLATE =
+        "SELECT "
+        + buildAllColumns(TABLE_NAME, columns)
+        + " ," + Category.buildAllColumns(Category.TABLE_NAME, Category.COLUMNS())
+        + " FROM " + TABLE_NAME
+        + " INNER JOIN categories "
+        + " ON " + Category.TABLE_NAME + ".id = " + TABLE_NAME + ".category_id"
+        + " WHERE " + TABLE_NAME + ".deleted_at is null"
+        + " AND " + Category.TABLE_NAME + ".deleted_at is null";
+
     /**
      * プライマリキーによる商品検索
      */
@@ -120,14 +130,7 @@ public class Item extends ModelMethods {
      * 商品名の部分一致とカテゴリによる商品検索
      */
     public static List<Item> search(String itemName, int categoryId, int limit, int offset) throws SQLException {
-        final String sql = "SELECT "
-            + buildAllColumns(TABLE_NAME, columns)
-            + " ," + Category.buildAllColumns(Category.TABLE_NAME, Category.COLUMNS())
-            + " FROM " + TABLE_NAME
-            + " INNER JOIN categories "
-            + " ON " + Category.TABLE_NAME + ".id = " + TABLE_NAME + ".category_id"
-            + " WHERE " + TABLE_NAME + ".deleted_at is null"
-            + " AND " + Category.TABLE_NAME + ".deleted_at is null"
+        final String sql = SQL_TEMPLATE
             + " AND " + TABLE_NAME + ".name LIKE ?"
             + " AND " + TABLE_NAME + ".category_id = ?"
             + " LIMIT ? OFFSET ?";
