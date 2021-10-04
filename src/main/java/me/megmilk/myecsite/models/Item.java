@@ -139,13 +139,7 @@ public class Item extends ModelMethods {
             statement.setInt(4, offset);
 
             try (final ResultSet resultSet = statement.executeQuery()) {
-                List<Item> items = new ArrayList<>();
-                while (resultSet.next()) {
-                    final Item item = make(resultSet);
-                    items.add(item);
-                }
-
-                return items;
+                return makeList(resultSet);
             }
         }
     }
