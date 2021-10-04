@@ -85,4 +85,44 @@ public class ItemTest {
 
         assertEquals(0, items.size());
     }
+
+    /**
+     * カテゴリによる検索
+     */
+    @Test
+    void searchTest3() throws SQLException {
+        final int TEST_CATEGORY_ID = 2;
+        final int TEST_LIMIT = 3;
+        final int TEST_OFFSET = 0;
+
+        final List<Item> items = Item.search(
+            TEST_CATEGORY_ID,
+            TEST_LIMIT,
+            TEST_OFFSET
+        );
+
+        assertTrue(items.size() >= 1);
+        assertTrue(items.size() <= TEST_LIMIT);
+        for (Item item : items) {
+            assertEquals(TEST_CATEGORY_ID, item.getCategory_id());
+        }
+    }
+
+    /**
+     * カテゴリによる検索 (1件もヒットしない場合)
+     */
+    @Test
+    void searchTest4() throws SQLException {
+        final int TEST_INVALID_CATEGORY_ID = Integer.MAX_VALUE;
+        final int TEST_LIMIT = 3;
+        final int TEST_OFFSET = 0;
+
+        final List<Item> items = Item.search(
+            TEST_INVALID_CATEGORY_ID,
+            TEST_LIMIT,
+            TEST_OFFSET
+        );
+
+        assertEquals(0, items.size());
+    }
 }
