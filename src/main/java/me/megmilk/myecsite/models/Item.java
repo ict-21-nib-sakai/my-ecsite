@@ -85,13 +85,7 @@ public class Item extends ModelMethods {
             statement.setInt(3, offset);
 
             try (final ResultSet resultSet = statement.executeQuery()) {
-                List<Item> items = new ArrayList<>();
-                while (resultSet.next()) {
-                    final Item item = make(resultSet);
-                    items.add(item);
-                }
-
-                return items;
+                return makeList(resultSet);
             }
         }
     }
@@ -173,6 +167,19 @@ public class Item extends ModelMethods {
         item.properties.put("category", category);
 
         return item;
+    }
+
+    /**
+     * @return ResultSet から List<Item> オブジェクトにする
+     */
+    public static List<Item> makeList(ResultSet resultSet) throws SQLException {
+        List<Item> items = new ArrayList<>();
+        while (resultSet.next()) {
+            final Item item = make(resultSet);
+            items.add(item);
+        }
+
+        return items;
     }
 
     public int getId() {
