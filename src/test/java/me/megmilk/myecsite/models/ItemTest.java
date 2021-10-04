@@ -125,4 +125,69 @@ public class ItemTest {
 
         assertEquals(0, items.size());
     }
+
+    /**
+     * 商品名の一部とカテゴリによる検索
+     */
+    @Test
+    void searchTest5() throws SQLException {
+        final String TEST_ITEM_NAME = "猫";
+        final int TEST_CATEGORY_ID = 4;
+        final int TEST_LIMIT = 3;
+        final int TEST_OFFSET = 0;
+
+        final List<Item> items = Item.search(
+            TEST_ITEM_NAME,
+            TEST_CATEGORY_ID,
+            TEST_LIMIT,
+            TEST_OFFSET
+        );
+
+        assertTrue(items.size() >= 1);
+        assertTrue(items.size() <= TEST_LIMIT);
+        for (Item item : items) {
+            assertTrue(item.getName().contains(TEST_ITEM_NAME));
+            assertEquals(TEST_CATEGORY_ID, item.getCategory_id());
+        }
+    }
+
+    /**
+     * 商品名の一部とカテゴリによる検索 (1件もヒットしない場合 その1)
+     */
+    @Test
+    void searchTest6() throws SQLException {
+        final String TEST_INVALID_ITEM_NAME = "無効な商品名";
+        final int TEST_CATEGORY_ID = 4;
+        final int TEST_LIMIT = 3;
+        final int TEST_OFFSET = 0;
+
+        final List<Item> items = Item.search(
+            TEST_INVALID_ITEM_NAME,
+            TEST_CATEGORY_ID,
+            TEST_LIMIT,
+            TEST_OFFSET
+        );
+
+        assertEquals(0, items.size());
+    }
+
+    /**
+     * 商品名の一部とカテゴリによる検索 (1件もヒットしない場合 その2)
+     */
+    @Test
+    void searchTest7() throws SQLException {
+        final String TEST_ITEM_NAME = "猫";
+        final int TEST_INVALID_CATEGORY_ID = Integer.MAX_VALUE;
+        final int TEST_LIMIT = 3;
+        final int TEST_OFFSET = 0;
+
+        final List<Item> items = Item.search(
+            TEST_ITEM_NAME,
+            TEST_INVALID_CATEGORY_ID,
+            TEST_LIMIT,
+            TEST_OFFSET
+        );
+
+        assertEquals(0, items.size());
+    }
 }
