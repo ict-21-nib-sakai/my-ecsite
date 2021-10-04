@@ -91,7 +91,45 @@ public class Item extends ModelMethods {
             statement.setInt(2, limit);
             statement.setInt(3, offset);
 
-            try (final ResultSet resultSet = statement.executeQuery()){
+            try (final ResultSet resultSet = statement.executeQuery()) {
+                List<Item> items = new ArrayList<>();
+                while (resultSet.next()) {
+                    final Item item = make(resultSet);
+                    final Category category = Category.make(resultSet);
+
+                    item
+                        .properties
+                        .put("category", category);
+
+                    items.add(item);
+                }
+
+                return items;
+            }
+        }
+    }
+
+    /**
+     * カテゴリによる検索
+     */
+    public static List<Item> search(int categoryId, int limit, int offset) throws SQLException {
+        final String sql = "SELECT "
+            + buildAllColumns(TABLE_NAME, columns)
+            + " ," + Category.buildAllColumns(Category.TABLE_NAME, Category.COLUMNS())
+            + " FROM " + TABLE_NAME
+            + " INNER JOIN categories "
+            + " ON categories.id = " + TABLE_NAME + ".category_id"
+            + " WHERE " + TABLE_NAME + ".deleted_at is null"
+            + " AND categories.deleted_at is null"
+            + " AND " + TABLE_NAME + ".category_id = ?"
+            + " LIMIT ? OFFSET ?";
+
+        try (final PreparedStatement statement = prepareStatement(sql)) {
+            statement.setInt(1, categoryId);
+            statement.setInt(2, limit);
+            statement.setInt(3, offset);
+
+            try (final ResultSet resultSet = statement.executeQuery()) {
                 List<Item> items = new ArrayList<>();
                 while (resultSet.next()) {
                     final Item item = make(resultSet);
