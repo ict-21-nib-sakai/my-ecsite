@@ -160,12 +160,6 @@ public class Item extends ModelMethods {
                 List<Item> items = new ArrayList<>();
                 while (resultSet.next()) {
                     final Item item = make(resultSet);
-                    final Category category = Category.make(resultSet);
-
-                    item
-                        .properties
-                        .put("category", category);
-
                     items.add(item);
                 }
 
