@@ -42,7 +42,7 @@ public class Item extends ModelMethods {
             + buildAllColumns(TABLE_NAME, columns)
             + " ," + Category.buildAllColumns(Category.TABLE_NAME, Category.COLUMNS())
             + " FROM " + TABLE_NAME
-            + " INNER JOIN categories "
+            + " INNER JOIN " + Category.TABLE_NAME
             + " ON " + Category.TABLE_NAME + ".id = " + TABLE_NAME + ".category_id"
             + " WHERE " + TABLE_NAME + ".deleted_at is null"
             + " AND " + Category.TABLE_NAME + ".deleted_at is null";
