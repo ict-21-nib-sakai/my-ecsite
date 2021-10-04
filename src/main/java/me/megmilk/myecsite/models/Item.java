@@ -104,14 +104,8 @@ public class Item extends ModelMethods {
      * カテゴリによる検索
      */
     public static List<Item> search(int categoryId, int limit, int offset) throws SQLException {
-        final String sql = "SELECT "
-            + buildAllColumns(TABLE_NAME, columns)
-            + " ," + Category.buildAllColumns(Category.TABLE_NAME, Category.COLUMNS())
-            + " FROM " + TABLE_NAME
-            + " INNER JOIN categories "
-            + " ON categories.id = " + TABLE_NAME + ".category_id"
-            + " WHERE " + TABLE_NAME + ".deleted_at is null"
-            + " AND categories.deleted_at is null"
+        final String sql =
+            SQL_TEMPLATE
             + " AND " + TABLE_NAME + ".category_id = ?"
             + " LIMIT ? OFFSET ?";
 
