@@ -148,6 +148,46 @@ public class Item extends ModelMethods {
     }
 
     /**
+     * 商品名の部分一致とカテゴリによる商品検索
+     */
+    public static List<Item> search(String itemName, int categoryId, int limit, int offset) throws SQLException {
+        final String sql = "SELECT "
+            + buildAllColumns(TABLE_NAME, columns)
+            + " ," + Category.buildAllColumns(Category.TABLE_NAME, Category.COLUMNS())
+            + " FROM " + TABLE_NAME
+            + " INNER JOIN categories "
+            + " ON " + Category.TABLE_NAME + ".id = " + TABLE_NAME + ".category_id"
+            + " WHERE " + TABLE_NAME + ".deleted_at is null"
+            + " AND " + Category.TABLE_NAME + ".deleted_at is null"
+            + " AND " + TABLE_NAME + ".name LIKE ?"
+            + " AND " + TABLE_NAME + ".category_id = ?"
+            + " LIMIT ? OFFSET ?";
+
+        try (final PreparedStatement statement = prepareStatement(sql)) {
+            statement.setString(1, "%" + itemName + "%");
+            statement.setInt(2, categoryId);
+            statement.setInt(3, limit);
+            statement.setInt(4, offset);
+
+            try (final ResultSet resultSet = statement.executeQuery()) {
+                List<Item> items = new ArrayList<>();
+                while (resultSet.next()) {
+                    final Item item = make(resultSet);
+                    final Category category = Category.make(resultSet);
+
+                    item
+                        .properties
+                        .put("category", category);
+
+                    items.add(item);
+                }
+
+                return items;
+            }
+        }
+    }
+
+    /**
      * @return ResultSet から Item オブジェクトにする
      */
     public static Item make(ResultSet resultSet) throws SQLException {
