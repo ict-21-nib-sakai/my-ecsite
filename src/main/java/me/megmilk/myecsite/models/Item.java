@@ -39,13 +39,13 @@ public class Item extends ModelMethods {
 
     final static String SQL_TEMPLATE =
         "SELECT "
-        + buildAllColumns(TABLE_NAME, columns)
-        + " ," + Category.buildAllColumns(Category.TABLE_NAME, Category.COLUMNS())
-        + " FROM " + TABLE_NAME
-        + " INNER JOIN categories "
-        + " ON " + Category.TABLE_NAME + ".id = " + TABLE_NAME + ".category_id"
-        + " WHERE " + TABLE_NAME + ".deleted_at is null"
-        + " AND " + Category.TABLE_NAME + ".deleted_at is null";
+            + buildAllColumns(TABLE_NAME, columns)
+            + " ," + Category.buildAllColumns(Category.TABLE_NAME, Category.COLUMNS())
+            + " FROM " + TABLE_NAME
+            + " INNER JOIN categories "
+            + " ON " + Category.TABLE_NAME + ".id = " + TABLE_NAME + ".category_id"
+            + " WHERE " + TABLE_NAME + ".deleted_at is null"
+            + " AND " + Category.TABLE_NAME + ".deleted_at is null";
 
     /**
      * プライマリキーによる商品検索
@@ -78,16 +78,10 @@ public class Item extends ModelMethods {
      * 商品名の部分一致による商品検索
      */
     public static List<Item> search(String itemName, int limit, int offset) throws SQLException {
-        final String sql = "SELECT "
-            + buildAllColumns(TABLE_NAME, columns)
-            + " ," + Category.buildAllColumns(Category.TABLE_NAME, Category.COLUMNS())
-            + " FROM " + TABLE_NAME
-            + " INNER JOIN categories "
-            + " ON categories.id = " + TABLE_NAME + ".category_id"
-            + " WHERE " + TABLE_NAME + ".deleted_at is null"
-            + " AND categories.deleted_at is null"
-            + " AND " + TABLE_NAME + ".name LIKE ?"
-            + " LIMIT ? OFFSET ?";
+        final String sql =
+            SQL_TEMPLATE
+                + " AND " + TABLE_NAME + ".name LIKE ?"
+                + " LIMIT ? OFFSET ?";
 
         try (final PreparedStatement statement = prepareStatement(sql)) {
             statement.setString(1, "%" + itemName + "%");
@@ -106,8 +100,8 @@ public class Item extends ModelMethods {
     public static List<Item> search(int categoryId, int limit, int offset) throws SQLException {
         final String sql =
             SQL_TEMPLATE
-            + " AND " + TABLE_NAME + ".category_id = ?"
-            + " LIMIT ? OFFSET ?";
+                + " AND " + TABLE_NAME + ".category_id = ?"
+                + " LIMIT ? OFFSET ?";
 
         try (final PreparedStatement statement = prepareStatement(sql)) {
             statement.setInt(1, categoryId);
