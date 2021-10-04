@@ -59,14 +59,7 @@ public class Item extends ModelMethods {
                     return null;
                 }
 
-                final Item item = make(resultSet);
-                final Category category = Category.make(resultSet);
-
-                item
-                    .properties
-                    .put("category", category);
-
-                return item;
+                return make(resultSet);
             }
         }
     }
@@ -191,8 +184,11 @@ public class Item extends ModelMethods {
      * @return ResultSet から Item オブジェクトにする
      */
     public static Item make(ResultSet resultSet) throws SQLException {
-        Item item = new Item();
+        final Item item = new Item();
+        final Category category = Category.make(resultSet);
+
         item.properties = makeProperties(resultSet, columns);
+        item.properties.put("category", category);
 
         return item;
     }
