@@ -63,7 +63,9 @@ public class Category extends ModelMethods {
     public static List<Category> enumerate() throws SQLException {
         final String sql =
             "SELECT " + buildAllColumns(TABLE_NAME, columns)
-            + " FROM " + TABLE_NAME;
+            + " FROM " + TABLE_NAME
+            + " WHERE " + TABLE_NAME + ".deleted_at is null"
+            + " ORDER BY sequence";
 
         try (final PreparedStatement statement = ModelAbstract.prepareStatement(sql)) {
             try (final ResultSet resultSet = statement.executeQuery()) {
