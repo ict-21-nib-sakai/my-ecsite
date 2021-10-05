@@ -1,4 +1,5 @@
 <%@ page pageEncoding="UTF-8" %>
+<%--@elvariable id="categories" type="java.util.List<me.megmilk.myecsite.models.Category>"--%>
 <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">くじらカフェ Online Store</a>
@@ -36,14 +37,14 @@
                         カテゴリ
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#">
-                                Something else here
-                            </a>
-                        </li>
+                        <c:forEach var="category" items="${categories}">
+                            <li>
+                                <a class="dropdown-item"
+                                   href="<c:out value="${pageContext.request.contextPath}/category/"/><c:out value="${category.id}"/>">
+                                    <c:out value="${category.name}"/>
+                                </a>
+                            </li>
+                        </c:forEach>
                     </ul>
                 </li>
 
