@@ -34,6 +34,7 @@
                        href="#" id="categoryDropdown"
                        role="button" data-bs-toggle="dropdown"
                        aria-expanded="false">
+                        <i class="bi bi-card-heading"></i>
                         カテゴリ
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
@@ -49,7 +50,10 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#">カート</a>
+                    <a class="nav-link" href="#">
+                        <i class="bi bi-cart"></i>
+                        カート
+                    </a>
                 </li>
             </ul>
 
@@ -57,7 +61,10 @@
                 <li class="nav-item">
                     <a class="nav-link disabled"
                        href="#" tabindex="-1"
-                       aria-disabled="true">ログイン</a>
+                       aria-disabled="true">
+                        <i class="bi bi-lock"></i>
+                        ログイン
+                    </a>
                 </li>
 
                 <li class="nav-item dropdown">
@@ -71,16 +78,22 @@
                     <ul class="dropdown-menu dropdown-menu-lg-end"
                         aria-labelledby="navbarDropdown">
                         <li>
-                            <a class="dropdown-item" href="#">注文履歴</a>
+                            <a class="dropdown-item" href="#">
+                                <i class="bi bi-clock-history"></i>注文履歴
+                            </a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="#">アカウント情報</a>
+                            <a class="dropdown-item" href="#">
+                                <i class="bi bi-person-circle"></i>
+                                アカウント情報
+                            </a>
                         </li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
                         <li>
                             <a class="dropdown-item" href="#">
+                                <i class="bi bi-unlock"></i>
                                 ログアウト
                             </a>
                         </li>
