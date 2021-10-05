@@ -1,6 +1,12 @@
 package me.megmilk.myecsite.controllers;
 
+import me.megmilk.myecsite.models.Item;
+import me.megmilk.myecsite.services.IndexService;
+
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,6 +28,17 @@ public class IndexController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response
     ) throws ServletException, IOException {
+        List<Item> items = new ArrayList<>();
+
+        try {
+            items = IndexService.search(request);
+        } catch (SQLException e) {
+            // TODO ログ, エラーページを表示
+            e.printStackTrace();
+        }
+
+        request.setAttribute("items", items);
+
         request
             .getRequestDispatcher("/WEB-INF/views/index.jsp")
             .forward(request, response);
