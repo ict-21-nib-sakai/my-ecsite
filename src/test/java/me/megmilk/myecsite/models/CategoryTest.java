@@ -40,4 +40,18 @@ public class CategoryTest {
         assertNotNull(categories);
         assertTrue(categories.size() >= 1);
     }
+
+    /**
+     * カテゴリは設定された順番で列挙されること
+     */
+    @Test
+    void enumerateTest2() throws SQLException {
+        final List<Category> categories = Category.enumerate();
+
+        int prevSequence = Integer.MIN_VALUE;
+        for (Category category: categories) {
+            assertTrue(category.getSequence() > prevSequence);
+            prevSequence = category.getSequence();
+        }
+    }
 }
