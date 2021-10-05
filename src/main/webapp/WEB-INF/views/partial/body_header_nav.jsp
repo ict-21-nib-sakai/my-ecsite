@@ -53,7 +53,14 @@
                     <a class="nav-link" href="#">
                         <i class="bi bi-cart"></i>
                         カート
+                        <span class="translate-middle badge rounded-pill bg-danger ms-3">
+                            +99
+                            <span class="visually-hidden">
+                                カート内の商品数量
+                            </span>
+                        </span>
                     </a>
+
                 </li>
             </ul>
 
