@@ -96,6 +96,10 @@ public class Category extends ModelMethods {
         return (String) properties.get("name");
     }
 
+    public int getSequence() {
+        return (int) properties.get("sequence");
+    }
+
     public boolean isSuspended() {
         return (boolean) properties.get("suspended");
     }
