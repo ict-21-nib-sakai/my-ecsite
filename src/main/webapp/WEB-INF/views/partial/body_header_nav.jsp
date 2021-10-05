@@ -1,5 +1,6 @@
 <%@ page pageEncoding="UTF-8" %>
 <%--@elvariable id="categories" type="java.util.List<me.megmilk.myecsite.models.Category>"--%>
+<%--@elvariable id="prevRequest" type="javax.servlet.http.HttpServletRequest"--%>
 <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">くじらカフェ Online Store</a>
@@ -20,7 +21,10 @@
                             <span class="input-group-text" id="basic-addon1">
                                 <i class="bi bi-search"></i>
                             </span>
+
                             <input type="text"
+                                   name="keyword"
+                                   value="<c:out value="${prevRequest.getParameter('keyword')}"/>"
                                    class="form-control"
                                    placeholder="(例) キャットフード"
                                    aria-label="Input group example"
