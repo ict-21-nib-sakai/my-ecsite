@@ -22,7 +22,6 @@
 <main>
     <div class="album py-5 bg-light mt-3">
         <div class="container">
-
             <c:if test="${not empty flash_error_title}">
                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
                     <i class="bi bi-exclamation-circle"></i>
@@ -37,7 +36,7 @@
 
             <c:if test="${not empty flash_info_title}">
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <i class="bi bi-exclamation-circle"></i>
+                    <i class="bi bi-info-circle"></i>
                     <c:out value="${flash_info_title}"/>
                     <button type="button"
                             class="btn-close"
