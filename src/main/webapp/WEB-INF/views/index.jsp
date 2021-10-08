@@ -1,6 +1,10 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%--@elvariable id="flash_info_title" type="String"--%>
+<%--@elvariable id="flash_info_messages" type="String[]"--%>
+<%--@elvariable id="flash_error_title" type="String"--%>
+<%--@elvariable id="flash_error_messages" type="String[]"--%>
 <%--@elvariable id="items" type="java.util.List<me.megmilk.myecsite.models.Item>"--%>
 <!DOCTYPE html>
 <html lang="ja">
@@ -18,6 +22,31 @@
 <main>
     <div class="album py-5 bg-light mt-3">
         <div class="container">
+
+            <c:if test="${not empty flash_error_title}">
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <i class="bi bi-exclamation-circle"></i>
+                    <c:out value="${flash_error_title}"/>
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="alert"
+                            aria-label="Close">
+                    </button>
+                </div>
+            </c:if>
+
+            <c:if test="${not empty flash_info_title}">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="bi bi-exclamation-circle"></i>
+                    <c:out value="${flash_info_title}"/>
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="alert"
+                            aria-label="Close">
+                    </button>
+                </div>
+            </c:if>
+
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                 <c:forEach var="item" items="${items}">
                     <div class="col">
