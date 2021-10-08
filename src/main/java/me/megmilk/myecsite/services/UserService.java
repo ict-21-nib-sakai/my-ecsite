@@ -41,12 +41,6 @@ public class UserService {
             return null;
         }
 
-        System.out.println(
-            DigestUtils.sha256Hex(
-                request.getParameter("password")
-            )
-        );
-
         // TODO 本来ならパスワードは Spring の Bcrypt を使いたいけど、今回はほぼ素のJavaの学習。
         //  上記の理由により、暫定的に SHA256 を使います。
         final String password = DigestUtils.sha256Hex(
