@@ -59,5 +59,48 @@ public class LoginController extends HttpServlet {
         HttpServletRequest request,
         HttpServletResponse response
     ) throws ServletException, IOException {
+        // ログイン済みの場合は、Web サイトトップページを表示
+        if (null != request.getSession().getAttribute("userId")) {
+            response.sendRedirect(
+                request.getContextPath()
+            );
+
+            return;
+        }
+
+        User user = null;
+
+        try {
+            user = UserService.authenticate(request);
+        } catch (SQLException e) {
+            // TODO ログ, エラーページを表示
+            e.printStackTrace();
+        }
+
+        // ログインが失敗した場合、再度ログインフォームを表示
+        if (null == user) {
+            request
+                .getSession()
+                .removeAttribute("userId");
+
+            response.sendRedirect(
+                request.getContextPath() + "/login"
+            );
+
+            return;
+        }
+
+        // セッションスコープにユーザーIDを保持する
+        request
+            .getSession()
+            .setAttribute(
+                "userId",
+                user.getId()
+            );
+
+        // Webサイトのトップページを表示
+        response.sendRedirect(
+            request.getContextPath()
+        );
     }
 }
