@@ -108,10 +108,26 @@
                                 <hr class="dropdown-divider">
                             </li>
                             <li>
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="#" id="logout_link">
                                     <i class="bi bi-unlock"></i>
                                     ログアウト
                                 </a>
+                                <form action="${pageContext.request.contextPath}/logout"
+                                      method="post"
+                                      id="logout_form">
+                                    <%-- TODO CSRF トークン --%>
+                                </form>
+                                <script>
+                                    const logout_link = document.getElementById('logout_link')
+
+                                    logout_link.addEventListener('click', event => {
+                                        event.preventDefault()
+
+                                        document
+                                            .getElementById('logout_form')
+                                            .submit()
+                                    })
+                                </script>
                             </li>
                         </ul>
                     </li>
