@@ -53,4 +53,14 @@ public class UserService {
 
         return user;
     }
+
+    /**
+     * ログアウト
+     */
+    public static void logout(HttpServletRequest request) {
+        // セッションスコープに記録されているユーザーIDを削除
+        request
+            .getSession()
+            .removeAttribute("userId");
+    }
 }
