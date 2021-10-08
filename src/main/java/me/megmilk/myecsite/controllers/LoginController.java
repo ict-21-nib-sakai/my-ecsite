@@ -1,6 +1,7 @@
 package me.megmilk.myecsite.controllers;
 
 import me.megmilk.myecsite.models.User;
+import me.megmilk.myecsite.services.UserService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 
 /**
  * 一般側ログイン
@@ -34,7 +36,9 @@ public class LoginController extends HttpServlet {
 
         // ログイン済みの場合、Web サイトのトップページにリダイレクトする
         if (null != user) {
-            response.sendRedirect("/");
+            response.sendRedirect(
+                request.getContextPath()
+            );
 
             return;
         }
