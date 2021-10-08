@@ -1,6 +1,7 @@
 <%@ page pageEncoding="UTF-8" %>
 <%--@elvariable id="categories" type="java.util.List<me.megmilk.myecsite.models.Category>"--%>
 <%--@elvariable id="prevRequest" type="javax.servlet.http.HttpServletRequest"--%>
+<%--@elvariable id="user" type="me.megmilk.myecsite.models.User"--%>
 <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">くじらカフェ Online Store</a>
@@ -53,63 +54,68 @@
                     </ul>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="bi bi-cart"></i>
-                        カート
-                        <span class="translate-middle badge rounded-pill bg-danger ms-3">
+                <c:if test="${not empty user}">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="bi bi-cart"></i>
+                            カート
+                            <span class="translate-middle badge rounded-pill bg-danger ms-3">
                             +99
                             <span class="visually-hidden">
                                 カート内の商品数量
                             </span>
                         </span>
-                    </a>
-
-                </li>
+                        </a>
+                    </li>
+                </c:if>
             </ul>
 
             <ul class="navbar-nav d-flex">
-                <li class="nav-item">
-                    <a class="nav-link disabled"
-                       href="#" tabindex="-1"
-                       aria-disabled="true">
-                        <i class="bi bi-lock"></i>
-                        ログイン
-                    </a>
-                </li>
+                <c:if test="${empty user}">
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           href="<c:out value="${pageContext.request.contextPath}/login"/>"
+                           tabindex="-1">
+                            <i class="bi bi-lock"></i>
+                            ログイン
+                        </a>
+                    </li>
+                </c:if>
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle"
-                       href="#" id="navbarDropdown"
-                       role="button"
-                       data-bs-toggle="dropdown"
-                       aria-expanded="false">
-                        ●●○○さん
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-lg-end"
-                        aria-labelledby="navbarDropdown">
-                        <li>
-                            <a class="dropdown-item" href="#">
-                                <i class="bi bi-clock-history"></i>注文履歴
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#">
-                                <i class="bi bi-person-circle"></i>
-                                アカウント情報
-                            </a>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#">
-                                <i class="bi bi-unlock"></i>
-                                ログアウト
-                            </a>
-                        </li>
-                    </ul>
-                </li>
+                <c:if test="${not empty user}">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle"
+                           href="#" id="navbarDropdown"
+                           role="button"
+                           data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            <c:out value="${user.name}"/>さん
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-lg-end"
+                            aria-labelledby="navbarDropdown">
+                            <li>
+                                <a class="dropdown-item" href="#">
+                                    <i class="bi bi-clock-history"></i>注文履歴
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">
+                                    <i class="bi bi-person-circle"></i>
+                                    アカウント情報
+                                </a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">
+                                    <i class="bi bi-unlock"></i>
+                                    ログアウト
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </c:if>
             </ul>
         </div>
     </div>
