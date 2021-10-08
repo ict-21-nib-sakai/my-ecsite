@@ -1,5 +1,6 @@
 package me.megmilk.myecsite.controllers;
 
+import me.megmilk.myecsite.controllers.filters.FlashMessage;
 import me.megmilk.myecsite.models.User;
 import me.megmilk.myecsite.services.UserService;
 
@@ -8,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -79,9 +81,14 @@ public class LoginController extends HttpServlet {
 
         // ログインが失敗した場合、再度ログインフォームを表示
         if (null == user) {
-            request
-                .getSession()
-                .removeAttribute("userId");
+            final HttpSession session = request.getSession();
+
+            session.removeAttribute("userId");
+
+            session.setAttribute(
+                FlashMessage.FLASH_ERROR_TITLE,
+                "ログインできませんでした。メールアドレスとパスワードを再度入力してください。"
+            );
 
             response.sendRedirect(
                 request.getContextPath() + "/login"
@@ -91,12 +98,16 @@ public class LoginController extends HttpServlet {
         }
 
         // セッションスコープにユーザーIDを保持する
-        request
-            .getSession()
-            .setAttribute(
-                "userId",
-                user.getId()
-            );
+        final HttpSession session = request.getSession();
+
+        session.setAttribute(
+            "userId", user.getId()
+        );
+
+        session.setAttribute(
+            FlashMessage.FLASH_INFO_TITLE,
+            "いらっしゃいませ " + user.getName() + " さん。"
+        );
 
         // Webサイトのトップページを表示
         response.sendRedirect(
