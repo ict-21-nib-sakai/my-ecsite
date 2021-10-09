@@ -4,7 +4,6 @@ import me.megmilk.myecsite.controllers.filters.FlashMessage;
 import me.megmilk.myecsite.models.Category;
 import me.megmilk.myecsite.models.Item;
 import me.megmilk.myecsite.services.CategoryService;
-import me.megmilk.myecsite.services.IndexService;
 import me.megmilk.myecsite.services.ItemService;
 
 import javax.servlet.ServletException;
