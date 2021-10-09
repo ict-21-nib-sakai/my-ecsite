@@ -1,5 +1,6 @@
 package me.megmilk.myecsite.controllers;
 
+import me.megmilk.myecsite.controllers.filters.FlashMessage;
 import me.megmilk.myecsite.models.Category;
 import me.megmilk.myecsite.models.Item;
 import me.megmilk.myecsite.services.CategoryService;
@@ -32,7 +33,7 @@ public class CategoryController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response
     ) throws ServletException, IOException {
         List<Item> items = new ArrayList<>();
-        Category category = new Category();
+        Category category = null;
 
         try {
             items = ItemService.enumerate(request);
@@ -40,6 +41,20 @@ public class CategoryController extends HttpServlet {
         } catch (SQLException | NumberFormatException e) {
             // TODO ログ, エラーページを表示
             e.printStackTrace();
+        }
+
+        if (null == category) {
+            // 存在しないカテゴリが指定された場合、Web サイトのトップページを表示する
+            request.getSession().setAttribute(
+                FlashMessage.FLASH_ERROR_TITLE,
+                "ご指定のカテゴリはみつかりませんでした。お手数ですが、検索から商品をお探しください。"
+            );
+
+            response.sendRedirect(
+                request.getContextPath()
+            );
+
+            return;
         }
 
         request.setAttribute("items", items);
