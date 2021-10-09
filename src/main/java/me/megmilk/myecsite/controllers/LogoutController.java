@@ -1,6 +1,6 @@
 package me.megmilk.myecsite.controllers;
 
-import me.megmilk.myecsite.controllers.filters.FlashMessage;
+import me.megmilk.myecsite.controllers.sessions.Flash;
 import me.megmilk.myecsite.services.UserService;
 
 import javax.servlet.ServletException;
@@ -44,8 +44,8 @@ public class LogoutController extends HttpServlet {
     ) throws ServletException, IOException {
         UserService.logout(request);
 
-        request.getSession().setAttribute(
-            FlashMessage.FLASH_INFO_TITLE,
+        Flash.setInfoTitle(
+            request,
             "ログアウトしました。ご利用ありがとうございました。"
         );
 
