@@ -1,5 +1,6 @@
 package me.megmilk.myecsite.controllers;
 
+import me.megmilk.myecsite.models.Category;
 import me.megmilk.myecsite.models.Item;
 import me.megmilk.myecsite.services.CategoryService;
 import me.megmilk.myecsite.services.IndexService;
@@ -31,15 +32,18 @@ public class CategoryController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response
     ) throws ServletException, IOException {
         List<Item> items = new ArrayList<>();
+        Category category = new Category();
 
         try {
             items = ItemService.enumerate(request);
+            category = CategoryService.find(request);
         } catch (SQLException | NumberFormatException e) {
             // TODO ログ, エラーページを表示
             e.printStackTrace();
         }
 
         request.setAttribute("items", items);
+        request.setAttribute("category", category);
 
         request
             .getRequestDispatcher("/WEB-INF/views/catetory.jsp")
