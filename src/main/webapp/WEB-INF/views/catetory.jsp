@@ -6,13 +6,13 @@
 <%--@elvariable id="flash_error_title" type="String"--%>
 <%--@elvariable id="flash_error_messages" type="String[]"--%>
 <%--@elvariable id="items" type="java.util.List<me.megmilk.myecsite.models.Item>"--%>
+<%--@elvariable id="category" type="me.megmilk.myecsite.models.Category"--%>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta content="text/html" charset="UTF-8">
     <title>
-        <%-- TODO カテゴリ名をタイトルに含めること --%>
-        くじらカフェ Online Store
+        <c:out value="${category.name}"/> | くじらカフェ Online Store
     </title>
     <%@ include file="partial/html_head.jsp" %>
 </head>
@@ -23,6 +23,7 @@
 <main>
     <div class="album py-5 bg-light mt-3">
         <div class="container">
+            <h2><c:out value="${category.name}"/></h2>
             <c:if test="${not empty flash_error_title}">
                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
                     <i class="bi bi-exclamation-circle"></i>
