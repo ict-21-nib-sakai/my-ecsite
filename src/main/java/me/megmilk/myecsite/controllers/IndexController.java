@@ -38,7 +38,6 @@ public class IndexController extends HttpServlet {
         }
 
         request.setAttribute("items", items);
-        request.setAttribute("prevRequest", request);
 
         request
             .getRequestDispatcher("/WEB-INF/views/index.jsp")
