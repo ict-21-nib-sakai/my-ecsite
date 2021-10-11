@@ -1,5 +1,6 @@
 package me.megmilk.myecsite.controllers;
 
+import me.megmilk.myecsite.controllers.sessions.Flash;
 import me.megmilk.myecsite.models.Item;
 import me.megmilk.myecsite.services.ItemService;
 
@@ -26,13 +27,26 @@ public class ItemController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response
     ) throws ServletException, IOException {
-        Item item = new Item();
+        Item item = null;
 
         try {
             item = ItemService.find(request);
         } catch (SQLException | NumberFormatException e) {
             // TODO ログ, エラーページを表示
             e.printStackTrace();
+        }
+
+        if (null == item) {
+            Flash.setErrorTitle(
+                request,
+                "お探しの商品が見つかりませんでした。お手数ですが、検索をお試しください。"
+            );
+
+            response.sendRedirect(
+                request.getContextPath()
+            );
+
+            return;
         }
 
         request.setAttribute("item", item);
