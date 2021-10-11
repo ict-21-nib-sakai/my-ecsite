@@ -32,4 +32,16 @@ public class ItemService {
 
         return Item.search(keyword, categoryId, PSEUDO_LIMIT, PSEUDO_OFFSET);
     }
+
+    /**
+     * 商品をプライマリキーで検索する
+     */
+    public static Item find(HttpServletRequest request
+    ) throws SQLException, NumberFormatException {
+        final int itemId = Integer.parseInt(
+            request.getPathInfo().substring(1)
+        );
+
+        return Item.find(itemId);
+    }
 }
