@@ -4,7 +4,10 @@
 <%--@elvariable id="user" type="me.megmilk.myecsite.models.User"--%>
 <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">くじらカフェ Online Store</a>
+        <a class="navbar-brand"
+           href="${pageContext.request.contextPath}">
+            くじらカフェ Online Store
+        </a>
         <button class="navbar-toggler"
                 type="button"
                 data-bs-toggle="collapse"
