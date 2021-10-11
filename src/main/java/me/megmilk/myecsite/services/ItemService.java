@@ -16,14 +16,20 @@ public class ItemService {
             request.getPathInfo().substring(1)
         );
 
+        final String keyword = request.getParameter("keyword");
+
         // TODO limit, offset は仮。あとでパラメーターを参照して正式な値にすること
         final int PSEUDO_LIMIT = Integer.MAX_VALUE;
         final int PSEUDO_OFFSET = 0;
 
-        return Item.search(
-            categoryId,
-            PSEUDO_LIMIT,
-            PSEUDO_OFFSET
-        );
+        if (null == keyword) {
+            return Item.search(
+                categoryId,
+                PSEUDO_LIMIT,
+                PSEUDO_OFFSET
+            );
+        }
+
+        return Item.search(keyword, categoryId, PSEUDO_LIMIT, PSEUDO_OFFSET);
     }
 }
