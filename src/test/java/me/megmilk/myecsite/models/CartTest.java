@@ -30,4 +30,15 @@ public class CartTest {
             cart.getItem().getId()
         );
     }
+
+    /**
+     * 存在しないプライマリキーで検索した場合 null が返ってくること
+     */
+    @Test
+    void findTest2() throws SQLException {
+        final int TEST_INVALID_CART_ID = Integer.MAX_VALUE;
+        final Cart cart = Cart.find(TEST_INVALID_CART_ID);
+
+        assertNull(cart);
+    }
 }
