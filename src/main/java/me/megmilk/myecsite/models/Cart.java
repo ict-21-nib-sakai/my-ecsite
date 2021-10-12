@@ -4,7 +4,9 @@ import me.megmilk.myecsite.base.ModelAbstract;
 import me.megmilk.myecsite.base.ModelMethods;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Cart extends ModelMethods {
     /**
@@ -35,6 +37,9 @@ public class Cart extends ModelMethods {
         }
     }
 
+    /**
+     * プライマリキーを指定したカート検索
+     */
     public static Cart find(int id) throws SQLException {
         final String sql = "SELECT "
             + buildAllColumns(TABLE_NAME, columns)
@@ -55,6 +60,25 @@ public class Cart extends ModelMethods {
     }
 
     /**
+     * ユーザーIDを指定したカート内 商品一覧
+     */
+    public static List<Cart> enumerate(int userId) throws SQLException {
+        final String sql = "SELECT "
+            + buildAllColumns(TABLE_NAME, columns)
+            + " FROM " + TABLE_NAME
+            + " WHERE user_id = ?"
+            + " ORDER BY created_at";
+
+        try (final PreparedStatement statement = ModelAbstract.prepareStatement(sql)) {
+            statement.setInt(1, userId);
+
+            try (final ResultSet resultSet = statement.executeQuery()) {
+                return makeList(resultSet);
+            }
+        }
+    }
+
+    /**
      * @return ResultSet から Cart オブジェクトにする
      */
     public static Cart make(ResultSet resultSet) throws SQLException {
@@ -62,6 +86,19 @@ public class Cart extends ModelMethods {
         cart.properties = makeProperties(resultSet, columns);
 
         return cart;
+    }
+
+    /**
+     * @return ResultSet から List<Cart> オブジェクトにする
+     */
+    public static List<Cart> makeList(ResultSet resultSet) throws SQLException {
+        List<Cart> carts = new ArrayList<>();
+        while (resultSet.next()) {
+            final Cart cart = make(resultSet);
+            carts.add(cart);
+        }
+
+        return carts;
     }
 
     public int getId() {
