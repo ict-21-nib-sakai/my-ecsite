@@ -40,6 +40,9 @@ public class Cart extends ModelMethods {
     /** 冗長なクエリを実行しないためのキャッシュ */
     private static final HashMap<Integer, User> cachedUser = new HashMap<>();
 
+    /** 冗長なクエリを実行しないためのキャッシュ */
+    private static final HashMap<Integer, Item> cachedItem = new HashMap<>();
+
     /**
      * プライマリキーを指定したカート検索
      */
@@ -141,9 +144,14 @@ public class Cart extends ModelMethods {
     }
 
     public Item getItem() throws SQLException {
-        // Eager Loading せず、動的に取得してみる
-        //  長文になる SQL は避けたい一方で、パフォーマンス低下が気になるが。
-        //  やはり簡潔な SQL も捨てがたい。
-        return Item.find(this.getItem_id());
+        // 冗長なクエリを実行しないために Item インスタンスをキャッシュする
+        if (cachedItem.size() == 0
+            || null == cachedItem.get(this.getItem_id())
+        ) {
+            Item item = Item.find(this.getItem_id());
+            cachedItem.put(this.getItem_id(), item);
+        }
+
+        return cachedItem.get(this.getItem_id());
     }
 }
