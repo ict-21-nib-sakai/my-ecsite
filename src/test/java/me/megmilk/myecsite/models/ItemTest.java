@@ -2,17 +2,20 @@ package me.megmilk.myecsite.models;
 
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ItemTest {
+public class ItemTest extends AbstractTest {
     /**
      * プライマリキーを指定した検索ができること
      */
     @Test
-    void findTest1() throws SQLException {
+    void findTest1() throws SQLException, IOException {
+        seed();
+
         final int TEST_ID = 1;
         final Item item = Item.find(TEST_ID);
 
@@ -24,7 +27,9 @@ public class ItemTest {
      * 存在しないプライマリキーを指定した場合 null が返ってくること
      */
     @Test
-    void findTest2() throws SQLException {
+    void findTest2() throws SQLException, IOException {
+        seed();
+
         final int INVALID_ID = Integer.MAX_VALUE;
         final Item item = Item.find(INVALID_ID);
 
@@ -35,7 +40,9 @@ public class ItemTest {
      * Category オブジェクトも参照できること
      */
     @Test
-    void findTest3() throws SQLException {
+    void findTest3() throws SQLException, IOException {
+        seed();
+
         final int TEST_ID = 1;
         final Item item = Item.find(TEST_ID);
 
@@ -48,7 +55,9 @@ public class ItemTest {
      * 商品名の部分一致による商品検索
      */
     @Test
-    void searchTest1() throws SQLException {
+    void searchTest1() throws SQLException, IOException {
+        seed();
+
         final String TEST_ITEM_NAME = "猫";
         final int TEST_LIMIT = 3;
         final int TEST_OFFSET = 0;
@@ -72,7 +81,9 @@ public class ItemTest {
      * 商品名の部分一致による商品検索 (1件もヒットしない場合)
      */
     @Test
-    void searchTest2() throws SQLException {
+    void searchTest2() throws SQLException, IOException {
+        seed();
+
         final String TEST_INVALID_ITEM_NAME = "無効な商品名";
         final int TEST_LIMIT = 3;
         final int TEST_OFFSET = 0;
@@ -90,7 +101,9 @@ public class ItemTest {
      * カテゴリによる検索
      */
     @Test
-    void searchTest3() throws SQLException {
+    void searchTest3() throws SQLException, IOException {
+        seed();
+
         final int TEST_CATEGORY_ID = 2;
         final int TEST_LIMIT = 3;
         final int TEST_OFFSET = 0;
@@ -112,7 +125,9 @@ public class ItemTest {
      * カテゴリによる検索 (1件もヒットしない場合)
      */
     @Test
-    void searchTest4() throws SQLException {
+    void searchTest4() throws SQLException, IOException {
+        seed();
+
         final int TEST_INVALID_CATEGORY_ID = Integer.MAX_VALUE;
         final int TEST_LIMIT = 3;
         final int TEST_OFFSET = 0;
@@ -130,7 +145,9 @@ public class ItemTest {
      * 商品名の一部とカテゴリによる検索
      */
     @Test
-    void searchTest5() throws SQLException {
+    void searchTest5() throws SQLException, IOException {
+        seed();
+
         final String TEST_ITEM_NAME = "猫";
         final int TEST_CATEGORY_ID = 4;
         final int TEST_LIMIT = 3;
@@ -155,7 +172,9 @@ public class ItemTest {
      * 商品名の一部とカテゴリによる検索 (1件もヒットしない場合 その1)
      */
     @Test
-    void searchTest6() throws SQLException {
+    void searchTest6() throws SQLException, IOException {
+        seed();
+
         final String TEST_INVALID_ITEM_NAME = "無効な商品名";
         final int TEST_CATEGORY_ID = 4;
         final int TEST_LIMIT = 3;
@@ -175,7 +194,9 @@ public class ItemTest {
      * 商品名の一部とカテゴリによる検索 (1件もヒットしない場合 その2)
      */
     @Test
-    void searchTest7() throws SQLException {
+    void searchTest7() throws SQLException, IOException {
+        seed();
+
         final String TEST_ITEM_NAME = "猫";
         final int TEST_INVALID_CATEGORY_ID = Integer.MAX_VALUE;
         final int TEST_LIMIT = 3;
