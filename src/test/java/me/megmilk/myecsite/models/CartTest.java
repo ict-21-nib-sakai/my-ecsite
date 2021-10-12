@@ -53,8 +53,20 @@ public class CartTest {
 
         assertTrue(carts.size() >= 1);
         for (Cart cart : carts) {
-            assertEquals(TEST_USER_ID, cart.getUser_id());
-            assertEquals(TEST_USER_ID, cart.getUser().getId());
+            assertEquals(
+                TEST_USER_ID,
+                cart.getUser_id()
+            );
+
+            assertEquals(
+                TEST_USER_ID,
+                cart.getUser().getId()
+            );
+
+            assertEquals(
+                cart.getItem_id(),
+                cart.getItem().getId()
+            );
         }
     }
 
