@@ -85,6 +85,42 @@ public class Cart extends ModelMethods {
     }
 
     /**
+     * カートに商品を追加する
+     *
+     * すでにカート内に入っている場合は、数量を加算する
+     */
+    public static void add(int userId, int itemId, int quantity) throws SQLException {
+        final String sql =
+            "INSERT INTO carts (user_id, item_id, quantity, created_at, updated_at)"
+                + " VALUES (?, ?, ?, ?, ?)"
+                + " ON CONFLICT (user_id, item_id)"
+                + " DO UPDATE SET"
+                + "     quantity = ("
+                + "         SELECT quantity"
+                + "         FROM carts"
+                + "         WHERE user_id = ?"
+                + "         AND item_id = ?"
+                + "     ) + ?"
+                + "     , updated_at = ?";
+
+        try (final PreparedStatement statement = ModelAbstract.prepareStatement(sql)) {
+            final Timestamp now = new Timestamp(System.currentTimeMillis());
+
+            statement.setInt(1, userId);
+            statement.setInt(2, itemId);
+            statement.setInt(3, quantity);
+            statement.setTimestamp(4, now);
+            statement.setTimestamp(5, now);
+            statement.setInt(6, userId);
+            statement.setInt(7, itemId);
+            statement.setInt(8, quantity);
+            statement.setTimestamp(9, now);
+
+            statement.executeUpdate();
+        }
+    }
+
+    /**
      * @return ResultSet から Cart オブジェクトにする
      */
     public static Cart make(ResultSet resultSet) throws SQLException {
