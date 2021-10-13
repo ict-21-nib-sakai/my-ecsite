@@ -89,4 +89,69 @@ public class CartTest extends AbstractTest {
 
         assertEquals(0, carts.size());
     }
+
+    /**
+     * カートに商品を追加 (カートに未投入の商品の場合)
+     */
+    @Test
+    void addTest1() throws SQLException, IOException {
+        seed();
+
+        final int TEST_USER_ID = 1;
+        final int TEST_ITEM_ID = 8;
+        final int TEST_QUANTITY = 3;
+
+        Cart.add(TEST_USER_ID, TEST_ITEM_ID, TEST_QUANTITY);
+
+        final List<Cart> carts = Cart.enumerate(TEST_USER_ID);
+        for (Cart cart : carts) {
+            if (TEST_ITEM_ID != cart.getItem_id()) {
+                continue;
+            }
+
+            assertEquals(TEST_QUANTITY, cart.getQuantity());
+            break;
+        }
+    }
+
+    /**
+     * カートに商品を追加 (すでにカート内に入っている数量を加算)
+     */
+    @Test
+    void addTest2() throws SQLException, IOException {
+        seed();
+
+        final int TEST_USER_ID = 1;
+        final List<Cart> carts = Cart.enumerate(TEST_USER_ID);
+
+        final int TEST_ITEM_ID = 9;
+        Cart preUpdateCart = null;
+
+        for (Cart cart : carts) {
+            if (TEST_ITEM_ID != cart.getItem_id()) {
+                continue;
+            }
+
+            preUpdateCart = cart;
+        }
+
+        if (null == preUpdateCart) {
+            fail("テスト用の seeder.sql を見直してください。");
+
+            return;
+        }
+
+        // カート内の商品数量を追加
+        final int TEST_QUANTITY = 5;
+        Cart.add(TEST_USER_ID, TEST_ITEM_ID, TEST_QUANTITY);
+
+        final Cart postUpdatedCart = Cart.find(preUpdateCart.getId());
+
+        assert postUpdatedCart != null;
+
+        assertEquals(
+            TEST_QUANTITY + preUpdateCart.getQuantity(),
+            postUpdatedCart.getQuantity()
+        );
+    }
 }
