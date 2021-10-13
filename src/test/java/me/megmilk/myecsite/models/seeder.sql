@@ -416,6 +416,8 @@ ALTER TABLE ONLY orders
 ALTER TABLE ONLY users
     ADD CONSTRAINT users_pk PRIMARY KEY (id);
 
+CREATE UNIQUE INDEX carts_index_1 ON public.carts USING btree (user_id, item_id);
+
 CREATE INDEX categories_index_1 ON categories USING btree (sequence);
 
 CREATE UNIQUE INDEX users_idx_1 ON users USING btree (email);
