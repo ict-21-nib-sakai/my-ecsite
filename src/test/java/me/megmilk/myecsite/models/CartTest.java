@@ -49,6 +49,53 @@ public class CartTest extends AbstractTest {
     }
 
     /**
+     * ユーザーIDと商品IDを指定したカート検索
+     */
+    @Test
+    void findTest3() throws SQLException, IOException {
+        seed();
+
+        final int TEST_USER_ID = 1;
+        final int TEST_ITEM_ID = 9;
+
+        final Cart cart = Cart.find(TEST_USER_ID, TEST_ITEM_ID);
+
+        assertNotNull(cart);
+        assertEquals(TEST_USER_ID, cart.getUser_id());
+        assertEquals(TEST_ITEM_ID, cart.getItem_id());
+    }
+
+    /**
+     * ユーザーIDと商品IDを指定したカート検索 (無効なユーザーIDの場合)
+     */
+    @Test
+    void findTest4() throws SQLException, IOException {
+        seed();
+
+        final int TEST_INVALID_USER_ID = Integer.MAX_VALUE;
+        final int TEST_ITEM_ID = 9;
+
+        final Cart cart = Cart.find(TEST_INVALID_USER_ID, TEST_ITEM_ID);
+
+        assertNull(cart);
+    }
+
+    /**
+     * ユーザーIDと商品IDを指定したカート検索 (無効な商品IDの場合)
+     */
+    @Test
+    void findTest5() throws SQLException, IOException {
+        seed();
+
+        final int TEST_USER_ID = 1;
+        final int TEST_INVALID_ITEM_ID = Integer.MAX_VALUE;
+
+        final Cart cart = Cart.find(TEST_USER_ID, TEST_INVALID_ITEM_ID);
+
+        assertNull(cart);
+    }
+
+    /**
      * ユーザーIDを指定したカート内一覧取得
      */
     @Test
