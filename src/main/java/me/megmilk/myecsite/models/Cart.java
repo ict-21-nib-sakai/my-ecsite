@@ -37,10 +37,14 @@ public class Cart extends ModelMethods {
         }
     }
 
-    /** 冗長なクエリを実行しないためのキャッシュ */
+    /**
+     * 冗長なクエリを実行しないためのキャッシュ
+     */
     private static final HashMap<Integer, User> cachedUser = new HashMap<>();
 
-    /** 冗長なクエリを実行しないためのキャッシュ */
+    /**
+     * 冗長なクエリを実行しないためのキャッシュ
+     */
     private static final HashMap<Integer, Item> cachedItem = new HashMap<>();
 
     /**
@@ -54,6 +58,30 @@ public class Cart extends ModelMethods {
 
         try (final PreparedStatement statement = ModelAbstract.prepareStatement(sql)) {
             statement.setInt(1, id);
+
+            try (final ResultSet resultSet = statement.executeQuery()) {
+                if (!resultSet.next()) {
+                    return null;
+                }
+
+                return make(resultSet);
+            }
+        }
+    }
+
+    /**
+     * ユーザーIDと商品IDを指定したカート検索
+     */
+    public static Cart find(int userId, int itemId) throws SQLException {
+        final String sql = "SELECT "
+            + buildAllColumns(TABLE_NAME, columns)
+            + " FROM " + TABLE_NAME
+            + " WHERE user_id = ?"
+            + " AND item_id = ?";
+
+        try (final PreparedStatement statement = ModelAbstract.prepareStatement(sql)) {
+            statement.setInt(1, userId);
+            statement.setInt(2, itemId);
 
             try (final ResultSet resultSet = statement.executeQuery()) {
                 if (!resultSet.next()) {
@@ -86,7 +114,7 @@ public class Cart extends ModelMethods {
 
     /**
      * カートに商品を追加する
-     *
+     * <p>
      * すでにカート内に入っている場合は、数量を加算する
      */
     public static void add(int userId, int itemId, int quantity) throws SQLException {
