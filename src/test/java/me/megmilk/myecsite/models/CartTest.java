@@ -165,33 +165,20 @@ public class CartTest extends AbstractTest {
         seed();
 
         final int TEST_USER_ID = 1;
-        final List<Cart> carts = Cart.enumerate(TEST_USER_ID);
-
         final int TEST_ITEM_ID = 9;
-        Cart preUpdateCart = null;
 
-        for (Cart cart : carts) {
-            if (TEST_ITEM_ID != cart.getItem_id()) {
-                continue;
-            }
+        // テスト実行前のカート
+        final Cart preUpdateCart = Cart.find(TEST_USER_ID, TEST_ITEM_ID);
 
-            preUpdateCart = cart;
-        }
-
-        if (null == preUpdateCart) {
-            fail("テスト用の seeder.sql を見直してください。");
-
-            return;
-        }
-
-        // カート内の商品数量を追加
+        // カート内の商品数量を追加 (テスト対象のメソッドを実行する)
         final int TEST_QUANTITY = 5;
         Cart.add(TEST_USER_ID, TEST_ITEM_ID, TEST_QUANTITY);
 
-        final Cart postUpdatedCart = Cart.find(preUpdateCart.getId());
+        // テスト対象のメソッドを実行後のカート
+        final Cart postUpdatedCart = Cart.find(TEST_USER_ID, TEST_ITEM_ID);
 
+        assert preUpdateCart != null;
         assert postUpdatedCart != null;
-
         assertEquals(
             TEST_QUANTITY + preUpdateCart.getQuantity(),
             postUpdatedCart.getQuantity()
