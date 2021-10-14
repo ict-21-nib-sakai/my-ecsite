@@ -2,6 +2,7 @@
 <%--@elvariable id="categories" type="java.util.List<me.megmilk.myecsite.models.Category>"--%>
 <%--@elvariable id="prevRequest" type="javax.servlet.http.HttpServletRequest"--%>
 <%--@elvariable id="user" type="me.megmilk.myecsite.models.User"--%>
+<%--@elvariable id="totalQuantity" type="int"--%>
 <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light">
     <div class="container-fluid">
         <a class="navbar-brand"
@@ -63,13 +64,21 @@
                            href="<c:out value="${pageContext.request.contextPath}/cart"/>">
                             <i class="bi bi-cart"></i>
                             カート
-                            <span class="translate-middle badge rounded-pill bg-danger ms-3">
-                                <%-- TODO カート内の数量はモックアップです。あとで正式な数字を表示すること --%>
-                                +99
-                                <span class="visually-hidden">
-                                    カート内の商品数量
+                            <c:if test="${totalQuantity >= 1}">
+                                <span class="translate-middle badge rounded-pill bg-danger ms-3">
+                                    <c:choose>
+                                        <c:when test="${totalQuantity <= 99}">
+                                            <c:out value="${totalQuantity}"/>
+                                        </c:when>
+                                        <c:otherwise>
+                                            +99
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <span class="visually-hidden">
+                                        カート内の商品数量
+                                    </span>
                                 </span>
-                            </span>
+                            </c:if>
                         </a>
                     </li>
                 </c:if>
