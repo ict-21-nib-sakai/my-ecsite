@@ -14,8 +14,6 @@ public class CartService {
     public static List<Cart> enumerate(HttpServletRequest request) throws SQLException {
         final User user = (User) request.getAttribute("user");
 
-        System.out.println(user);
-
         return Cart.enumerate(user.getId());
     }
 }
