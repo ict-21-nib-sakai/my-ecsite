@@ -6,6 +6,7 @@
 <%--@elvariable id="flash_error_title" type="String"--%>
 <%--@elvariable id="flash_error_messages" type="String[]"--%>
 <%--@elvariable id="carts" type="java.util.List<me.megmilk.myecsite.models.Cart>"--%>
+<%--@elvariable id="sum" type="int"--%>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -50,6 +51,13 @@
                     </tr>
                 </c:forEach>
                 </tbody>
+                <tfoot>
+                <tr>
+                    <td colspan="5" class="text-end">
+                        合計金額 ¥<f:formatNumber value="${sum}" pattern="###,###"/>
+                    </td>
+                </tr>
+                </tfoot>
             </table>
         </div>
     </div>
