@@ -59,15 +59,17 @@
 
                 <c:if test="${not empty user}">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link"
+                           href="<c:out value="${pageContext.request.contextPath}/cart"/>">
                             <i class="bi bi-cart"></i>
                             カート
                             <span class="translate-middle badge rounded-pill bg-danger ms-3">
-                            +99
-                            <span class="visually-hidden">
-                                カート内の商品数量
+                                <%-- TODO カート内の数量はモックアップです。あとで正式な数字を表示すること --%>
+                                +99
+                                <span class="visually-hidden">
+                                    カート内の商品数量
+                                </span>
                             </span>
-                        </span>
                         </a>
                     </li>
                 </c:if>
@@ -118,7 +120,7 @@
                                 <form action="${pageContext.request.contextPath}/logout"
                                       method="post"
                                       id="logout_form">
-                                    <%-- TODO CSRF トークン --%>
+                                        <%-- TODO CSRF トークン --%>
                                 </form>
                                 <script>
                                     const logout_link = document.getElementById('logout_link')
