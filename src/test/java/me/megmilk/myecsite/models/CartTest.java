@@ -184,4 +184,42 @@ public class CartTest extends AbstractTest {
             postUpdatedCart.getQuantity()
         );
     }
+
+    /**
+     * カートの商品数量を変更する (カートに入っている場合)
+     */
+    @Test
+    void changeTest1() throws SQLException, IOException {
+        seed();
+
+        final int TEST_USER_ID = 1;
+        final int TEST_ITEM_ID = 9;
+        final int TEST_QUANTITY = 5;
+
+        // テスト対象のメソッドを実行
+        Cart.change(TEST_USER_ID, TEST_ITEM_ID, TEST_QUANTITY);
+
+        Cart cart = Cart.find(TEST_USER_ID, TEST_ITEM_ID);
+        assertNotNull(cart);
+        assertEquals(TEST_QUANTITY, cart.getQuantity());
+    }
+
+    /**
+     * カートの商品数量を変更する (カートに入っていない場合)
+     */
+    @Test
+    void changeTest2() throws SQLException, IOException {
+        seed();
+
+        final int TEST_USER_ID = 2;
+        final int TEST_ITEM_ID = 1;
+        final int TEST_QUANTITY = 10;
+
+        // テスト対象のメソッドを実行
+        Cart.change(TEST_USER_ID, TEST_ITEM_ID, TEST_QUANTITY);
+
+        Cart cart = Cart.find(TEST_USER_ID, TEST_ITEM_ID);
+        assertNotNull(cart);
+        assertEquals(TEST_QUANTITY, cart.getQuantity());
+    }
 }
