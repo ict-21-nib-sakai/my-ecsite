@@ -149,6 +149,35 @@ public class Cart extends ModelMethods {
     }
 
     /**
+     * カートの商品数量を変更する
+     * <p>
+     * そもそもカートに存在しない場合は、カートに追加する
+     */
+    public static void change(int userId, int itemId, int quantity) throws SQLException {
+        final String sql =
+            "INSERT INTO carts (user_id, item_id, quantity, created_at, updated_at)"
+                + " VALUES (?, ?, ?, ?, ?)"
+                + " ON CONFLICT (user_id, item_id)"
+                + " DO UPDATE SET"
+                + "     quantity = ?"
+                + "     , updated_at = ?";
+
+        try (final PreparedStatement statement = ModelAbstract.prepareStatement(sql)) {
+            final Timestamp now = new Timestamp(System.currentTimeMillis());
+
+            statement.setInt(1, userId);
+            statement.setInt(2, itemId);
+            statement.setInt(3, quantity);
+            statement.setTimestamp(4, now);
+            statement.setTimestamp(5, now);
+            statement.setInt(6, quantity);
+            statement.setTimestamp(7, now);
+
+            statement.executeUpdate();
+        }
+    }
+
+    /**
      * @return ResultSet から Cart オブジェクトにする
      */
     public static Cart make(ResultSet resultSet) throws SQLException {
