@@ -32,4 +32,24 @@ public class CartService {
 
         return sum;
     }
+
+    /**
+     * カート内の商品数量の合計を計算
+     */
+    public static int totalQuantity(HttpServletRequest request) throws SQLException {
+        final User user = (User)request.getAttribute("user");
+
+        if (null == user) {
+            return 0;
+        }
+
+        final List<Cart> carts = Cart.enumerate(user.getId());
+        int totalQuantity = 0;
+
+        for (Cart cart : carts) {
+            totalQuantity += cart.getQuantity();
+        }
+
+        return totalQuantity;
+    }
 }
