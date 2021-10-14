@@ -29,15 +29,18 @@ public class CartIndexController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response
     ) throws ServletException, IOException {
         List<Cart> carts = new ArrayList<>();
+        int sum = 0;
 
         try {
             carts = CartService.enumerate(request);
+            sum = CartService.sum(carts);
         } catch (SQLException e) {
             // TODO ログ, エラーページを表示
             e.printStackTrace();
         }
 
         request.setAttribute("carts", carts);
+        request.setAttribute("sum", sum);
 
         request
             .getRequestDispatcher("/WEB-INF/views/cart.jsp")
