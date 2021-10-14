@@ -150,15 +150,11 @@ public class CartTest extends AbstractTest {
 
         Cart.add(TEST_USER_ID, TEST_ITEM_ID, TEST_QUANTITY);
 
-        final List<Cart> carts = Cart.enumerate(TEST_USER_ID);
-        for (Cart cart : carts) {
-            if (TEST_ITEM_ID != cart.getItem_id()) {
-                continue;
-            }
+        Cart cart = Cart.find(TEST_USER_ID, TEST_ITEM_ID);
 
-            assertEquals(TEST_QUANTITY, cart.getQuantity());
-            break;
-        }
+        assert cart != null;
+        assertEquals(TEST_QUANTITY, cart.getQuantity());
+        assertEquals(TEST_ITEM_ID, cart.getItem_id());
     }
 
     /**
