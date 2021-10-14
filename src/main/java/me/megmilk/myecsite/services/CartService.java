@@ -16,4 +16,20 @@ public class CartService {
 
         return Cart.enumerate(user.getId());
     }
+
+    /**
+     * カート内の合計金額を計算
+     */
+    public static int sum(List<Cart> carts) throws SQLException {
+        if (null == carts || 0 == carts.size()) {
+            return 0;
+        }
+
+        int sum = 0;
+        for (Cart cart : carts) {
+            sum += cart.getItem().getPrice() * cart.getQuantity();
+        }
+
+        return sum;
+    }
 }
