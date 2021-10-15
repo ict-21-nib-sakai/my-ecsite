@@ -1,4 +1,4 @@
-package me.megmilk.myecsite.controllers.filters;
+package me.megmilk.myecsite.http.filters;
 
 import me.megmilk.myecsite.models.User;
 

@@ -1,6 +1,6 @@
-package me.megmilk.myecsite.controllers.sessions;
+package me.megmilk.myecsite.http.sessions;
 
-import me.megmilk.myecsite.controllers.filters.FlashMessage;
+import me.megmilk.myecsite.http.filters.FlashMessage;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;

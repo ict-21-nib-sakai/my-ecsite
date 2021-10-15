@@ -1,6 +1,6 @@
-package me.megmilk.myecsite.controllers;
+package me.megmilk.myecsite.http.controllers;
 
-import me.megmilk.myecsite.controllers.sessions.Flash;
+import me.megmilk.myecsite.http.sessions.Flash;
 import me.megmilk.myecsite.models.User;
 import me.megmilk.myecsite.services.UserService;
 

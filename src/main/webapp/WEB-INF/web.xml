@@ -7,56 +7,56 @@
     <filter>
         <filter-name>AcceptEncodingFilter</filter-name>
         <filter-class>
-            me.megmilk.myecsite.controllers.filters.AcceptEncodingFilter
+            me.megmilk.myecsite.http.filters.AcceptEncodingFilter
         </filter-class>
     </filter>
 
     <filter>
         <filter-name>SessionStart</filter-name>
         <filter-class>
-            me.megmilk.myecsite.controllers.filters.SessionStart
+            me.megmilk.myecsite.http.filters.SessionStart
         </filter-class>
     </filter>
 
     <filter>
         <filter-name>SetUserInfo</filter-name>
         <filter-class>
-            me.megmilk.myecsite.controllers.filters.SetUserInfo
+            me.megmilk.myecsite.http.filters.SetUserInfo
         </filter-class>
     </filter>
 
     <filter>
         <filter-name>TotalQuantity</filter-name>
         <filter-class>
-            me.megmilk.myecsite.controllers.filters.TotalQuantity
+            me.megmilk.myecsite.http.filters.TotalQuantity
         </filter-class>
     </filter>
 
     <filter>
         <filter-name>FlashMessage</filter-name>
         <filter-class>
-            me.megmilk.myecsite.controllers.filters.FlashMessage
+            me.megmilk.myecsite.http.filters.FlashMessage
         </filter-class>
     </filter>
 
     <filter>
         <filter-name>EnumerateCategories</filter-name>
         <filter-class>
-            me.megmilk.myecsite.controllers.filters.EnumerateCategories
+            me.megmilk.myecsite.http.filters.EnumerateCategories
         </filter-class>
     </filter>
 
     <filter>
         <filter-name>InheritPreviousRequest</filter-name>
         <filter-class>
-            me.megmilk.myecsite.controllers.filters.InheritPreviousRequest
+            me.megmilk.myecsite.http.filters.InheritPreviousRequest
         </filter-class>
     </filter>
 
     <filter>
         <filter-name>RequireLoginFilter</filter-name>
         <filter-class>
-            me.megmilk.myecsite.controllers.filters.RequireLoginFilter
+            me.megmilk.myecsite.http.filters.RequireLoginFilter
         </filter-class>
     </filter>
 
