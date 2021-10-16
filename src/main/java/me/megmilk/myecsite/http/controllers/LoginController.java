@@ -1,5 +1,6 @@
 package me.megmilk.myecsite.http.controllers;
 
+import me.megmilk.myecsite.http.FlashBag;
 import me.megmilk.myecsite.http.sessions.Flash;
 import me.megmilk.myecsite.models.User;
 import me.megmilk.myecsite.services.UserService;
@@ -33,7 +34,15 @@ public class LoginController extends HttpServlet {
         // このページはWebブラウザにキャシュさせない
         response.addHeader("Cache-Control", "no-cache, no-store");
 
-        final User user = (User) request.getAttribute("user");
+        final FlashBag flashBag = (FlashBag) request.getAttribute("flashBag");
+        User user = null;
+
+        try {
+            user = flashBag.getUser();
+        } catch (SQLException e) {
+            // TODO ログ, エラーページ表示
+            e.printStackTrace();
+        }
 
         // ログイン済みの場合、Web サイトのトップページにリダイレクトする
         if (null != user) {
@@ -61,15 +70,24 @@ public class LoginController extends HttpServlet {
         HttpServletResponse response
     ) throws ServletException, IOException {
         // ログイン済みの場合は、Web サイトトップページを表示
-        if (null != request.getSession().getAttribute("userId")) {
+        final FlashBag flashBag = (FlashBag) request.getAttribute("flashBag");
+        User user = null;
+
+        try {
+            user = flashBag.getUser();
+        } catch (SQLException e) {
+            // TODO ログ, エラーページ表示
+            e.printStackTrace();
+        }
+
+        // ログイン済みの場合、Web サイトのトップページにリダイレクトする
+        if (null != user) {
             response.sendRedirect(
                 request.getContextPath()
             );
 
             return;
         }
-
-        User user = null;
 
         try {
             user = UserService.authenticate(request);
