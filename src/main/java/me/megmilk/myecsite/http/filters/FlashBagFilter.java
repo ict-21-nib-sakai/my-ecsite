@@ -1,6 +1,6 @@
 package me.megmilk.myecsite.http.filters;
 
-import me.megmilk.myecsite.services.CartService;
+import me.megmilk.myecsite.http.FlashBag;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -8,30 +8,25 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebFilter
-public class TotalQuantity implements Filter {
+@WebFilter(filterName = "FlashBagFilter")
+public class FlashBagFilter implements Filter {
     @Override
     public void init(FilterConfig config) throws ServletException {
     }
 
-    /**
-     * カート内の商品数量の合計を計算し、リクエストスコープに代入する
-     */
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain
     ) throws IOException, ServletException {
-        int totalQuantity = 0;
+        FlashBag flashBag = null;
 
         try {
-            totalQuantity = CartService.totalQuantity(
-                (HttpServletRequest) request
-            );
+            flashBag = new FlashBag((HttpServletRequest) request);
         } catch (SQLException e) {
-            // TODO ログ, エラーページ表示
+            // TODO ログ, エラーページを表示
             e.printStackTrace();
         }
 
-        request.setAttribute("totalQuantity", totalQuantity);
+        request.setAttribute("flashBag", flashBag);
 
         chain.doFilter(request, response);
     }
