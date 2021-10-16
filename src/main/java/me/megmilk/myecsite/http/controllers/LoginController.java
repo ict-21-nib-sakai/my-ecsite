@@ -34,18 +34,8 @@ public class LoginController extends HttpServlet {
         // このページはWebブラウザにキャシュさせない
         response.addHeader("Cache-Control", "no-cache, no-store");
 
-        final FlashBag flashBag = (FlashBag) request.getAttribute("flashBag");
-        User user = null;
-
-        try {
-            user = flashBag.getUser();
-        } catch (SQLException e) {
-            // TODO ログ, エラーページ表示
-            e.printStackTrace();
-        }
-
         // ログイン済みの場合、Web サイトのトップページにリダイレクトする
-        if (null != user) {
+        if (loggedIn(request)) {
             response.sendRedirect(
                 request.getContextPath()
             );
@@ -69,25 +59,17 @@ public class LoginController extends HttpServlet {
         HttpServletRequest request,
         HttpServletResponse response
     ) throws ServletException, IOException {
-        // ログイン済みの場合は、Web サイトトップページを表示
-        final FlashBag flashBag = (FlashBag) request.getAttribute("flashBag");
-        User user = null;
-
-        try {
-            user = flashBag.getUser();
-        } catch (SQLException e) {
-            // TODO ログ, エラーページ表示
-            e.printStackTrace();
-        }
-
-        // ログイン済みの場合、Web サイトのトップページにリダイレクトする
-        if (null != user) {
+        if (loggedIn(request)) {
             response.sendRedirect(
                 request.getContextPath()
             );
 
             return;
         }
+
+        // ログイン済みの場合は、Web サイトトップページを表示
+        final FlashBag flashBag = (FlashBag) request.getAttribute("flashBag");
+        User user = null;
 
         try {
             user = UserService.authenticate(request);
@@ -126,5 +108,22 @@ public class LoginController extends HttpServlet {
         response.sendRedirect(
             request.getContextPath()
         );
+    }
+
+    /**
+     * @return すでにログイン済みであるか
+     */
+    private boolean loggedIn(HttpServletRequest request) {
+        final FlashBag flashBag = (FlashBag) request.getAttribute("flashBag");
+        User user = null;
+
+        try {
+            user = flashBag.getUser();
+        } catch (SQLException e) {
+            // TODO ログ, エラーページ表示
+            e.printStackTrace();
+        }
+
+        return null != user;
     }
 }
