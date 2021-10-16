@@ -1,8 +1,6 @@
 <%@ page pageEncoding="UTF-8" %>
-<%--@elvariable id="categories" type="java.util.List<me.megmilk.myecsite.models.Category>"--%>
 <%--@elvariable id="prevRequest" type="javax.servlet.http.HttpServletRequest"--%>
-<%--@elvariable id="user" type="me.megmilk.myecsite.models.User"--%>
-<%--@elvariable id="totalQuantity" type="int"--%>
+<%--@elvariable id="flashBag" type="me.megmilk.myecsite.http.FlashBag"--%>
 <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light">
     <div class="container-fluid">
         <a class="navbar-brand"
@@ -47,7 +45,7 @@
                         カテゴリ
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
-                        <c:forEach var="category" items="${categories}">
+                        <c:forEach var="category" items="${flashBag.categories}">
                             <li>
                                 <a class="dropdown-item"
                                    href="<c:out value="${pageContext.request.contextPath}/category/"/><c:out value="${category.id}"/>">
@@ -58,17 +56,17 @@
                     </ul>
                 </li>
 
-                <c:if test="${not empty user}">
+                <c:if test="${not empty flashBag.user}">
                     <li class="nav-item">
                         <a class="nav-link"
                            href="<c:out value="${pageContext.request.contextPath}/cart"/>">
                             <i class="bi bi-cart"></i>
                             カート
-                            <c:if test="${totalQuantity >= 1}">
+                            <c:if test="${flashBag.totalQuantity >= 1}">
                                 <span class="translate-middle badge rounded-pill bg-danger ms-3">
                                     <c:choose>
-                                        <c:when test="${totalQuantity <= 99}">
-                                            <c:out value="${totalQuantity}"/>
+                                        <c:when test="${flashBag.totalQuantity <= 99}">
+                                            <c:out value="${flashBag.totalQuantity}"/>
                                         </c:when>
                                         <c:otherwise>
                                             +99
@@ -85,7 +83,7 @@
             </ul>
 
             <ul class="navbar-nav d-flex">
-                <c:if test="${empty user}">
+                <c:if test="${empty flashBag.user}">
                     <li class="nav-item">
                         <a class="nav-link"
                            href="<c:out value="${pageContext.request.contextPath}/login"/>"
@@ -96,14 +94,14 @@
                     </li>
                 </c:if>
 
-                <c:if test="${not empty user}">
+                <c:if test="${not empty flashBag.user}">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle"
                            href="#" id="navbarDropdown"
                            role="button"
                            data-bs-toggle="dropdown"
                            aria-expanded="false">
-                            <c:out value="${user.name}"/>さん
+                            <c:out value="${flashBag.user.name}"/>さん
                         </a>
                         <ul class="dropdown-menu dropdown-menu-lg-end"
                             aria-labelledby="navbarDropdown">
