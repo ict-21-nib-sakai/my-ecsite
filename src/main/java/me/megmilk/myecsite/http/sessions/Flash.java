@@ -1,6 +1,6 @@
 package me.megmilk.myecsite.http.sessions;
 
-import me.megmilk.myecsite.http.filters.FlashMessage;
+import me.megmilk.myecsite.http.FlashBag;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -13,7 +13,7 @@ public class Flash {
         final HttpSession session = request.getSession();
 
         session.setAttribute(
-            FlashMessage.FLASH_INFO_TITLE,
+            FlashBag.FLASH_INFO_TITLE,
             text
         );
     }
@@ -25,7 +25,7 @@ public class Flash {
         final HttpSession session = request.getSession();
 
         session.setAttribute(
-            FlashMessage.FLASH_ERROR_TITLE,
+            FlashBag.FLASH_ERROR_TITLE,
             text
         );
     }
