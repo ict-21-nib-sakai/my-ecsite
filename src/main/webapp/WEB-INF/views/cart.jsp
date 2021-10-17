@@ -26,8 +26,9 @@
                     <th scope="col">商品名</th>
                     <th scope="col">色</th>
                     <th scope="col">メーカー</th>
-                    <th scope="col" class="text-end">単価</th>
                     <th scope="col" class="text-end">数量</th>
+                    <th scope="col" class="text-end">単価</th>
+                    <th scope="col" class="text-center">削除</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -42,15 +43,27 @@
                         <td><c:out value="${cart.item.color}"/></td>
                         <td><c:out value="${cart.item.maker}"/></td>
                         <td class="text-end">
-                            ¥<f:formatNumber value="${cart.item.price}" pattern="###,###"/></td>
+                            <f:formatNumber value="${cart.quantity}" pattern="###,###"/>
+                        </td>
                         <td class="text-end">
-                            <f:formatNumber value="${cart.quantity}" pattern="###,###"/></td>
+                            ¥<f:formatNumber value="${cart.item.price}" pattern="###,###"/>
+                        </td>
+                        <td class="text-center">
+                            <button type="button"
+                                    class="btn btn-danger">
+                                <i class="bi bi-cart-x"></i>
+                                削除
+                            </button>
+                        </td>
                     </tr>
                 </c:forEach>
                 </tbody>
                 <tfoot>
                 <tr>
-                    <td colspan="5" class="text-end">
+                    <td colspan="4" class="text-end">
+                        合計数量 <c:out value="${flashBag.totalQuantity}"/>
+                    </td>
+                    <td colspan="2" class="text-end">
                         合計金額 ¥<f:formatNumber value="${sum}" pattern="###,###"/>
                     </td>
                 </tr>
