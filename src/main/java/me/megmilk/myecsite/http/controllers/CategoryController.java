@@ -1,6 +1,6 @@
 package me.megmilk.myecsite.http.controllers;
 
-import me.megmilk.myecsite.http.sessions.Flash;
+import me.megmilk.myecsite.http.FlashBag;
 import me.megmilk.myecsite.models.Category;
 import me.megmilk.myecsite.models.Item;
 import me.megmilk.myecsite.services.CategoryService;
@@ -44,7 +44,7 @@ public class CategoryController extends HttpServlet {
 
         if (null == category) {
             // 存在しないカテゴリが指定された場合、Web サイトのトップページを表示する
-            Flash.setErrorTitle(
+            FlashBag.setErrorTitle(
                 request,
                 "ご指定のカテゴリはみつかりませんでした。お手数ですが、検索から商品をお探しください。"
             );
