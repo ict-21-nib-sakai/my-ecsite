@@ -86,6 +86,30 @@ public class FlashBag {
     /**
      * おしらせ用 フラッシュメッセージ (タイトル部分) を代入
      */
+    public static void setInfoTitle(HttpServletRequest request, String infoTitle) {
+        final HttpSession session = request.getSession();
+
+        session.setAttribute(
+            FLASH_INFO_TITLE,
+            infoTitle
+        );
+    }
+
+    /**
+     * エラー用 フラッシュメッセージ (タイトル部分) を代入
+     */
+    public static void setErrorTitle(HttpServletRequest request, String errorTitle) {
+        final HttpSession session = request.getSession();
+
+        session.setAttribute(
+            FLASH_ERROR_TITLE,
+            errorTitle
+        );
+    }
+
+    /**
+     * おしらせ用 フラッシュメッセージ (タイトル部分) を代入
+     */
     private FlashBag setFlashInfoTitle() {
         if (null == session.getAttribute(FLASH_INFO_TITLE)) {
             return this;
