@@ -1,6 +1,6 @@
 package me.megmilk.myecsite.http.controllers;
 
-import me.megmilk.myecsite.http.sessions.Flash;
+import me.megmilk.myecsite.http.FlashBag;
 import me.megmilk.myecsite.models.Item;
 import me.megmilk.myecsite.services.ItemService;
 
@@ -37,7 +37,7 @@ public class ItemController extends HttpServlet {
         }
 
         if (null == item) {
-            Flash.setErrorTitle(
+            FlashBag.setErrorTitle(
                 request,
                 "お探しの商品が見つかりませんでした。お手数ですが、検索をお試しください。"
             );
