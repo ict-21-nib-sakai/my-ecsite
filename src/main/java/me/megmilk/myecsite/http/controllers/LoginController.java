@@ -1,7 +1,6 @@
 package me.megmilk.myecsite.http.controllers;
 
 import me.megmilk.myecsite.http.FlashBag;
-import me.megmilk.myecsite.http.sessions.Flash;
 import me.megmilk.myecsite.models.User;
 import me.megmilk.myecsite.services.UserService;
 
@@ -82,7 +81,7 @@ public class LoginController extends HttpServlet {
         if (null == user) {
             request.getSession().removeAttribute("userId");
 
-            Flash.setErrorTitle(
+            FlashBag.setErrorTitle(
                 request,
                 "ログインできませんでした。メールアドレスとパスワードを再度入力してください。"
             );
@@ -99,7 +98,7 @@ public class LoginController extends HttpServlet {
             "userId", user.getId()
         );
 
-        Flash.setInfoTitle(
+        FlashBag.setInfoTitle(
             request,
             "いらっしゃいませ " + user.getName() + " さん。"
         );
