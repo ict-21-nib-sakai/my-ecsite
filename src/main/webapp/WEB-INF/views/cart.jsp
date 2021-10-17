@@ -1,10 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%--@elvariable id="flash_info_title" type="String"--%>
-<%--@elvariable id="flash_info_messages" type="String[]"--%>
-<%--@elvariable id="flash_error_title" type="String"--%>
-<%--@elvariable id="flash_error_messages" type="String[]"--%>
+<%--@elvariable id="flashBag" type="me.megmilk.myecsite.http.FlashBag"--%>
 <%--@elvariable id="carts" type="java.util.List<me.megmilk.myecsite.models.Cart>"--%>
 <%--@elvariable id="sum" type="int"--%>
 <!DOCTYPE html>
