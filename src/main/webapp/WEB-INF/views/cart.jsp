@@ -49,6 +49,12 @@
                             ¥<f:formatNumber value="${cart.item.price}" pattern="###,###"/>
                         </td>
                         <td class="text-center">
+                            <c:url value="/cart/del/${cart.item_id}" var="cart_del_url"/>
+                            <form action="${cart_del_url}"
+                                  method="post"
+                                  id="<c:out value="cart_del_url_${cart.id}"/>">
+                                    <%-- TODO CSRF トークン --%>
+                            </form>
                             <button type="button"
                                     class="btn btn-danger">
                                 <i class="bi bi-cart-x"></i>
