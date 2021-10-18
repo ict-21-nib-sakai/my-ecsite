@@ -58,10 +58,9 @@
             </dl>
 
             <div class="text-center mt-3">
-                <%--
-                TODO フォームの送信先のコントローラーや、カートページの実装
-                --%>
-                <form method="post" action="#">
+                <c:url value="/cart/add/${item.id}" var="cart_add_url"/>
+                <form method="post" action="<c:out value="${cart_add_url}"/>">
+                    <%-- TODO CSRF トークン --%>
                     <button type="submit" class="btn btn-primary">
                         <i class="bi bi-cart-plus"></i>
                         カートに追加
