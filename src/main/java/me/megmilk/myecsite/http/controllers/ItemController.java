@@ -27,6 +27,9 @@ public class ItemController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response
     ) throws ServletException, IOException {
+        // このページはWebブラウザにキャシュさせない
+        response.addHeader("Cache-Control", "no-cache, no-store");
+
         Item item = null;
 
         try {
