@@ -57,6 +57,23 @@ public class CartService {
     }
 
     /**
+     * カートに商品を数量1で追加する
+     */
+    public static Cart add(HttpServletRequest request
+    ) throws SQLException, NumberFormatException {
+        final int itemId = Integer.parseInt(
+            request.getPathInfo().substring(1)
+        );
+
+        final FlashBag flashBag = (FlashBag) request.getAttribute("flashBag");
+        final User user = flashBag.getUser();
+
+        Cart.add(user.getId(), itemId, 1);
+
+        return Cart.find(user.getId(), itemId);
+    }
+
+    /**
      * カート内の商品を削除
      *
      * @return 削除前の Cart インスタンス
