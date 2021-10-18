@@ -61,7 +61,7 @@
                 <tfoot>
                 <tr>
                     <td colspan="4" class="text-end">
-                        合計数量 <c:out value="${flashBag.totalQuantity}"/>
+                        合計数量 {{ totalQuantity }}
                     </td>
                     <td colspan="2" class="text-end">
                         合計金額 ¥<f:formatNumber value="${sum}" pattern="###,###"/>
@@ -164,6 +164,19 @@
                     .NumberFormat()
                     .format(value)
             }
+        },
+        computed: {
+            /**
+             * @return {Number} 数量の合計
+             */
+            totalQuantity: function () {
+                let quantities = 0
+                for (const cart of this.carts) {
+                    quantities += cart.quantity
+                }
+
+                return quantities
+            },
         },
     })
 </script>
