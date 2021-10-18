@@ -107,7 +107,9 @@
 
                     <button
                         type="button"
-                        class="btn btn-danger">
+                        class="btn btn-danger"
+                        @click="sendDeletionRequest(cartOnModal)"
+                        :disabled="!buttonStatus">
                         <i class="bi bi-cart-x"></i>
                         削除する
                     </button>
@@ -123,7 +125,13 @@
     const app = new Vue({
         el: '#app',
         data: {
+            // モーダルウィンドウ内の [削除] ボタンの状態
+            buttonStatus: true,
+
+            // モーダルウィンドウ表示するカートの内容
             cartOnModal: {},
+
+            // カート内の一覧表示用
             carts: [
                 <c:forEach var="cart" items="${carts}" varStatus="cart_loop">
                 {
@@ -139,6 +147,7 @@
         },
         methods: {
             openModal: function (cart) {
+                this.buttonStatus = true
                 this.cartOnModal = cart
 
                 // モーダルウィンドウを表示する
@@ -149,6 +158,12 @@
 
                 confirmationModal.show()
             },
+            sendDeletionRequest: function (cart) {
+                // モーダルウィンドウ内の [削除] ボタンを無効化する
+                this.buttonStatus = false
+
+                // TODO 削除のリクエストを送信する
+            }
         },
         filters: {
             numberFormat: function (value) {
