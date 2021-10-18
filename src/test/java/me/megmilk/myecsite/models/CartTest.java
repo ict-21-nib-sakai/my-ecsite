@@ -222,4 +222,41 @@ public class CartTest extends AbstractTest {
         assertNotNull(cart);
         assertEquals(TEST_QUANTITY, cart.getQuantity());
     }
+
+    /**
+     * プライマリキーを指定してカート内の商品を1レコード削除 (レコードが存在する場合)
+     */
+    @Test
+    void deleteTest1() throws SQLException, IOException {
+        seed();
+
+        final int TEST_CART_ID = 1;
+        final Cart preDeleteCart = Cart.find(TEST_CART_ID);
+
+        // テスト対象のメソッドを実行
+        final Cart afterDeletedCart = Cart.delete(TEST_CART_ID);
+
+        assertNotNull(afterDeletedCart);
+
+        assert preDeleteCart != null;
+        assertEquals(
+            preDeleteCart.getId(),
+            afterDeletedCart.getId()
+        );
+    }
+
+    /**
+     * プライマリキーを指定してカート内の商品を1レコード削除 (レコードが存在しない場合)
+     */
+    @Test
+    void deleteTest2() throws SQLException, IOException {
+        seed();
+
+        final int TEST_INVALID_CART_ID = Integer.MAX_VALUE;
+
+        // テスト対象のメソッドを実行
+        final Cart cart = Cart.delete(TEST_INVALID_CART_ID);
+
+        assertNull(cart);
+    }
 }
