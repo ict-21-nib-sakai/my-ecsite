@@ -43,7 +43,7 @@
                     </button>
                 </div>
             </c:if>
-            <table class="table table-hover">
+            <table class="table table-hover responsive">
                 <thead class="table-light">
                 <tr>
                     <th scope="col">商品名</th>
@@ -63,11 +63,11 @@
                             {{ cart.name }}
                         </a>
                     </td>
-                    <td>{{ cart.color }}</td>
-                    <td>{{ cart.maker }}</td>
-                    <td class="text-end">{{ cart.quantity }}</td>
-                    <td class="text-end">¥{{ cart.price | numberFormat }}</td>
-                    <td class="text-center">
+                    <td data-title="色">{{ cart.color }}</td>
+                    <td data-title="メーカー">{{ cart.maker }}</td>
+                    <td data-title="数量" class="text-end resp-text-start">{{ cart.quantity }}</td>
+                    <td data-title="単価" class="text-end resp-text-start">¥{{ cart.price | numberFormat }}</td>
+                    <td class="text-center resp-text-end">
                         <form :action="'${cart_parent_path}' + cart.id"
                               :id="'cart_del_' + cart.id"
                               method="post">
