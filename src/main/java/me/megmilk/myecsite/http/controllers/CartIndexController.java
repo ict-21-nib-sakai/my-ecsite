@@ -28,6 +28,9 @@ public class CartIndexController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response
     ) throws ServletException, IOException {
+        // このページはWebブラウザにキャシュさせない
+        response.addHeader("Cache-Control", "no-cache, no-store");
+
         List<Cart> carts = new ArrayList<>();
         int sum = 0;
 
