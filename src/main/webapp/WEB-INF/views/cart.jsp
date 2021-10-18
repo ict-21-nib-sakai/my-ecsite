@@ -64,7 +64,7 @@
                         合計数量 {{ totalQuantity }}
                     </td>
                     <td colspan="2" class="text-end">
-                        合計金額 ¥<f:formatNumber value="${sum}" pattern="###,###"/>
+                        合計金額 ¥{{ totalPrice | numberFormat }}
                     </td>
                 </tr>
                 </tfoot>
@@ -177,6 +177,18 @@
 
                 return quantities
             },
+
+            /**
+             * @return {Number} 合計金額
+             */
+            totalPrice: function () {
+                let total = 0
+                for (const cart of this.carts) {
+                    total += cart.price * cart.quantity
+                }
+
+                return total
+            }
         },
     })
 </script>
