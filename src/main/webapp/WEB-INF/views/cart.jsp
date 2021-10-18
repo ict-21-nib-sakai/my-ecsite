@@ -33,7 +33,7 @@
                 </thead>
                 <tbody>
                 <c:url value="/item/" var="item_parent_path"/>
-                <c:url value="/cart/del/" var="cart_parent_path"/>
+                <c:url value="/cart/delete/" var="cart_parent_path"/>
                 <tr v-for="cart in carts" v-bind:key="cart.id">
                     <td>
                         <a :href="'<c:out value="${item_parent_path}"/>' + cart.id">
