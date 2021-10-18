@@ -55,4 +55,31 @@ public class CartService {
 
         return totalQuantity;
     }
+
+    /**
+     * カート内の商品を削除
+     *
+     * @return 削除前の Cart インスタンス
+     */
+    public static Cart deleteCartItem(HttpServletRequest request
+    ) throws SQLException, NumberFormatException {
+        final int cartId = Integer.parseInt(
+            request.getPathInfo().substring(1)
+        );
+
+        final FlashBag flashBag = (FlashBag) request.getAttribute("flashBag");
+        final User user = flashBag.getUser();
+        final Cart cart = Cart.find(cartId);
+
+        if (null == cart) {
+            return null;
+        }
+
+        // 他者のカート内容は削除させない
+        if (cart.getUser_id() != user.getId()) {
+            return null;
+        }
+
+        return Cart.delete(cartId);
+    }
 }
