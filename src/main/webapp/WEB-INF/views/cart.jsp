@@ -78,5 +78,53 @@
         </div>
     </div>
 </main>
+
+<div class="modal fade"
+     id="confirmationModal"
+     tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">
+                    削除の確認
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>以下の商品をカートから削除してよろしいですか？</p>
+                <dl>
+                    <dt>商品名</dt>
+                    <dd>{{ item_name }}</dd>
+                    <dt>メーカー</dt>
+                    <dd>{{ manufacturer }}</dd>
+                    <dt>単価</dt>
+                    <dd>{{ price | numberFormat }}円</dd>
+                    <dt>数量</dt>
+                    <dd>{{ amount }}個</dd>
+                </dl>
+            </div>
+            <div class="modal-footer">
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal">
+                    <i class="bi bi-caret-left"></i>
+                    やめる
+                </button>
+
+                <button
+                    @click="sendDeletionRequest"
+                    :disabled="!buttonEnabled"
+                    type="button"
+                    class="btn btn-danger">
+                    <i class="bi bi-cart-x"></i>
+                    削除する
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
 </body>
 </html>
