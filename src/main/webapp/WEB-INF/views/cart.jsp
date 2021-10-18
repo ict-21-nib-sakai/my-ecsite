@@ -57,38 +57,6 @@
                         </button>
                     </td>
                 </tr>
-
-                <c:forEach var="cart" items="${carts}">
-                    <tr>
-                        <td>
-                            <c:url value="/item/${cart.item_id}" var="item_detail_url"/>
-                            <a href="${item_detail_url}">
-                                <c:out value="${cart.item.name}"/>
-                            </a>
-                        </td>
-                        <td><c:out value="${cart.item.color}"/></td>
-                        <td><c:out value="${cart.item.maker}"/></td>
-                        <td class="text-end">
-                            <f:formatNumber value="${cart.quantity}" pattern="###,###"/>
-                        </td>
-                        <td class="text-end">
-                            ¥<f:formatNumber value="${cart.item.price}" pattern="###,###"/>
-                        </td>
-                        <td class="text-center">
-                            <c:url value="/cart/del/${cart.item_id}" var="cart_del_url"/>
-                            <form action="${cart_del_url}"
-                                  method="post"
-                                  id="<c:out value="cart_del_url_${cart.id}"/>">
-                                    <%-- TODO CSRF トークン --%>
-                            </form>
-                            <button type="button"
-                                    class="btn btn-danger">
-                                <i class="bi bi-cart-x"></i>
-                                削除
-                            </button>
-                        </td>
-                    </tr>
-                </c:forEach>
                 </tbody>
                 <tfoot>
                 <tr>
