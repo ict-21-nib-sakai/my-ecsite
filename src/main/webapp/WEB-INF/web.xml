@@ -62,6 +62,7 @@
     <filter-mapping>
         <filter-name>RequireLoginFilter</filter-name>
         <url-pattern>/cart</url-pattern>
+        <url-pattern>/cart/add/*</url-pattern>
         <url-pattern>/cart/delete/*</url-pattern>
     </filter-mapping>
 </web-app>
