@@ -20,6 +20,29 @@
 <main id="app">
     <div class="py-5 bg-light mt-3">
         <div class="container">
+            <c:if test="${not empty flashBag.flashErrorTitle}">
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <i class="bi bi-exclamation-circle"></i>
+                    <c:out value="${flashBag.flashErrorTitle}"/>
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="alert"
+                            aria-label="Close">
+                    </button>
+                </div>
+            </c:if>
+
+            <c:if test="${not empty flashBag.flashInfoTitle}">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="bi bi-info-circle"></i>
+                    <c:out value="${flashBag.flashInfoTitle}"/>
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="alert"
+                            aria-label="Close">
+                    </button>
+                </div>
+            </c:if>
             <table class="table table-hover">
                 <thead class="table-light">
                 <tr>
