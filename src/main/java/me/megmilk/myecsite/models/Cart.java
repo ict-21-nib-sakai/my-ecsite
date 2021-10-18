@@ -178,6 +178,29 @@ public class Cart extends ModelMethods {
     }
 
     /**
+     * カートの商品を1つ削除
+     *
+     * @param id carts テーブルのプライマリキー
+     * @return 削除前の Cart インスタンス。ただし、レコードがなかった場合は null を返す。
+     */
+    public static Cart delete(int id) throws SQLException {
+        Cart cart = find(id);
+
+        if (null == cart) {
+            return null;
+        }
+
+        final String sql = "DELETE FROM " + TABLE_NAME + " WHERE id = ?";
+
+        try (final PreparedStatement statement = ModelAbstract.prepareStatement(sql)) {
+            statement.setInt(1, id);
+            statement.executeUpdate();
+        }
+
+        return cart;
+    }
+
+    /**
      * @return ResultSet から Cart オブジェクトにする
      */
     public static Cart make(ResultSet resultSet) throws SQLException {
