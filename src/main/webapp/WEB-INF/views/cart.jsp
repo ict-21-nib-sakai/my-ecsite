@@ -59,7 +59,7 @@
                 <c:url value="/cart/delete/" var="cart_parent_path"/>
                 <tr v-for="cart in carts" v-bind:key="cart.id">
                     <td>
-                        <a :href="'<c:out value="${item_parent_path}"/>' + cart.id">
+                        <a :href="'<c:out value="${item_parent_path}"/>' + cart.itemId">
                             {{ cart.name }}
                         </a>
                     </td>
@@ -160,6 +160,7 @@
                 <c:forEach var="cart" items="${carts}" varStatus="cart_loop">
                 {
                     id: <c:out value="${cart.id}"/>,
+                    itemId: <c:out value="${cart.item_id}"/>,
                     name: "<c:out value="${cart.item.name}"/>",
                     color: "<c:out value="${cart.item.color}"/>",
                     maker: "<c:out value="${cart.item.maker}"/>",
