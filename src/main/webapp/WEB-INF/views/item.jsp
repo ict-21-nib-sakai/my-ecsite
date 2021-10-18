@@ -1,10 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%--@elvariable id="flash_info_title" type="String"--%>
-<%--@elvariable id="flash_info_messages" type="String[]"--%>
-<%--@elvariable id="flash_error_title" type="String"--%>
-<%--@elvariable id="flash_error_messages" type="String[]"--%>
 <%--@elvariable id="item" type="me.megmilk.myecsite.models.Item"--%>
 <!DOCTYPE html>
 <html lang="ja">
