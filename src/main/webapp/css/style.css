@@ -1,0 +1,55 @@
+@charset "UTF-8";
+/**
+ * オリジナルスタイルシート
+ */
+
+/**
+ * table 要素のレスポンシブデザイン
+ */
+@media screen and (max-width: 900px) {
+    table.responsive thead {
+        display: none;
+    }
+
+    table.responsive tbody tr {
+        border-bottom: 1px solid #212529;
+    }
+
+    table.responsive tbody td {
+        display: block;
+        font-weight: bold;
+    }
+
+    table.responsive tbody td:first-child {
+        border-bottom-width: 0;
+        padding-top: 2.0rem;
+        font-size: 1.2rem;
+    }
+
+    table.responsive tbody td:nth-child(n + 2) {
+        border-bottom: 1px solid #dee2e6 !important;
+    }
+
+    table.responsive tbody td[data-title]::before {
+        content: attr(data-title) ": ";
+        font-weight: normal;
+        display: inline;
+    }
+
+    table.responsive tbody td:last-child {
+        padding-bottom: 1.0rem;
+        border-bottom-width: 0 !important;
+    }
+
+    table.responsive tfoot td {
+        display: block;
+    }
+
+    table.responsive td.resp-text-start{
+        text-align: left !important;
+    }
+
+    table.responsive td.resp-text-end {
+        text-align: right !important;
+    }
+}
