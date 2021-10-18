@@ -46,6 +46,7 @@
                     <td class="text-end">¥{{ cart.price | numberFormat }}</td>
                     <td class="text-center">
                         <form :action="'${cart_parent_path}' + cart.id"
+                              :id="'cart_del_' + cart.id"
                               method="post">
                             <%-- TODO CSRF トークン --%>
                         </form>
@@ -162,7 +163,9 @@
                 // モーダルウィンドウ内の [削除] ボタンを無効化する
                 this.buttonStatus = false
 
-                // TODO 削除のリクエストを送信する
+                // 削除のリクエストを送信する
+                const form = document.getElementById('cart_del_' + cart.id)
+                form.submit();
             }
         },
         filters: {
