@@ -16,7 +16,8 @@
     }
 
     table.responsive tbody td {
-        display: block;
+        display: flex;
+        align-items: center;
         font-weight: bold;
     }
 
@@ -33,7 +34,13 @@
     table.responsive tbody td[data-title]::before {
         content: attr(data-title) ": ";
         font-weight: normal;
-        display: inline;
+        display: flex;
+        flex: 1;
+    }
+
+    table.responsive tbody td span.resp-flex-9 {
+        display: flex;
+        flex: 9;
     }
 
     table.responsive tbody td:last-child {
@@ -49,7 +56,7 @@
         text-align: left !important;
     }
 
-    table.responsive td.resp-text-end {
-        text-align: right !important;
+    table.responsive tbody td.resp-flex-end {
+        justify-content: flex-end;
     }
 }
