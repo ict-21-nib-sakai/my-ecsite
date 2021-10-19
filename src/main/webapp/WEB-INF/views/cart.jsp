@@ -63,19 +63,25 @@
                             {{ cart.name }}
                         </a>
                     </td>
-                    <td data-title="色">{{ cart.color }}</td>
-                    <td data-title="メーカー">{{ cart.maker }}</td>
+                    <td data-title="色">
+                        <span class="resp-flex-9">{{ cart.color }}</span>
+                    </td>
+                    <td data-title="メーカー">
+                        <span class="resp-flex-9">{{ cart.maker }}</span>
+                    </td>
                     <td data-title="数量" class="text-end resp-text-start">
-                        <input type="number"
-                               min="0"
-                               class="form-control text-end"
-                               :name="'cart_quantity_' + cart.id"
-                               :value="cart.quantity">
+                        <span class="resp-flex-9">
+                            <input type="number"
+                                   min="0"
+                                   class="form-control text-end"
+                                   :name="'cart_quantity_' + cart.id"
+                                   :value="cart.quantity">
+                        </span>
                     </td>
                     <td data-title="単価" class="text-end resp-text-start">
-                        ¥{{ cart.price | numberFormat }}
+                        <span class="resp-flex-9">¥{{ cart.price | numberFormat }}</span>
                     </td>
-                    <td class="text-center resp-text-end">
+                    <td class="text-center resp-flex-end">
                         <form :action="'${cart_parent_path}' + cart.id"
                               :id="'cart_del_' + cart.id"
                               method="post">
