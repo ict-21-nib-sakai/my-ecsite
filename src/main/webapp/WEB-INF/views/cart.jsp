@@ -47,9 +47,9 @@
                 <thead class="table-light">
                 <tr>
                     <th scope="col">商品名</th>
-                    <th scope="col">色</th>
-                    <th scope="col">メーカー</th>
-                    <th scope="col" class="text-end">数量</th>
+                    <th scope="col" class="col-2">色</th>
+                    <th scope="col" class="col-2">メーカー</th>
+                    <th scope="col" class="col-2 text-end">数量</th>
                     <th scope="col" class="text-end">単価</th>
                     <th scope="col" class="text-center">削除</th>
                 </tr>
@@ -65,8 +65,16 @@
                     </td>
                     <td data-title="色">{{ cart.color }}</td>
                     <td data-title="メーカー">{{ cart.maker }}</td>
-                    <td data-title="数量" class="text-end resp-text-start">{{ cart.quantity }}</td>
-                    <td data-title="単価" class="text-end resp-text-start">¥{{ cart.price | numberFormat }}</td>
+                    <td data-title="数量" class="text-end resp-text-start">
+                        <input type="number"
+                               min="0"
+                               class="form-control text-end"
+                               :name="'cart_quantity_' + cart.id"
+                               :value="cart.quantity">
+                    </td>
+                    <td data-title="単価" class="text-end resp-text-start">
+                        ¥{{ cart.price | numberFormat }}
+                    </td>
                     <td class="text-center resp-text-end">
                         <form :action="'${cart_parent_path}' + cart.id"
                               :id="'cart_del_' + cart.id"
@@ -74,7 +82,7 @@
                             <%-- TODO CSRF トークン --%>
                         </form>
                         <button type="button"
-                                class="btn btn-danger"
+                                class="btn btn-danger text-nowrap"
                                 @click="openModal(cart)">
                             <i class="bi bi-cart-x"></i>
                             削除
