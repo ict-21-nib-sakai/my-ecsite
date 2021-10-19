@@ -72,10 +72,12 @@
                     <td data-title="数量" class="text-end resp-text-start">
                         <span class="resp-flex-9">
                             <input type="number"
-                                   min="0"
+                                   min="1"
                                    class="form-control text-end"
                                    :name="'cart_quantity_' + cart.id"
-                                   :value="cart.quantity">
+                                   :value="cart.quantity"
+                                   v-model="cart.quantity"
+                                   @change="quantityChanged(cart)">
                         </span>
                     </td>
                     <td data-title="単価" class="text-end resp-text-start">
@@ -197,6 +199,15 @@
 
                 confirmationModal.show()
             },
+            quantityChanged: function (cart) {
+                // 数値以外は「1」に矯正する
+                if (0 === cart.quantity.toString().length) {
+                    cart.quantity = 1
+                }
+
+                // TODO 非同期通信でカート数量を送信する
+                console.log(cart.quantity);
+            },
             sendDeletionRequest: function (cart) {
                 // モーダルウィンドウ内の [削除] ボタンを無効化する
                 this.buttonStatus = false
@@ -204,7 +215,7 @@
                 // 削除のリクエストを送信する
                 const form = document.getElementById('cart_del_' + cart.id)
                 form.submit();
-            }
+            },
         },
         filters: {
             numberFormat: function (value) {
@@ -228,7 +239,7 @@
             totalQuantity: function () {
                 let quantities = 0
                 for (const cart of this.carts) {
-                    quantities += cart.quantity
+                    quantities += parseInt(cart.quantity, 10)
                 }
 
                 return quantities
