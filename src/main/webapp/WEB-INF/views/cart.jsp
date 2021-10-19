@@ -205,8 +205,23 @@
                     cart.quantity = 1
                 }
 
-                // TODO 非同期通信でカート数量を送信する
-                console.log(cart.quantity);
+                // 非同期通信でカート数量を送信する
+                <c:url value="/cart/change_quantity" var="cart_change_quantity_url"/>
+                axios({
+                    method: 'post',
+                    url: '<c:out value="${cart_change_quantity_url}"/>',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    responseType: 'json',
+                    data: {
+                        cartId: parseInt(cart.id, 10),
+                        quantity: parseInt(cart.quantity, 10),
+                    }
+                }).then(
+                    // TODO Vue.js の data を更新する
+                    response => console.log('response body:', response.data)
+                )
             },
             sendDeletionRequest: function (cart) {
                 // モーダルウィンドウ内の [削除] ボタンを無効化する
@@ -214,7 +229,7 @@
 
                 // 削除のリクエストを送信する
                 const form = document.getElementById('cart_del_' + cart.id)
-                form.submit();
+                form.submit()
             },
         },
         filters: {
