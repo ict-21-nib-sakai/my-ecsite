@@ -71,13 +71,13 @@
                         </a>
                     </td>
                     <td data-title="色">
-                        <span class="resp-flex-9">{{ cart.color }}</span>
+                        <span class="resp-flex-8">{{ cart.color }}</span>
                     </td>
                     <td data-title="メーカー">
-                        <span class="resp-flex-9">{{ cart.maker }}</span>
+                        <span class="resp-flex-8">{{ cart.maker }}</span>
                     </td>
                     <td data-title="数量" class="text-end resp-text-start">
-                        <span class="resp-flex-9">
+                        <span class="resp-flex-8">
                             <input type="number"
                                    min="1"
                                    class="form-control text-end"
@@ -88,7 +88,7 @@
                         </span>
                     </td>
                     <td data-title="単価" class="text-end resp-text-start">
-                        <span class="resp-flex-9">¥{{ cart.price | numberFormat }}</span>
+                        <span class="resp-flex-8">¥{{ cart.price | numberFormat }}</span>
                     </td>
                     <td class="text-center resp-flex-end">
                         <form :action="'${cart_parent_path}' + cart.id"

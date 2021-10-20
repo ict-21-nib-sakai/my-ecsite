@@ -63,22 +63,22 @@
                     <tr>
                         <td><c:out value="${cart.item.name}"/></td>
                         <td data-title="色">
-                            <span class="resp-flex-9">
+                            <span class="resp-flex-8">
                                 <c:out value="${cart.item.color}"/>
                             </span>
                         </td>
                         <td data-title="メーカー">
-                            <span class="resp-flex-9">
+                            <span class="resp-flex-8">
                                 <c:out value="${cart.item.maker}"/>
                             </span>
                         </td>
                         <td data-title="数量" class="text-end resp-text-start">
-                            <span class="resp-flex-9">
+                            <span class="resp-flex-8">
                                 <c:out value="${cart.quantity}"/>
                             </span>
                         </td>
                         <td data-title="単価" class="text-end resp-text-start">
-                            <span class="resp-flex-9">
+                            <span class="resp-flex-8">
                                 ¥<f:formatNumber value="${cart.item.price}" pattern="###,###"/>
                             </span>
                         </td>
