@@ -109,6 +109,19 @@
                 </tr>
                 </tfoot>
             </table>
+
+            <div class="text-center">
+                <a href="<c:out value="${pageContext.request.contextPath}"/>"
+                   class="btn btn-secondary me-3">
+                    <i class="bi bi-caret-left"></i>
+                    商品検索に戻る
+                </a>
+
+                <a href="#" class="btn btn-primary">
+                    <i class="bi bi-arrow-right-circle"></i>
+                    配達先・お支払い方法
+                </a>
+            </div>
         </div>
     </div>
 
