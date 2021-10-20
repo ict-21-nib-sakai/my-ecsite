@@ -13,6 +13,7 @@ package me.megmilk.myecsite.http.responses;
 public class CartJson {
     private int id;
     private int itemId;
+    private String name;
     private String color;
     private String maker;
     private int price;
@@ -29,6 +30,15 @@ public class CartJson {
 
     public int getItemId() {
         return itemId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public CartJson setName(String name) {
+        this.name = name;
+        return this;
     }
 
     public CartJson setItemId(int itemId) {
