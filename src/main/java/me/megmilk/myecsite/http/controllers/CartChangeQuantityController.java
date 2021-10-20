@@ -1,5 +1,7 @@
 package me.megmilk.myecsite.http.controllers;
 
+import com.google.gson.Gson;
+import me.megmilk.myecsite.http.responses.CartsJson;
 import me.megmilk.myecsite.models.Cart;
 import me.megmilk.myecsite.services.CartService;
 
@@ -35,37 +37,18 @@ public class CartChangeQuantityController extends HttpServlet {
         try {
             final List<Cart> carts = CartService.changeQuantity(request);
 
-            // TODO JSON Vue.js でそのまま使える JSON 形式を返す
-            StringBuilder json = new StringBuilder();
-            for (Cart cart : carts) {
-                if (json.length() >= 1) {
-                    json.append(",");
-                }
-
-                // FIXME JSON はエンコードしないといけない。
-                //  商品名にマルチバイト文字とか、'{' や ':' や ',' などが含まれていると
-                //  ブラウザ解釈できないし
-                //  null が文字列の "null" で返ってきている。
-                json.append(String.format(
-                    "{id: %d, itemId: %d, name:\"%s\", color:\"%s\", maker:\"%s\", quantity: %d, price: %d}",
-                    cart.getId(),
-                    cart.getItem_id(),
-                    cart.getItem().getName(),
-                    cart.getItem().getColor(),
-                    cart.getItem().getMaker(),
-                    cart.getQuantity(),
-                    cart.getItem().getPrice()
-                ));
-            }
-
+            // JSON 形式を返す
             response.addHeader("Cache-Control", "no-cache, no-store");
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
-            PrintWriter writer = response.getWriter();
-            writer.println(
-                "[" + json.toString() + "]"
-            );
 
+            final PrintWriter writer = response.getWriter();
+            final Gson gson = new Gson();
+            final CartsJson cartsJson = CartsJson.make(carts);
+
+            writer.println(
+                gson.toJson(cartsJson.getCarts())
+            );
         } catch (SQLException | NumberFormatException e) {
             // TODO ログ, エラーページ表示
             e.printStackTrace();
