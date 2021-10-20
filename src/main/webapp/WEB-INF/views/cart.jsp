@@ -125,7 +125,8 @@
                     商品検索に戻る
                 </a>
 
-                <a href="#"
+                <c:url value="/cart/payment" var="cart_payment_url"/>
+                <a href="${cart_payment_url}"
                    :class="classAttrNextButton"
                    v-show="totalQuantity">
                     <i class="bi bi-arrow-right-circle"></i>
