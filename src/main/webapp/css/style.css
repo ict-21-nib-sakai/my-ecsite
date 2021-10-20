@@ -35,12 +35,12 @@
         content: attr(data-title) ": ";
         font-weight: normal;
         display: flex;
-        flex: 1;
+        flex: 2;
     }
 
-    table.responsive tbody td span.resp-flex-9 {
+    table.responsive tbody td span.resp-flex-8 {
         display: flex;
-        flex: 9;
+        flex: 8;
     }
 
     table.responsive tbody td:last-child {
