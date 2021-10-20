@@ -221,8 +221,13 @@
                         }
                     ).toString(),
                 }).then(
-                    // TODO Vue.js の data を更新する
-                    response => console.log('response body:', response.data)
+                    response => {
+                        // Vue.js の data を更新する
+                        app.carts = response.data
+
+                        // TODO 通信中は [削除] ボタンや [次の画面] に進むボタンを無効化する。
+                        //  通信が完了したら、ボタンを有効化する。
+                    }
                 )
             },
             sendDeletionRequest: function (cart) {
