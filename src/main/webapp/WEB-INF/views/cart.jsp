@@ -211,13 +211,15 @@
                     method: 'post',
                     url: '<c:out value="${cart_change_quantity_url}"/>',
                     headers: {
-                        'Content-Type': 'application/json',
+                        'Content-Type': 'application/x-www-form-urlencoded',
                     },
                     responseType: 'json',
-                    data: {
-                        cartId: parseInt(cart.id, 10),
-                        quantity: parseInt(cart.quantity, 10),
-                    }
+                    data: new URLSearchParams(
+                        {
+                            cartId: cart.id.toString(),
+                            quantity: cart.quantity.toString(),
+                        }
+                    ).toString(),
                 }).then(
                     // TODO Vue.js の data を更新する
                     response => console.log('response body:', response.data)
