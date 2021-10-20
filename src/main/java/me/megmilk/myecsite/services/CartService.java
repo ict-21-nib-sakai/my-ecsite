@@ -10,6 +10,34 @@ import java.util.List;
 
 public class CartService {
     /**
+     * パラメーターに該当するカート1レコードぶんの Cart のインスタンスを返す
+     *
+     * @return 存在しないプライマリキーや、他者のカートを参照した場合は null を返します。
+     */
+    public static Cart find(HttpServletRequest request) throws SQLException, NumberFormatException {
+        final int cartId = Integer.parseInt(
+            request.getParameter("cartId")
+        );
+
+        final Cart cart = Cart.find(cartId);
+
+        // 存在しないカートを参照した場合は null を返す
+        if (null == cart) {
+            return null;
+        }
+
+        final FlashBag flashBag = (FlashBag) request.getAttribute("flashBag");
+        final User user = flashBag.getUser();
+
+        // 他者のカートを参照した場合は null を返す
+        if (cart.getUser_id() != user.getId()) {
+            return null;
+        }
+
+        return cart;
+    }
+
+    /**
      * カート内の商品を列挙
      */
     public static List<Cart> enumerate(HttpServletRequest request) throws SQLException {
@@ -71,6 +99,39 @@ public class CartService {
         Cart.add(user.getId(), itemId, 1);
 
         return Cart.find(user.getId(), itemId);
+    }
+
+    /**
+     * カート内の1つの商品の数量を変更する。
+     *
+     * @return 数量を変更した商品に関係なくカートの全内容
+     * @implNote 複数の商品の数量を変更は想定していません。
+     */
+    public static List<Cart> changeQuantity(HttpServletRequest request
+    ) throws SQLException, NumberFormatException {
+        final Cart cart = find(request);
+
+        if (null == cart) {
+            FlashBag.setErrorTitle(request, "数量を変更できませんでした。");
+
+            return enumerate(request);
+        }
+
+        final int quantity = Integer.parseInt(
+            request.getParameter("quantity")
+        );
+        final FlashBag flashBag = (FlashBag) request.getAttribute("flashBag");
+        final User user = flashBag.getUser();
+
+        // カート内の数量を変更
+        Cart.change(user.getId(), cart.getItem_id(), quantity);
+
+        FlashBag.setInfoTitle(
+            request,
+            "「" + cart.getItem().getName() + "」の数量を変更しました。"
+        );
+
+        return enumerate(request);
     }
 
     /**
