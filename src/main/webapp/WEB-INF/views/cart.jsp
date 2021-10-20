@@ -98,7 +98,8 @@
                         </form>
                         <button type="button"
                                 class="btn btn-danger text-nowrap"
-                                @click="openModal(cart)">
+                                @click="openModal(cart)"
+                                :disabled="!trafficFree">
                             <i class="bi bi-cart-x"></i>
                             削除
                         </button>
@@ -124,7 +125,9 @@
                     商品検索に戻る
                 </a>
 
-                <a href="#" class="btn btn-primary" v-show="totalQuantity">
+                <a href="#"
+                   :class="classAttrNextButton"
+                   v-show="totalQuantity">
                     <i class="bi bi-arrow-right-circle"></i>
                     配達先・お支払い方法
                 </a>
@@ -185,6 +188,10 @@
     const app = new Vue({
         el: '#app',
         data: {
+            // 一覧表示や、ページ下部のボタンの状態
+            //  通信中はボタンを押せない / 通信完了後にボタンが押せる
+            trafficFree: true,
+
             // モーダルウィンドウ内の [削除] ボタンの状態
             buttonStatus: true,
 
@@ -225,6 +232,9 @@
                     cart.quantity = 1
                 }
 
+                // 非同期通信のまえに、通信中フラグを設定する
+                app.trafficFree = false
+
                 // 非同期通信でカート数量を送信する
                 <c:url value="/cart/change_quantity" var="cart_change_quantity_url"/>
                 axios({
@@ -245,8 +255,8 @@
                         // Vue.js の data を更新する
                         app.carts = response.data
 
-                        // TODO 通信中は [削除] ボタンや [次の画面] に進むボタンを無効化する。
-                        //  通信が完了したら、ボタンを有効化する。
+                        // 通信が完了したら、ボタンを有効化する。
+                        app.trafficFree = true
                     }
                 )
             },
@@ -297,6 +307,19 @@
                 }
 
                 return total
+            },
+
+            /**
+             * @return {String} [配達先・お支払い方法] 要素のクラス
+             *
+             * 通信状態の有無に応じてクラスを使い分ける
+             */
+            classAttrNextButton: function () {
+                if (this.trafficFree) {
+                    return 'btn btn-primary'
+                }
+
+                return 'btn btn-primary disabled'
             }
         },
     })
