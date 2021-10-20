@@ -43,7 +43,14 @@
                     </button>
                 </div>
             </c:if>
-            <table class="table table-hover responsive">
+
+            <div class="card text-dark bg-light my-5" v-show="0 === totalQuantity">
+                <div class="card-body">
+                    <p class="card-text mt-3 mb-3">カートに商品は入っていません。</p>
+                </div>
+            </div>
+
+            <table class="table table-hover responsive" v-show="totalQuantity">
                 <thead class="table-light">
                 <tr>
                     <th scope="col">商品名</th>
@@ -117,7 +124,7 @@
                     商品検索に戻る
                 </a>
 
-                <a href="#" class="btn btn-primary">
+                <a href="#" class="btn btn-primary" v-show="totalQuantity">
                     <i class="bi bi-arrow-right-circle"></i>
                     配達先・お支払い方法
                 </a>
