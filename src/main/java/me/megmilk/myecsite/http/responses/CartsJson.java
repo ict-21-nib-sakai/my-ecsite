@@ -31,6 +31,7 @@ public class CartsJson {
             cartJson
                 .setId(cart.getId())
                 .setItemId(cart.getItem_id())
+                .setName(cart.getItem().getName())
                 .setColor(cart.getItem().getColor())
                 .setMaker(cart.getItem().getMaker())
                 .setPrice(cart.getItem().getPrice())
