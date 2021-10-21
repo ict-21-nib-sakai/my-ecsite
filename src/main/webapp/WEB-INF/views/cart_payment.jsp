@@ -86,13 +86,10 @@
                 </div>
 
                 <c:if test="${flashBag.hasMessage('delivery_option')}">
-                    <div class="card border-warning mb-4">
-                        <div class="card-body">
-                            <p class="card-text">
-                                <c:out value="${flashBag.getMessage('delivery_option')}"/>
-                            </p>
-                        </div>
-                    </div>
+                    <p class="text-danger font-weight-bold">
+                        <i class="bi bi-exclamation-circle"></i>
+                        <c:out value="${flashBag.getMessage('delivery_option')}"/>
+                    </p>
                 </c:if>
 
                 <input type="text"
@@ -103,13 +100,10 @@
                        :disabled="enabledOptionalAddress">
 
                 <c:if test="${flashBag.hasMessage('optional_address')}">
-                    <div class="card border-warning mb-4">
-                        <div class="card-body">
-                            <p class="card-text">
-                                <c:out value="${flashBag.getMessage('optional_address')}"/>
-                            </p>
-                        </div>
-                    </div>
+                    <p class="text-danger font-weight-bold">
+                        <i class="bi bi-exclamation-circle"></i>
+                        <c:out value="${flashBag.getMessage('optional_address')}"/>
+                    </p>
                 </c:if>
             </div>
 
