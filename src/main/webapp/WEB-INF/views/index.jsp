@@ -1,23 +1,10 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@page contentType="text/html" pageEncoding="UTF-8" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--@elvariable id="flashBag" type="me.megmilk.myecsite.http.FlashBag"--%>
 <%--@elvariable id="items" type="java.util.List<me.megmilk.myecsite.models.Item>"--%>
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta content="text/html" charset="UTF-8">
-    <title>
-        くじらカフェ Online Store
-    </title>
-    <%@ include file="partial/html_head.jsp" %>
-</head>
-<body>
-<header>
-    <%@ include file="partial/body_header_nav.jsp" %>
-</header>
-<main>
-    <div class="album py-5 bg-light mt-3">
+<c:import url="layout/app.jsp">
+    <c:param name="content">
         <div class="container">
             <c:if test="${not empty flashBag.flashErrorTitle}">
                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -87,7 +74,5 @@
                 </div>
             </c:if>
         </div>
-    </div>
-</main>
-</body>
-</html>
+    </c:param>
+</c:import>
