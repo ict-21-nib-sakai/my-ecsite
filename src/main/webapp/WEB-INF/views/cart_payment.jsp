@@ -5,8 +5,8 @@
 <%--@elvariable id="carts" type="java.util.List<me.megmilk.myecsite.models.Cart>"--%>
 <%--@elvariable id="totalQuantity" type="int"--%>
 <%--@elvariable id="sum" type="int"--%>
-<%--@elvariable id="DELIVERY_OPTIONS" type="String[][]"--%>
-<%--@elvariable id="DELIVERY_OPTIONAL" type="String"--%>
+<%--@elvariable id="CartService$DELIVERY_OPTIONS" type="String[][]"--%>
+<%--@elvariable id="CartService$DELIVERY_OPTIONAL" type="String"--%>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -23,6 +23,9 @@
 <main id="app">
     <div class="py-5 bg-light mt-3">
         <div class="container">
+
+            <c:out value="${CartService$DELIVERY_OPTIONAL}"/>
+
             <c:if test="${not empty flashBag.flashErrorTitle}">
                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
                     <i class="bi bi-exclamation-circle"></i>
@@ -158,7 +161,7 @@
             selectedRadio: '',
             optionalAddress: '',
             radioOptions: [
-                <c:forEach var="radioOption" items="${DELIVERY_OPTIONS}">
+                <c:forEach var="radioOption" items="${CartService$DELIVERY_OPTIONS}">
                 {
                     value: '<c:out value="${radioOption[0]}"/>',
                     text: '<c:out value="${radioOption[1]}"/>',
@@ -168,7 +171,7 @@
         },
         computed: {
             enabledOptionalAddress: function () {
-                return this.selectedRadio !== '<c:out value="${DELIVERY_OPTIONAL}"/>'
+                return this.selectedRadio !== '<c:out value="${CartService$DELIVERY_OPTIONAL}"/>'
             },
         },
     })
