@@ -6,6 +6,7 @@
 <%--@elvariable id="totalQuantity" type="int"--%>
 <%--@elvariable id="sum" type="int"--%>
 <%--@elvariable id="DELIVERY_OPTIONS" type="String[][]"--%>
+<%--@elvariable id="DELIVERY_OPTIONAL" type="String"--%>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -19,7 +20,7 @@
 <header>
     <%@ include file="partial/body_header_nav.jsp" %>
 </header>
-<main>
+<main id="app">
     <div class="py-5 bg-light mt-3">
         <div class="container">
             <c:if test="${not empty flashBag.flashErrorTitle}">
@@ -104,26 +105,29 @@
                 <%-- TODO CSRF トークン --%>
                 <div class="mb-3">
                     <h3>配達先</h3>
-                    <c:forEach var="delivery_option" items="${DELIVERY_OPTIONS}">
-                        <div class="form-check mb-2">
-                            <input type="radio"
-                                   name="delivery_option"
-                                   class="form-check-input"
-                                   id="delivery_option_<c:out value="${delivery_option[0]}"/>"
-                                   value="${delivery_option[0]}">
+                    <div class="form-check mb-2"
+                         v-for="radioOption in radioOptions"
+                         v-bind:key="radioOption.value">
 
-                            <label class="form-check-label"
-                                   for="delivery_option_<c:out value="${delivery_option[0]}"/>">
-                                <c:out value="${delivery_option[1]}"/>
-                            </label>
-                        </div>
-                    </c:forEach>
+                        <input type="radio"
+                               name="delivery_option"
+                               class="form-check-input"
+                               :id="'delivery_option_' + radioOption.value"
+                               :value="radioOption.value"
+                               v-model="selectedRadio">
+
+                        <label class="form-check-label"
+                               :for="'delivery_option_' + radioOption.value">
+                            {{ radioOption.text }}
+                        </label>
+                    </div>
 
                     <input type="text"
                            name="optional_address"
                            class="form-control"
                            placeholder="ご自宅以外の配達先"
-                           value="">
+                           v-model="optionalAddress"
+                           :disabled="enabledOptionalAddress">
                 </div>
 
                 <div class="text-center">
@@ -144,5 +148,30 @@
         </div>
     </div>
 </main>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+
+<script>
+    const app = new Vue({
+        el: '#app',
+        data: {
+            selectedRadio: '',
+            optionalAddress: '',
+            radioOptions: [
+                <c:forEach var="radioOption" items="${DELIVERY_OPTIONS}">
+                {
+                    value: '<c:out value="${radioOption[0]}"/>',
+                    text: '<c:out value="${radioOption[1]}"/>',
+                },
+                </c:forEach>
+            ],
+        },
+        computed: {
+            enabledOptionalAddress: function () {
+                return this.selectedRadio !== '<c:out value="${DELIVERY_OPTIONAL}"/>'
+            },
+        },
+    })
+</script>
 </body>
 </html>
