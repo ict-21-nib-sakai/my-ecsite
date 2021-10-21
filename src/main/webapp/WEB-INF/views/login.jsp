@@ -3,6 +3,7 @@
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--@elvariable id="flashBag" type="me.megmilk.myecsite.http.FlashBag"--%>
 <c:import url="layout/app.jsp">
+    <c:param name="title" value="ログイン | "/>
     <c:param name="content">
         <form action="<c:out value="${pageContext.request.contextPath}/login"/>"
               method="post">
