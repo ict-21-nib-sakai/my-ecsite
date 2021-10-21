@@ -59,6 +59,7 @@ public class CartPaymentController extends HttpServlet {
         request.setAttribute("carts", carts);
         request.setAttribute("totalQuantity", totalQuantity);
         request.setAttribute("sum", sum);
+        request.setAttribute("DELIVERY_OPTIONS", CartService.DELIVERY_OPTIONS);
 
         request
             .getRequestDispatcher("/WEB-INF/views/cart_payment.jsp")
