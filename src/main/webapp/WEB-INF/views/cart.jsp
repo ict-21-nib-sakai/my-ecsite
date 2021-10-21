@@ -40,15 +40,15 @@
                     <span class="resp-flex-8">{{ cart.maker }}</span>
                 </td>
                 <td data-title="数量" class="text-end resp-text-start">
-                        <span class="resp-flex-8">
-                            <input type="number"
-                                   min="1"
-                                   class="form-control text-end"
-                                   :name="'cart_quantity_' + cart.id"
-                                   :value="cart.quantity"
-                                   v-model="cart.quantity"
-                                   @change="quantityChanged(cart)">
-                        </span>
+                    <span class="resp-flex-8">
+                        <input type="number"
+                               min="1"
+                               class="form-control text-end"
+                               :name="'cart_quantity_' + cart.id"
+                               :value="cart.quantity"
+                               v-model="cart.quantity"
+                               @change="quantityChanged(cart)">
+                    </span>
                 </td>
                 <td data-title="単価" class="text-end resp-text-start">
                     <span class="resp-flex-8">¥{{ cart.price | numberFormat }}</span>
