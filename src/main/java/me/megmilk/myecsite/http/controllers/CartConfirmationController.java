@@ -1,5 +1,7 @@
 package me.megmilk.myecsite.http.controllers;
 
+import me.megmilk.myecsite.http.validators.CartPaymentValidator;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -37,9 +39,21 @@ public class CartConfirmationController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response
     ) throws ServletException, IOException {
-        // TODO implements
-        //  - バリデーション
-        //    - 不備があれば cart/payment にリダイレクト。
-        //    - 不備がなければ cart/confirmation (同じURLにGETリクエスト) にリダイレクト
+        // バリデーション
+        boolean isValid = CartPaymentValidator.validate(request);
+
+        // 不備がなければ cart/confirmation (同じURLにGETリクエスト) にリダイレクト
+        if (isValid) {
+            response.sendRedirect(
+                request.getContextPath() + "/cart/confirmation"
+            );
+
+            return;
+        }
+
+        // 不備があれば cart/payment にリダイレクト
+        response.sendRedirect(
+            request.getContextPath() + "/cart/payment"
+        );
     }
 }
