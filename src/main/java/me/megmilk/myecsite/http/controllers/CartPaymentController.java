@@ -65,13 +65,4 @@ public class CartPaymentController extends HttpServlet {
             .getRequestDispatcher("/WEB-INF/views/cart_payment.jsp")
             .forward(request, response);
     }
-
-    /**
-     * 入力ページからのフォーム送信
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response
-    ) throws ServletException, IOException {
-        // TODO implements
-    }
 }
