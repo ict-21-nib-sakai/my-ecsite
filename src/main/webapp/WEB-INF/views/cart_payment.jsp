@@ -85,12 +85,32 @@
                     </label>
                 </div>
 
+                <c:if test="${flashBag.hasMessage('delivery_option')}">
+                    <div class="card border-warning mb-4">
+                        <div class="card-body">
+                            <p class="card-text">
+                                <c:out value="${flashBag.getMessage('delivery_option')}"/>
+                            </p>
+                        </div>
+                    </div>
+                </c:if>
+
                 <input type="text"
                        name="optional_address"
-                       class="form-control"
+                       class="form-control mb-2"
                        placeholder="ご自宅以外の配達先"
                        v-model="optionalAddress"
                        :disabled="enabledOptionalAddress">
+
+                <c:if test="${flashBag.hasMessage('optional_address')}">
+                    <div class="card border-warning mb-4">
+                        <div class="card-body">
+                            <p class="card-text">
+                                <c:out value="${flashBag.getMessage('optional_address')}"/>
+                            </p>
+                        </div>
+                    </div>
+                </c:if>
             </div>
 
             <div class="text-center">
