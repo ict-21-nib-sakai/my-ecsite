@@ -5,6 +5,7 @@
 <%--@elvariable id="carts" type="java.util.List<me.megmilk.myecsite.models.Cart>"--%>
 <%--@elvariable id="totalQuantity" type="int"--%>
 <%--@elvariable id="sum" type="int"--%>
+<%--@elvariable id="DELIVERY_OPTIONS" type="String[][]"--%>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -98,25 +99,48 @@
                 </tfoot>
             </table>
 
-            <%--
-            TODO この位置に配達先・お支払い方法の入力フォームを配置する
-            --%>
+            <c:url value="/cart/confirmation" var="cart_confirmation_url"/>
+            <form action="${cart_confirmation_url}" method="post">
+                <%-- TODO CSRF トークン --%>
+                <div class="mb-3">
+                    <h3>配達先</h3>
+                    <c:forEach var="delivery_option" items="${DELIVERY_OPTIONS}">
+                        <div class="form-check mb-2">
+                            <input type="radio"
+                                   name="delivery_option"
+                                   class="form-check-input"
+                                   id="delivery_option_<c:out value="${delivery_option[0]}"/>"
+                                   value="${delivery_option[0]}">
 
-            <div class="text-center">
-                <c:url value="/cart" var="cart_url"/>
-                <a href="<c:out value="${cart_url}"/>"
-                   class="btn btn-secondary me-3">
-                    <i class="bi bi-caret-left"></i>
-                    数量を変更する
-                </a>
+                            <label class="form-check-label"
+                                   for="delivery_option_<c:out value="${delivery_option[0]}"/>">
+                                <c:out value="${delivery_option[1]}"/>
+                            </label>
+                        </div>
+                    </c:forEach>
 
-                <c:url value="/cart/confirmation" var="cart_confirmation_url"/>
-                <a href="<c:out value="${cart_confirmation_url}"/>"
-                   class="btn btn-primary">
-                    <i class="bi bi-arrow-right-circle"></i>
-                    確認へ進む
-                </a>
-            </div>
+                    <input type="text"
+                           name="optional_address"
+                           class="form-control"
+                           placeholder="ご自宅以外の配達先"
+                           value="">
+                </div>
+
+                <div class="text-center">
+                    <c:url value="/cart" var="cart_url"/>
+                    <a href="<c:out value="${cart_url}"/>"
+                       class="btn btn-secondary me-3">
+                        <i class="bi bi-caret-left"></i>
+                        数量を変更する
+                    </a>
+
+                    <button type="submit"
+                            class="btn btn-primary">
+                        <i class="bi bi-arrow-right-circle"></i>
+                        確認へ進む
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </main>
