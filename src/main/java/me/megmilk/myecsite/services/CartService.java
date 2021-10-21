@@ -9,6 +9,17 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class CartService {
+    /** 配送先：ご自宅 */
+    public static final String DELIVERY_HOME = "home";
+
+    /** 配送先：配達先を指定 */
+    public static final String DELIVERY_OPTIONAL = "optional";
+
+    public static final String[][] DELIVERY_OPTIONS = {
+        {DELIVERY_HOME, "ご自宅"},
+        {DELIVERY_OPTIONAL, "配達先を指定"}
+    };
+
     /**
      * パラメーターに該当するカート1レコードぶんの Cart のインスタンスを返す
      *
