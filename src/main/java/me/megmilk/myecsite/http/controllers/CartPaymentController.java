@@ -1,5 +1,6 @@
 package me.megmilk.myecsite.http.controllers;
 
+import me.megmilk.myecsite.http.MySession;
 import me.megmilk.myecsite.models.Cart;
 import me.megmilk.myecsite.services.CartService;
 
@@ -59,6 +60,7 @@ public class CartPaymentController extends HttpServlet {
         request.setAttribute("carts", carts);
         request.setAttribute("totalQuantity", totalQuantity);
         request.setAttribute("sum", sum);
+        request.setAttribute("mySession", new MySession(request));
 
         request
             .getRequestDispatcher("/WEB-INF/views/cart_payment.jsp")
