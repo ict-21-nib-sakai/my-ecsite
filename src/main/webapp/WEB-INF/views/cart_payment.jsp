@@ -7,6 +7,7 @@
 <%--@elvariable id="sum" type="int"--%>
 <%--@elvariable id="CartService$DELIVERY_OPTIONS" type="String[][]"--%>
 <%--@elvariable id="CartService$DELIVERY_OPTIONAL" type="String"--%>
+<%--@elvariable id="mySession" type="me.megmilk.myecsite.http.MySession"--%>
 <c:import url="layout/app.jsp">
     <c:param name="title" value="配達先・お支払い方法 | "/>
     <c:param name="content">
@@ -128,8 +129,8 @@
             const app = new Vue({
                 el: '#app',
                 data: {
-                    selectedRadio: '',
-                    optionalAddress: '',
+                    selectedRadio: '<c:out value="${mySession.getFormValue('delivery_option')}"/>',
+                    optionalAddress: '<c:out value="${mySession.getFormValue('optional_address')}"/>',
                     radioOptions: [
                         <c:forEach var="radioOption" items="${CartService$DELIVERY_OPTIONS}">
                         {
