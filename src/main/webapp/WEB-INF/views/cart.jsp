@@ -81,9 +81,9 @@
             </tfoot>
         </table>
 
-        <div class="text-center">
+        <div class="d-flex justify-content-center gap-3">
             <a href="<c:out value="${pageContext.request.contextPath}"/>"
-               class="btn btn-secondary me-3">
+               class="btn btn-secondary">
                 <i class="bi bi-caret-left"></i>
                 商品検索に戻る
             </a>

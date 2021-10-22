@@ -108,10 +108,10 @@
                 </c:if>
             </div>
 
-            <div class="text-center">
+            <div class="d-flex justify-content-center gap-3">
                 <c:url value="/cart" var="cart_url"/>
                 <a href="<c:out value="${cart_url}"/>"
-                   class="btn btn-secondary me-3">
+                   class="btn btn-secondary">
                     <i class="bi bi-caret-left"></i>
                     数量を変更する
                 </a>
