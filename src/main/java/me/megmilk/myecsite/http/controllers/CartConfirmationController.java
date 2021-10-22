@@ -1,6 +1,11 @@
 package me.megmilk.myecsite.http.controllers;
 
+import me.megmilk.myecsite.http.FlashBag;
+import me.megmilk.myecsite.http.MySession;
 import me.megmilk.myecsite.http.validators.CartPaymentValidator;
+import me.megmilk.myecsite.models.Cart;
+import me.megmilk.myecsite.models.User;
+import me.megmilk.myecsite.services.CartService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,6 +13,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * カート 最終確認ページ
@@ -30,7 +38,29 @@ public class CartConfirmationController extends HttpServlet {
         // このページはWebブラウザにキャシュさせない
         response.addHeader("Cache-Control", "no-cache, no-store");
 
-        // TODO implements
+        final FlashBag flashBag = (FlashBag) request.getAttribute("flashBag");
+        User user = null;
+        List<Cart> carts = new ArrayList<>();
+        int sum = 0;
+        int totalQuantity = 0;
+
+        try {
+            carts = CartService.enumerate(request);
+            user = flashBag.getUser();
+            totalQuantity = CartService.totalQuantity(request);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        request.setAttribute("carts", carts);
+        request.setAttribute("totalQuantity", totalQuantity);
+        request.setAttribute("sum", sum);
+        request.setAttribute("user", user);
+        request.setAttribute("mySession", new MySession(request));
+
+        request
+            .getRequestDispatcher("/WEB-INF/views/cart_confirmation.jsp")
+            .forward(request, response);
     }
 
     /**
@@ -39,6 +69,9 @@ public class CartConfirmationController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response
     ) throws ServletException, IOException {
+        MySession.setFormValue(request, "delivery_option");
+        MySession.setFormValue(request, "optional_address");
+
         // バリデーション
         boolean isValid = CartPaymentValidator.validate(request);
 
