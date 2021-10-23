@@ -8,6 +8,7 @@
 <%--@elvariable id="CartService$DELIVERY_OPTIONS" type="String[][]"--%>
 <%--@elvariable id="CartService$DELIVERY_OPTIONAL" type="String"--%>
 <%--@elvariable id="mySession" type="me.megmilk.myecsite.http.MySession"--%>
+<%--@elvariable id="optionalAddress" type="String"--%>
 <c:import url="layout/app.jsp">
     <c:param name="title" value="配達先・お支払い方法 | "/>
     <c:param name="content">
@@ -130,7 +131,7 @@
                 el: '#app',
                 data: {
                     selectedRadio: '<c:out value="${mySession.getFormValue('delivery_option')}"/>',
-                    optionalAddress: '<c:out value="${mySession.getFormValue('optional_address')}"/>',
+                    optionalAddress: '<c:out value="${optionalAddress}" escapeXml="false"/>',
                     radioOptions: [
                         <c:forEach var="radioOption" items="${CartService$DELIVERY_OPTIONS}">
                         {
