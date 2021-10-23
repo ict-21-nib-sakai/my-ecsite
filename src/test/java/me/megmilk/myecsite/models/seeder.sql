@@ -158,14 +158,15 @@ ALTER SEQUENCE orders_id_seq OWNED BY orders.id;
 
 CREATE TABLE users
 (
-    id         integer                     NOT NULL,
-    email      character varying(255)      NOT NULL,
-    name       character varying(31)       NOT NULL,
-    suspended  boolean                     NOT NULL,
-    created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone,
-    deleted_at timestamp without time zone,
-    password   text                        NOT NULL
+    id           integer                     NOT NULL,
+    email        character varying(255)      NOT NULL,
+    name         character varying(31)       NOT NULL,
+    home_address character varying(255)      NOT NULL,
+    password     text                        NOT NULL,
+    suspended    boolean                     NOT NULL,
+    created_at   timestamp without time zone NOT NULL,
+    updated_at   timestamp without time zone,
+    deleted_at   timestamp without time zone
 );
 
 COMMENT ON TABLE users IS '利用者';
@@ -181,6 +182,8 @@ COMMENT ON COLUMN users.created_at IS '登録日時';
 COMMENT ON COLUMN users.updated_at IS '更新日時';
 
 COMMENT ON COLUMN users.deleted_at IS '退会日時';
+
+COMMENT ON COLUMN users.home_address IS '自宅の住所';
 
 CREATE SEQUENCE users_id_seq
     START WITH 1
@@ -251,8 +254,7 @@ VALUES (10, 'シルバー(SV)ネックレス', '5℃', 1, NULL, 8800, 12, false,
         '2021-10-03 12:41:30', NULL, NULL);
 INSERT INTO items
 VALUES (11, 'ダイヤモンドK10ピンクゴールド(PG)ネックレス', '5℃', 1, 'ピンクゴールド', 25300, 15, false,
-        false, '2021-10-03 12:41:30', NULL,
-        NULL);
+        false, '2021-10-03 12:41:30', NULL, NULL);
 INSERT INTO items
 VALUES (12, 'K10ピンクゴールド(PG) ピアス', '5℃', 1, 'ピンクゴールド', 7700, 13, false, false,
         '2021-10-03 12:41:30', NULL, NULL);
@@ -285,8 +287,7 @@ VALUES (23, '猫用おやつ 焼かつお 高齢猫用 5本入×4個', 'NYAO (�
         false, '2021-10-03 13:12:05', NULL, NULL);
 INSERT INTO items
 VALUES (24, '猫用おやつ にゃ～る グルメ まぐろ海鮮バラエティ 14グラム (x 120)', 'NYAO (ニャオ)', 4, NULL,
-        4480, 23, false, false,
-        '2021-10-03 13:13:08', NULL, NULL);
+        4480, 23, false, false, '2021-10-03 13:13:08', NULL, NULL);
 INSERT INTO items
 VALUES (25, 'キャットフード インドアキャット シニア 7歳以上', 'ビルズ・菜園', 4, NULL, 2473, 28, false,
         false, '2021-10-03 13:14:59', NULL, NULL);
@@ -301,49 +302,40 @@ VALUES (26, '3種ミックスナッツ700g', '有限会社 スイーツ', 7, NUL
         '2021-10-11 15:30:52', NULL, NULL);
 INSERT INTO items
 VALUES (27, '砂糖不使用 無添加 しかも6種類★ドライフルーツ＆素焼き 無塩 ミックスナッツ 300g', '有限会社 くだもの', 7,
-        NULL, 1480, 40, false, false,
-        '2021-10-11 15:30:52', NULL, NULL);
+        NULL, 1480, 40, false, false, '2021-10-11 15:30:52', NULL, NULL);
 INSERT INTO items
 VALUES (28, '干し芋 無添加 館の熟成干し芋  600g(200g×3袋) 季節限定', '有限会社 スイーツ', 7, NULL, 1000,
-        25, false, false, '2021-10-11 15:30:52',
-        NULL, NULL);
+        25, false, false, '2021-10-11 15:30:52', NULL, NULL);
 INSERT INTO items
 VALUES (29, '瀬戸内海産焼海苔(全角/全型)50枚入り[訳あり]', '(株) 海苔', 7, NULL, 1000, 33, false,
         false, '2021-10-11 15:30:52', NULL, NULL);
 INSERT INTO items
 VALUES (30, '北海道.チーズケーキ 2個セット. 訳あり スイーツ ギフト お菓子', '有限会社 スイーツ', 7, NULL, 2160,
-        45, false, false, '2021-10-11 15:30:52',
-        NULL, NULL);
+        45, false, false, '2021-10-11 15:30:52', NULL, NULL);
 INSERT INTO items
 VALUES (31, '訳あり庄内柿　5kg前後', '○○農園', 7, NULL, 1980, 50, false, false,
         '2021-10-11 15:30:52', NULL, NULL);
 INSERT INTO items
 VALUES (32, 'チーズケーキ ケーキ SUPERチーズケーキバー', 'おいしいケーキ屋さん', 7, NULL, 1000, 44, false,
-        false, '2021-10-11 15:30:52', NULL,
-        NULL);
+        false, '2021-10-11 15:30:52', NULL, NULL);
 INSERT INTO items
 VALUES (33, '熊本 みかん 訳あり みかん 蜜柑 ポイント消化 1セット 4kg', '○○農園', 7, NULL, 1880, 35,
-        false, false, '2021-10-11 15:30:52', NULL,
-        NULL);
+        false, false, '2021-10-11 15:30:52', NULL, NULL);
 INSERT INTO items
 VALUES (34, 'さつまいも 熊本県産 訳あり 紅はるか べにはるか 1kg', '○○農園', 7, NULL, 1222, 40, false,
-        false, '2021-10-11 15:30:52', NULL,
-        NULL);
+        false, '2021-10-11 15:30:52', NULL, NULL);
 INSERT INTO items
 VALUES (35, '朝摘み もぎたて青汁 国産 送料無料 大麦若葉 粉末 90g(3g×30包) 飲みやすい', '後藤園', 7, NULL,
-        1554, 70, false, false,
-        '2021-10-11 15:30:52', NULL, NULL);
+        1554, 70, false, false, '2021-10-11 15:30:52', NULL, NULL);
 INSERT INTO items
 VALUES (36, '熊本県産 訳あり 利平栗 1.5kg 2L～Lサイズ', '○○農園', 7, NULL, 3480, 20, false,
         false, '2021-10-11 15:30:52', NULL, NULL);
 INSERT INTO items
 VALUES (37, 'チーズケーキ 1個 希少 な ジャージー牛乳使用', '有限会社 スイーツ', 7, NULL, 1000, 25, false,
-        false, '2021-10-11 15:30:52', NULL,
-        NULL);
+        false, '2021-10-11 15:30:52', NULL, NULL);
 INSERT INTO items
 VALUES (38, 'マスクメロン 2玉 【秀品：2Lサイズ】 1玉約1.2kg以上', '○○農園', 7, NULL, 4980, 20, false,
-        false, '2021-10-11 15:30:52', NULL,
-        NULL);
+        false, '2021-10-11 15:30:52', NULL, NULL);
 INSERT INTO items
 VALUES (39, 'ギフト まるごとみかん大福 9個入り', '有限会社 スイーツ', 7, NULL, 3750, 33, false, false,
         '2021-10-11 15:30:52', NULL, NULL);
@@ -388,13 +380,27 @@ VALUES (3, 1, 'credit_card', 'home', '鳥取県鳥取市●●12', '鳥取 太�
 SELECT pg_catalog.setval('orders_id_seq', 3, true);
 
 INSERT INTO users
-VALUES (1, 'taro@example.com', '鳥取 太郎', false, '2021-10-02 09:56:05', NULL,
+VALUES (2,
+        'hanako@example.com',
+        '島根 花子',
+        '島根県○○市○○1-2-3',
+        '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8',
+        false,
+        '2021-10-02 09:56:42',
         NULL,
-        '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8');
+        NULL
+);
 INSERT INTO users
-VALUES (2, 'hanako@example.com', '島根 花子', false, '2021-10-02 09:56:42', NULL,
+VALUES (1,
+        'taro@example.com',
+        '鳥取 太郎',
+        '鳥取県○○郡○○町○○1234',
+        '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8',
+        false,
+        '2021-10-02 09:56:05',
         NULL,
-        '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8');
+        NULL
+);
 
 SELECT pg_catalog.setval('users_id_seq', 2, true);
 
@@ -416,7 +422,7 @@ ALTER TABLE ONLY orders
 ALTER TABLE ONLY users
     ADD CONSTRAINT users_pk PRIMARY KEY (id);
 
-CREATE UNIQUE INDEX carts_index_1 ON public.carts USING btree (user_id, item_id);
+CREATE UNIQUE INDEX carts_index_1 ON carts USING btree (user_id, item_id);
 
 CREATE INDEX categories_index_1 ON categories USING btree (sequence);
 
@@ -439,3 +445,5 @@ ALTER TABLE ONLY order_details
 
 ALTER TABLE ONLY orders
     ADD CONSTRAINT orders_fk_1 FOREIGN KEY (user_id) REFERENCES users (id);
+
+
