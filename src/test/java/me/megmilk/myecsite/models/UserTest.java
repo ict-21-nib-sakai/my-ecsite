@@ -1,10 +1,11 @@
 package me.megmilk.myecsite.models;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class UserTest extends AbstractTest {
     /**
@@ -19,6 +20,8 @@ public class UserTest extends AbstractTest {
 
         assertNotNull(user);
         assertEquals(TEST_EMAIL, user.getEmail());
+        assertNotNull(user.getHome_address());
+        assertTrue(user.getHome_address().length() >= 1);
     }
 
     /**
@@ -46,6 +49,8 @@ public class UserTest extends AbstractTest {
 
         assertNotNull(user);
         assertEquals(TEST_ID, user.getId());
+        assertNotNull(user.getHome_address());
+        assertTrue(user.getHome_address().length() >= 1);
     }
 
     /**
