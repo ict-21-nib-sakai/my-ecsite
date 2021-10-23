@@ -3,6 +3,7 @@ package me.megmilk.myecsite.http.controllers;
 import me.megmilk.myecsite.http.MySession;
 import me.megmilk.myecsite.models.Cart;
 import me.megmilk.myecsite.services.CartService;
+import me.megmilk.myecsite.services.MyStringService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -57,10 +58,16 @@ public class CartPaymentController extends HttpServlet {
             return;
         }
 
+        final MySession mySession = new MySession(request);
+        final String optionalAddress = MyStringService.convertQuotation(
+            mySession.getFormValue("optional_address")
+        );
+
         request.setAttribute("carts", carts);
         request.setAttribute("totalQuantity", totalQuantity);
         request.setAttribute("sum", sum);
-        request.setAttribute("mySession", new MySession(request));
+        request.setAttribute("mySession", mySession);
+        request.setAttribute("optionalAddress", optionalAddress);
 
         request
             .getRequestDispatcher("/WEB-INF/views/cart_payment.jsp")
