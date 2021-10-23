@@ -97,6 +97,10 @@ public class User extends ModelMethods {
         return (String) properties.get("name");
     }
 
+    public String getHome_address() {
+        return (String) properties.get("home_address");
+    }
+
     public boolean getSuspended() {
         return (boolean) properties.get("suspended");
     }
