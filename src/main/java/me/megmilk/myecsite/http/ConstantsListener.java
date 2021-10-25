@@ -24,5 +24,10 @@ public class ConstantsListener implements ServletContextListener {
         context.setAttribute("CartService$DELIVERY_HOME", CartService.DELIVERY_HOME);
         context.setAttribute("CartService$DELIVERY_OPTIONAL", CartService.DELIVERY_OPTIONAL);
         context.setAttribute("CartService$DELIVERY_OPTIONS", CartService.DELIVERY_OPTIONS);
+
+        context.setAttribute("CartService$PAYMENT_METHOD_CARD", CartService.PAYMENT_METHOD_CARD);
+        context.setAttribute("CartService$PAYMENT_METHOD_CASH_ON_DELIVERY", CartService.PAYMENT_METHOD_CASH_ON_DELIVERY);
+        context.setAttribute("CartService$PAYMENT_METHOD_BANK", CartService.PAYMENT_METHOD_BANK);
+        context.setAttribute("CartService$PAYMENT_METHODS", CartService.PAYMENT_METHODS);
     }
 }
