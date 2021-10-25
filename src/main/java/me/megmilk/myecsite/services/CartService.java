@@ -20,6 +20,21 @@ public class CartService {
         {DELIVERY_OPTIONAL, "配達先を指定"}
     };
 
+    /** お支払い方法：クレジットカード */
+    public static final String PAYMENT_METHOD_CARD = "card";
+
+    /** お支払い方法：代金引換 */
+    public static final String PAYMENT_METHOD_CASH_ON_DELIVERY = "cod";
+
+    /** お支払い方法：銀行振込 */
+    public static final String PAYMENT_METHOD_BANK = "bank";
+
+    public static final String[][] PAYMENT_METHODS = {
+        {PAYMENT_METHOD_CARD, "クレジットカード"},
+        {PAYMENT_METHOD_CASH_ON_DELIVERY, "代金引換"},
+        {PAYMENT_METHOD_BANK, "銀行振込"}
+    };
+
     /**
      * パラメーターに該当するカート1レコードぶんの Cart のインスタンスを返す
      *
