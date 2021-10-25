@@ -28,7 +28,6 @@
             </thead>
             <tbody>
             <c:url value="/item/" var="item_parent_path"/>
-            <c:url value="/cart/delete/" var="cart_parent_path"/>
 
             <c:forEach var="cart" items="${carts}">
                 <tr>
