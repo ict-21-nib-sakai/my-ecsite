@@ -7,11 +7,19 @@
 <%--@elvariable id="sum" type="int"--%>
 <%--@elvariable id="CartService$DELIVERY_OPTIONS" type="String[][]"--%>
 <%--@elvariable id="CartService$DELIVERY_OPTIONAL" type="String"--%>
+<%--@elvariable id="CartService$PAYMENT_METHODS" type="String[][]"--%>
+<%--@elvariable id="CartService$PAYMENT_METHOD_CARD" type="String"--%>
+<%--@elvariable id="CartService$PAYMENT_METHOD_CASH_ON_DELIVERY" type="String"--%>
+<%--@elvariable id="CartService$PAYMENT_METHOD_BANK" type="String"--%>
 <%--@elvariable id="mySession" type="me.megmilk.myecsite.http.MySession"--%>
 <%--@elvariable id="optionalAddress" type="String"--%>
 <c:import url="layout/app.jsp">
     <c:param name="title" value="配達先・お支払い方法 | "/>
     <c:param name="content">
+        <h2 class="border-bottom border-2 border-dark mb-4">
+            配達先・お支払い方法
+        </h2>
+
         <h3>
             <i class="bi bi-cart4"></i>
             ご注文の商品
@@ -116,6 +124,19 @@
                 </c:if>
             </div>
 
+            <div class="mb-3">
+                <h3>
+                    <i class="bi bi-credit-card"></i>
+                    お支払い方法
+                </h3>
+                <select name="payment_method" class="form-select">
+                    <option v-for="paymentMethod in paymentMethods"
+                            v-bind:value="paymentMethod.value">
+                        {{ paymentMethod.text }}
+                    </option>
+                </select>
+            </div>
+
             <div class="d-flex justify-content-center gap-3">
                 <c:url value="/cart" var="cart_url"/>
                 <a href="<c:out value="${cart_url}"/>"
@@ -147,6 +168,18 @@
                         },
                         </c:forEach>
                     ],
+                    paymentMethods: [
+                        {
+                            value: '',
+                            text: '選択してください',
+                        },
+                        <c:forEach var="paymentMethod" items="${CartService$PAYMENT_METHODS}">
+                        {
+                            value: '<c:out value="${paymentMethod[0]}"/>',
+                            text: '<c:out value="${paymentMethod[1]}"/>',
+                        },
+                        </c:forEach>
+                    ]
                 },
                 computed: {
                     enabledOptionalAddress: function () {
