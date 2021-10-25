@@ -129,12 +129,21 @@
                     <i class="bi bi-credit-card"></i>
                     お支払い方法
                 </h3>
-                <select name="payment_method" class="form-select">
+                <select name="payment_method"
+                        class="form-select mb-2"
+                        v-model="selectedPaymentMethod">
                     <option v-for="paymentMethod in paymentMethods"
                             v-bind:value="paymentMethod.value">
                         {{ paymentMethod.text }}
                     </option>
                 </select>
+
+                <c:if test="${flashBag.hasMessage('payment_method')}">
+                    <p class="text-danger font-weight-bold">
+                        <i class="bi bi-exclamation-circle"></i>
+                        <c:out value="${flashBag.getMessage('payment_method')}"/>
+                    </p>
+                </c:if>
             </div>
 
             <div class="d-flex justify-content-center gap-3">
@@ -160,6 +169,7 @@
                 data: {
                     selectedRadio: '<c:out value="${mySession.getFormValue('delivery_option')}"/>',
                     optionalAddress: '<c:out value="${optionalAddress}" escapeXml="false"/>',
+                    selectedPaymentMethod: '<c:out value="${mySession.getFormValue('payment_method')}"/>',
                     radioOptions: [
                         <c:forEach var="radioOption" items="${CartService$DELIVERY_OPTIONS}">
                         {
