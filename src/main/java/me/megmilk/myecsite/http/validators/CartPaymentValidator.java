@@ -20,21 +20,23 @@ public class CartPaymentValidator {
         //<editor-fold desc="配達先のラジオボタン">
         final String deliveryOption = request.getParameter("delivery_option");
 
-        boolean found = false;
+        {
+            boolean found = false;
 
-        for (String[] option : CartService.DELIVERY_OPTIONS) {
-            if (null == deliveryOption) {
-                break;
+            for (String[] option : CartService.DELIVERY_OPTIONS) {
+                if (null == deliveryOption) {
+                    break;
+                }
+
+                if (option[0].equals(deliveryOption)) {
+                    found = true;
+                    break;
+                }
             }
 
-            if (option[0].equals(deliveryOption)) {
-                found = true;
-                break;
+            if (!found) {
+                FlashBag.setMessagesBag(request, "delivery_option", "どれか選択してください。");
             }
-        }
-
-        if (!found) {
-            FlashBag.setMessagesBag(request, "delivery_option", "どれか選択してください。");
         }
         //</editor-fold>
 
@@ -50,6 +52,29 @@ public class CartPaymentValidator {
 
             if (null != optionalAddress && optionalAddress.length() > 255) {
                 FlashBag.setMessagesBag(request, "optional_address", "255文字以内で入力してください。");
+            }
+        }
+        //</editor-fold>
+
+        //<editor-fold desc="お支払い方法">
+        {
+            final String paymentMethod = request.getParameter("payment_method");
+
+            boolean found = false;
+
+            for (String[] option : CartService.PAYMENT_METHODS) {
+                if (null == paymentMethod) {
+                    break;
+                }
+
+                if (option[0].equals(paymentMethod)) {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                FlashBag.setMessagesBag(request, "payment_method", "どれか選択してください。");
             }
         }
         //</editor-fold>
