@@ -4,7 +4,6 @@ import me.megmilk.myecsite.http.FlashBag;
 import me.megmilk.myecsite.http.MySession;
 import me.megmilk.myecsite.http.validators.CartPaymentValidator;
 import me.megmilk.myecsite.models.Cart;
-import me.megmilk.myecsite.models.User;
 import me.megmilk.myecsite.services.CartService;
 
 import javax.servlet.ServletException;
@@ -39,14 +38,12 @@ public class CartConfirmationController extends HttpServlet {
         response.addHeader("Cache-Control", "no-cache, no-store");
 
         final FlashBag flashBag = (FlashBag) request.getAttribute("flashBag");
-        User user = null;
         List<Cart> carts = new ArrayList<>();
         int sum = 0;
         int totalQuantity = 0;
 
         try {
             carts = CartService.enumerate(request);
-            user = flashBag.getUser();
             totalQuantity = CartService.totalQuantity(request);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -55,7 +52,6 @@ public class CartConfirmationController extends HttpServlet {
         request.setAttribute("carts", carts);
         request.setAttribute("totalQuantity", totalQuantity);
         request.setAttribute("sum", sum);
-        request.setAttribute("user", user);
         request.setAttribute("mySession", new MySession(request));
 
         request
