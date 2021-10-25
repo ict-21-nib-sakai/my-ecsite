@@ -3,7 +3,6 @@
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--@elvariable id="flashBag" type="me.megmilk.myecsite.http.FlashBag"--%>
 <%--@elvariable id="carts" type="java.util.List<me.megmilk.myecsite.models.Cart>"--%>
-<%--@elvariable id="user" type="me.megmilk.myecsite.models.User"--%>
 <%--@elvariable id="totalQuantity" type="int"--%>
 <%--@elvariable id="sum" type="int"--%>
 <%--@elvariable id="CartService$DELIVERY_OPTIONS" type="String[][]"--%>
@@ -13,7 +12,10 @@
 <c:import url="layout/app.jsp">
     <c:param name="title" value="お買い物前の確認 | "/>
     <c:param name="content">
-        <h3>ご注文の商品</h3>
+        <h3>
+            <i class="bi bi-cart4"></i>
+            ご注文の商品
+        </h3>
         <table class="table table-hover responsive">
             <thead class="table-light">
             <tr>
@@ -68,15 +70,22 @@
         </table>
 
         <div class="mb-3">
-            <h3>配達先</h3>
+            <h3>
+                <i class="bi bi-box-seam"></i>
+                配達先
+            </h3>
             <c:choose>
                 <c:when test="${mySession.getFormValue('delivery_option') == CartService$DELIVERY_HOME}">
                     ご自宅
-                    <%-- TODO users テーブルに address カラムを追加する --%>
+                    <address>
+                        <c:out value="${flashBag.user.home_address}"/>
+                    </address>
                 </c:when>
                 <c:when test="${mySession.getFormValue('delivery_option') == CartService$DELIVERY_OPTIONAL}">
                     ご指定の配達先
-                    <c:out value="${mySession.getFormValue('optional_address')}"/>
+                    <address>
+                        <c:out value="${mySession.getFormValue('optional_address')}"/>
+                    </address>
                 </c:when>
             </c:choose>
         </div>
