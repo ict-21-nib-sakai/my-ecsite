@@ -12,6 +12,10 @@
 <c:import url="layout/app.jsp">
     <c:param name="title" value="配達先・お支払い方法 | "/>
     <c:param name="content">
+        <h3>
+            <i class="bi bi-cart4"></i>
+            ご注文の商品
+        </h3>
         <table class="table table-hover responsive">
             <thead class="table-light">
             <tr>
@@ -69,7 +73,10 @@
         <form action="${cart_confirmation_url}" method="post">
                 <%-- TODO CSRF トークン --%>
             <div class="mb-3">
-                <h3>配達先</h3>
+                <h3>
+                    <i class="bi bi-box-seam"></i>
+                    配達先
+                </h3>
                 <div class="form-check mb-2"
                      v-for="radioOption in radioOptions"
                      v-bind:key="radioOption.value">
