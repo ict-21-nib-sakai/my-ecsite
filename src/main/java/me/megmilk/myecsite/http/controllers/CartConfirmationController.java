@@ -67,6 +67,7 @@ public class CartConfirmationController extends HttpServlet {
     ) throws ServletException, IOException {
         MySession.setFormValue(request, "delivery_option");
         MySession.setFormValue(request, "optional_address");
+        MySession.setFormValue(request, "payment_method");
 
         // バリデーション
         boolean isValid = CartPaymentValidator.validate(request);
