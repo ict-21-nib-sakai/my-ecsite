@@ -55,6 +55,15 @@ public class Order extends ModelMethods {
             + " WHERE 1 = 1";
 
     /**
+     * FIXME この find メソッドが null を返してしまう。
+     * 要リファクタリング
+     * <pre>
+     * - INNER JOIN で order_details や、さらにその先の items を Eager Loading しているのが原因。
+     * - order_details レコードが未定の場合 null になってしまう。
+     * - だからと言って LEFT JOIN はしたくない。
+     * - 関連テーブルは get○○○ で遅延評価しても良いと考える。
+     * </pre>
+     * <p>
      * プライマリキーによる注文検索
      */
     public static Order find(int id) throws SQLException {
@@ -103,6 +112,54 @@ public class Order extends ModelMethods {
         order.properties.put("user", user);
 
         return order;
+    }
+
+    /**
+     * 注文確定のレコードを追加する
+     *
+     * @param user                注文者の User インスタンス
+     * @param paymentMethod       CartService.PAYMENT_METHOD_***
+     * @param shippingAddressType CartService.DELIVERY_***
+     * @param shippingAddress     配達先の住所
+     */
+    public static Order add(
+        User user,
+        String paymentMethod,
+        String shippingAddressType,
+        String shippingAddress
+    ) throws SQLException {
+        final String sql = "INSERT INTO orders ("
+            + "   user_id"
+            + " , payment_method"
+            + " , shipping_address_type"
+            + " , shipping_address"
+            + " , user_name"
+            + " , created_at"
+            + " , updated_at"
+            + " )"
+            + " VALUES (?, ?, ?, ?, ?, ?, ?)"
+            + " RETURNING id";
+
+        try (final PreparedStatement statement = prepareStatement(sql)) {
+            statement.setInt(1, user.getId());
+            statement.setString(2, paymentMethod);
+            statement.setString(3, shippingAddressType);
+            statement.setString(4, shippingAddress);
+            statement.setString(5, user.getName());
+
+            final Timestamp now = new Timestamp(System.currentTimeMillis());
+
+            statement.setTimestamp(6, now);
+            statement.setTimestamp(7, now);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                resultSet.next();
+                int primaryKey = resultSet.getInt(1);
+
+                // FIXME find メソッドが null を返してくる
+                return Order.find(primaryKey);
+            }
+        }
     }
 
     public int getId() {
