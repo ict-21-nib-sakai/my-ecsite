@@ -36,34 +36,23 @@ public class Order extends ModelMethods {
         }
     }
 
+    /**
+     * 冗長なクエリを実行しないためのキャッシュ
+     */
+    private static final HashMap<Integer, User> cachedUser = new HashMap<>();
+
+    /**
+     * 冗長なクエリを実行しないためのキャッシュ
+     */
+    private static final HashMap<Integer, List<OrderDetail>> cachedOrderDetail = new HashMap<>();
+
     final static String SQL_TEMPLATE =
         "SELECT "
             + buildAllColumns(TABLE_NAME, columns)
-            + " ," + User.buildAllColumns(User.TABLE_NAME, User.COLUMNS())
-            + " ," + OrderDetail.buildAllColumns(OrderDetail.TABLE_NAME, OrderDetail.COLUMNS())
-            + " ," + Item.buildAllColumns(Item.TABLE_NAME, Item.COLUMNS())
-            + " ," + Category.buildAllColumns(Category.TABLE_NAME, Category.COLUMNS())
             + " FROM " + TABLE_NAME
-            + " INNER JOIN " + User.TABLE_NAME
-            + " ON " + User.TABLE_NAME + ".id = " + TABLE_NAME + ".user_id"
-            + " INNER JOIN " + OrderDetail.TABLE_NAME
-            + " ON " + OrderDetail.TABLE_NAME + ".order_id = " + TABLE_NAME + ".id"
-            + " INNER JOIN " + Item.TABLE_NAME
-            + " ON " + Item.TABLE_NAME + ".id = " + OrderDetail.TABLE_NAME + ".item_id"
-            + " INNER JOIN " + Category.TABLE_NAME
-            + " ON " + Category.TABLE_NAME + ".id = " + Item.TABLE_NAME + ".category_id"
             + " WHERE 1 = 1";
 
     /**
-     * FIXME この find メソッドが null を返してしまう。
-     * 要リファクタリング
-     * <pre>
-     * - INNER JOIN で order_details や、さらにその先の items を Eager Loading しているのが原因。
-     * - order_details レコードが未定の場合 null になってしまう。
-     * - だからと言って LEFT JOIN はしたくない。
-     * - 関連テーブルは get○○○ で遅延評価しても良いと考える。
-     * </pre>
-     * <p>
      * プライマリキーによる注文検索
      */
     public static Order find(int id) throws SQLException {
@@ -89,13 +78,7 @@ public class Order extends ModelMethods {
      */
     public static Order make(ResultSet resultSet) throws SQLException {
         final Order order = new Order();
-        final User user = User.make(resultSet);
-
         order.properties = makeProperties(resultSet, columns);
-        order.properties.put("user", user);
-
-        final List<OrderDetail> orderDetail = OrderDetail.makeListWithoutOrder(resultSet);
-        order.properties.put("order_detail", orderDetail);
 
         return order;
     }
@@ -156,7 +139,6 @@ public class Order extends ModelMethods {
                 resultSet.next();
                 int primaryKey = resultSet.getInt(1);
 
-                // FIXME find メソッドが null を返してくる
                 return Order.find(primaryKey);
             }
         }
@@ -194,11 +176,27 @@ public class Order extends ModelMethods {
         return (Timestamp) properties.get("updated_at");
     }
 
-    public User getUser() {
-        return (User) properties.get("user");
+    public User getUser() throws SQLException {
+        // 冗長なクエリを実行しないために User インスタンスをキャッシュする
+        if (cachedUser.size() == 0
+            || null == cachedUser.get(this.getUser_id())
+        ) {
+            User user = User.find(this.getUser_id());
+            cachedUser.put(this.getUser_id(), user);
+        }
+
+        return cachedUser.get(this.getUser_id());
     }
 
-    public List<OrderDetail> getOrderDetails() {
-        return (List<OrderDetail>) properties.get("order_detail");
+    public List<OrderDetail> getOrderDetails() throws SQLException {
+        // 冗長なクエリを実行しないために OrderDetail インスタンスをキャッシュする
+        if (cachedOrderDetail.size() == 0
+            || null == cachedOrderDetail.get(this.getId())
+        ) {
+            List<OrderDetail> orderDetail = OrderDetail.enumerate(this.getId());
+            cachedOrderDetail.put(this.getId(), orderDetail);
+        }
+
+        return cachedOrderDetail.get(this.getId());
     }
 }
