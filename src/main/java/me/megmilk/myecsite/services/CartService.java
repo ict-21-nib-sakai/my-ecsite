@@ -1,7 +1,10 @@
 package me.megmilk.myecsite.services;
 
 import me.megmilk.myecsite.http.FlashBag;
+import me.megmilk.myecsite.http.MySession;
 import me.megmilk.myecsite.models.Cart;
+import me.megmilk.myecsite.models.Order;
+import me.megmilk.myecsite.models.OrderDetail;
 import me.megmilk.myecsite.models.User;
 
 import javax.servlet.http.HttpServletRequest;
@@ -185,5 +188,35 @@ public class CartService {
         }
 
         return Cart.delete(cartId);
+    }
+
+    /**
+     * カート 最終確認フォームから注文確定
+     */
+    public static Order placeAnOrder(HttpServletRequest request) throws SQLException {
+        // TODO トランザクション処理で行うこと。
+
+        final MySession session = new MySession(request);
+        final String paymentMethod = session.getFormValue("payment_method");
+        final String deliveryOption = session.getFormValue("delivery_option");
+
+        final FlashBag flashBag = (FlashBag) request.getAttribute("flashBag");
+        final User user = flashBag.getUser();
+        String shippingAddress = user.getHome_address();
+
+        if (DELIVERY_OPTIONAL.equals(deliveryOption)) {
+            shippingAddress = session.getFormValue("optional_address");
+        }
+
+        // 'orders' テーブルにレコードを追加
+        final Order order = Order.add(user, paymentMethod, deliveryOption, shippingAddress);
+
+        // 'order_details' テーブルにレコードを追加
+        final List<Cart> carts = CartService.enumerate(request);
+        OrderDetail.add(order, carts);
+
+        // TODO 'items' テーブルから在庫を減らす
+
+        return Order.find(order.getId());
     }
 }
