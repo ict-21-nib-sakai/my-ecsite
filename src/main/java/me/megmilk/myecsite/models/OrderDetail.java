@@ -138,7 +138,7 @@ public class OrderDetail extends ModelMethods {
                 statement.setInt(2, cart.getItem_id());
                 statement.setString(3, cart.getItem().getName());
                 statement.setInt(4, cart.getItem().getPrice());
-                statement.setInt(1, cart.getQuantity());
+                statement.setInt(5, cart.getQuantity());
                 statement.executeUpdate();
             }
         }
