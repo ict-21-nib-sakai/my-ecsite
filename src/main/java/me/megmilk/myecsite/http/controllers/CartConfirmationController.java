@@ -55,6 +55,8 @@ public class CartConfirmationController extends HttpServlet {
             response.sendRedirect(
                 request.getContextPath() + "/cart"
             );
+
+            return;
         }
 
         request.setAttribute("carts", carts);
