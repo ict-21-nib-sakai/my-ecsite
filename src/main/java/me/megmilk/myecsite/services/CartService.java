@@ -2,10 +2,7 @@ package me.megmilk.myecsite.services;
 
 import me.megmilk.myecsite.http.FlashBag;
 import me.megmilk.myecsite.http.MySession;
-import me.megmilk.myecsite.models.Cart;
-import me.megmilk.myecsite.models.Order;
-import me.megmilk.myecsite.models.OrderDetail;
-import me.megmilk.myecsite.models.User;
+import me.megmilk.myecsite.models.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
@@ -215,7 +212,17 @@ public class CartService {
         final List<Cart> carts = CartService.enumerate(request);
         OrderDetail.add(order, carts);
 
-        // TODO 'items' テーブルから在庫を減らす
+        // 'items' テーブルから在庫を減らす
+        for (Cart cart : carts) {
+            final Item item = Item.subtract(
+                cart.getItem_id(),
+                cart.getQuantity()
+            );
+
+            if (null == item) {
+                throw new SQLException("商品ID: " + cart.getItem_id() + ". この商品は存在しません。");
+            }
+        }
 
         return Order.find(order.getId());
     }
