@@ -32,9 +32,13 @@ public class CartThanksController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response
     ) throws ServletException, IOException {
         Order order = null;
+        int totalQuantity = 0;
+        int sum = 0;
 
         try {
             order = OrderService.find(request);
+            totalQuantity = OrderService.totalQuantity(order);
+            sum = OrderService.sum(order);
         } catch (SQLException e) {
             // TODO ログ, エラーページ表示
             e.printStackTrace();
@@ -52,6 +56,8 @@ public class CartThanksController extends HttpServlet {
         }
 
         request.setAttribute("order", order);
+        request.setAttribute("totalQuantity", totalQuantity);
+        request.setAttribute("sum", sum);
 
         request
             .getRequestDispatcher("/WEB-INF/views/cart_thanks.jsp")
