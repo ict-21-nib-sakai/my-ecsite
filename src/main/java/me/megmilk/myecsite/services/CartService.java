@@ -227,6 +227,9 @@ public class CartService {
         // 'carts' テーブルを空っぽにする
         Cart.empty(user.getId());
 
+        // セッション変数に保持していたすべての入力値を削除する
+        MySession.expungeAllValue(request);
+
         return Order.find(order.getId());
     }
 }
