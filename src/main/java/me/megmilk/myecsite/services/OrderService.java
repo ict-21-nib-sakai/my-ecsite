@@ -2,6 +2,7 @@ package me.megmilk.myecsite.services;
 
 import me.megmilk.myecsite.http.FlashBag;
 import me.megmilk.myecsite.models.Order;
+import me.megmilk.myecsite.models.OrderDetail;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
@@ -33,5 +34,31 @@ public class OrderService {
         }
 
         return order;
+    }
+
+    /**
+     * 注文の商品数量の合計を計算
+     */
+    public static int totalQuantity(Order order) throws SQLException {
+        int totalQuantity = 0;
+
+        for (OrderDetail orderDetail : order.getOrderDetails()) {
+            totalQuantity += orderDetail.getQuantity();
+        }
+
+        return totalQuantity;
+    }
+
+    /**
+     * 注文の商品の合計金額を計算
+     */
+    public static int sum(Order order) throws SQLException {
+        int sum = 0;
+
+        for (OrderDetail orderDetail : order.getOrderDetails()) {
+            sum += orderDetail.getItem_price() * orderDetail.getQuantity();
+        }
+
+        return sum;
     }
 }
