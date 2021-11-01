@@ -1,6 +1,5 @@
 package me.megmilk.myecsite.http.controllers;
 
-import me.megmilk.myecsite.http.FlashBag;
 import me.megmilk.myecsite.http.MySession;
 import me.megmilk.myecsite.http.validators.CartPaymentValidator;
 import me.megmilk.myecsite.models.Cart;
@@ -37,7 +36,6 @@ public class CartConfirmationController extends HttpServlet {
         // このページはWebブラウザにキャシュさせない
         response.addHeader("Cache-Control", "no-cache, no-store");
 
-        final FlashBag flashBag = (FlashBag) request.getAttribute("flashBag");
         List<Cart> carts = new ArrayList<>();
         int sum = 0;
         int totalQuantity = 0;
