@@ -49,6 +49,14 @@ public class CartConfirmationController extends HttpServlet {
             e.printStackTrace();
         }
 
+        // カートが空っぽの場合、このページは見せない。
+        //  カートページにリダイレクトする。
+        if (0 == carts.size()) {
+            response.sendRedirect(
+                request.getContextPath() + "/cart"
+            );
+        }
+
         request.setAttribute("carts", carts);
         request.setAttribute("totalQuantity", totalQuantity);
         request.setAttribute("sum", sum);
