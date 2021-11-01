@@ -8,6 +8,8 @@
 <%--@elvariable id="CartService$PAYMENT_METHOD_CARD" type="String"--%>
 <%--@elvariable id="CartService$PAYMENT_METHOD_CASH_ON_DELIVERY" type="String"--%>
 <%--@elvariable id="CartService$PAYMENT_METHOD_BANK" type="String"--%>
+<%--@elvariable id="totalQuantity" type="int"--%>
+<%--@elvariable id="sum" type="int"--%>
 <c:import url="layout/app.jsp">
     <c:param name="title" value="ご注文ありがとうございます | "/>
     <c:param name="content">
@@ -59,16 +61,10 @@
             <tfoot>
             <tr>
                 <td colspan="4" class="text-end">
-                    <%--
-                    TODO 注文の合計数量は正式なものを表示する
-                    --%>
-                    合計数量 10
+                    合計数量 <c:out value="${totalQuantity}"/>
                 </td>
                 <td class="text-end">
-                    <%--
-                    TODO 注文の合計金額は、正式なものを表示する
-                    --%>
-                    合計金額 ¥1,234,567
+                    合計金額 ¥<f:formatNumber value="${sum}" pattern="###,###"/>
                 </td>
             </tr>
             </tfoot>
