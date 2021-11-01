@@ -224,6 +224,9 @@ public class CartService {
             }
         }
 
+        // 'carts' テーブルを空っぽにする
+        Cart.empty(user.getId());
+
         return Order.find(order.getId());
     }
 }
