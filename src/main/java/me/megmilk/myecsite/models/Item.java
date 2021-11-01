@@ -144,6 +144,33 @@ public class Item extends ModelMethods {
     }
 
     /**
+     * 商品の在庫数を減らす
+     * <p>
+     * 当メソッドの実行の結果、在庫数が負の数になる場合もあり得ます。
+     * 必要な場合は事前にバリデーションを行ってください。
+     *
+     * @param itemId   商品ID
+     * @param quantity 減らす在庫数
+     */
+    public static Item subtract(int itemId, int quantity) throws SQLException {
+        final String sql =
+            "UPDATE items"
+            + " SET stock = stock - ?"
+            + " WHERE id = ?";
+
+        try (final PreparedStatement statement = prepareStatement(sql)){
+            statement.setInt(1, quantity);
+            statement.setInt(2, itemId);
+
+            if (1 != statement.executeUpdate()) {
+                return null;
+            }
+        }
+
+        return find(itemId);
+    }
+
+    /**
      * @return ResultSet から List<Item> オブジェクトにする
      */
     public static List<Item> makeList(ResultSet resultSet) throws SQLException {
