@@ -92,10 +92,22 @@
             </address>
         </div>
 
-        <%--
         <div class="mb-3">
-            TODO お支払い方法を表示する
+            <h3>
+                <i class="bi bi-credit-card"></i>
+                お支払い方法
+            </h3>
+            <c:choose>
+                <c:when test="${order.payment_method == CartService$PAYMENT_METHOD_CARD}">
+                    クレジットカード
+                </c:when>
+                <c:when test="${order.payment_method == CartService$PAYMENT_METHOD_CASH_ON_DELIVERY}">
+                    代金引換
+                </c:when>
+                <c:when test="${order.payment_method == CartService$PAYMENT_METHOD_BANK}">
+                    銀行振込
+                </c:when>
+            </c:choose>
         </div>
-        --%>
     </c:param>
 </c:import>
