@@ -211,4 +211,40 @@ public class ItemTest extends AbstractTest {
 
         assertEquals(0, items.size());
     }
+
+    /**
+     * 商品の在庫数を減らす (実在する商品の場合)
+     */
+    @Test
+    void subtractTest1() throws SQLException, IOException {
+        seed();
+
+        final int TEST_ITEM_ID = 1;
+        final int TEST_SUBTRACT_QUANTITY = 3;
+
+        // テスト対象のメソッド実行前の状態
+        final Item itemPre = Item.find(TEST_ITEM_ID);
+
+        // テスト対象のメソッドを実行後の状態
+        final Item itemPost = Item.subtract(TEST_ITEM_ID, TEST_SUBTRACT_QUANTITY);
+
+        assert itemPre != null;
+        assertNotNull(itemPost);
+        assertEquals(itemPre.getStock() - TEST_SUBTRACT_QUANTITY, itemPost.getStock());
+    }
+
+    /**
+     * 商品の在庫数を減らす (実在しない商品の場合)
+     */
+    @Test
+    void subtractTest2() throws SQLException, IOException {
+        seed();
+
+        final int INVALID_ITEM_ID = Integer.MAX_VALUE;
+        final int TEST_SUBTRACT_QUANTITY = 3;
+
+        // テスト対象のメソッドを実行
+        final Item item = Item.subtract(INVALID_ITEM_ID, TEST_SUBTRACT_QUANTITY);
+        assertNull(item);
+    }
 }
