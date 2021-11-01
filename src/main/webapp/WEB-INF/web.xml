@@ -66,6 +66,7 @@
         <url-pattern>/cart/change_quantity</url-pattern>
         <url-pattern>/cart/delete/*</url-pattern>
         <url-pattern>/cart/payment</url-pattern>
+        <url-pattern>/cart/confirmation</url-pattern>
         <url-pattern>/cart/thanks/*</url-pattern>
     </filter-mapping>
 </web-app>
