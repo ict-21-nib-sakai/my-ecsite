@@ -14,7 +14,21 @@
     <c:param name="title" value="ご注文ありがとうございます | "/>
     <c:param name="content">
         <h2>ご注文ありがとうございます</h2>
-        <p>下記の注文を賜りました。発送については追ってお知らせいたします。</p>
+
+        <p class="mb-5">
+            下記の注文を賜りました。発送については追ってお知らせいたします。
+        </p>
+
+        <div class="mb-3">
+            <h3>
+                <i class="bi bi-calendar2-event"></i>
+                ご注文日時
+            </h3>
+
+            <time>
+                <f:formatDate value="${order.created_at}" pattern="yyyy年MM月dd日 HH:mm"/>
+            </time>
+        </div>
 
         <h3>
             <i class="bi bi-cart4"></i>
