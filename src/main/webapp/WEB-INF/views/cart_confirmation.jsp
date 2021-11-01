@@ -8,6 +8,9 @@
 <%--@elvariable id="CartService$DELIVERY_OPTIONS" type="String[][]"--%>
 <%--@elvariable id="CartService$DELIVERY_HOME" type="String"--%>
 <%--@elvariable id="CartService$DELIVERY_OPTIONAL" type="String"--%>
+<%--@elvariable id="CartService$PAYMENT_METHOD_CARD" type="String"--%>
+<%--@elvariable id="CartService$PAYMENT_METHOD_CASH_ON_DELIVERY" type="String"--%>
+<%--@elvariable id="CartService$PAYMENT_METHOD_BANK" type="String"--%>
 <%--@elvariable id="mySession" type="me.megmilk.myecsite.http.MySession"--%>
 <c:import url="layout/app.jsp">
     <c:param name="title" value="お買い物前の確認 | "/>
@@ -85,6 +88,24 @@
                     <address>
                         <c:out value="${mySession.getFormValue('optional_address')}"/>
                     </address>
+                </c:when>
+            </c:choose>
+        </div>
+
+        <div class="mb-3">
+            <h3>
+                <i class="bi bi-credit-card"></i>
+                お支払い方法
+            </h3>
+            <c:choose>
+                <c:when test="${mySession.getFormValue('payment_method') == CartService$PAYMENT_METHOD_CARD}">
+                    クレジットカード
+                </c:when>
+                <c:when test="${mySession.getFormValue('payment_method') == CartService$PAYMENT_METHOD_CASH_ON_DELIVERY}">
+                    代金引換
+                </c:when>
+                <c:when test="${mySession.getFormValue('payment_method') == CartService$PAYMENT_METHOD_BANK}">
+                    銀行振込
                 </c:when>
             </c:choose>
         </div>
