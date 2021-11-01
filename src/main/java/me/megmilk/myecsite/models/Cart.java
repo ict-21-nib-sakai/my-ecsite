@@ -201,6 +201,17 @@ public class Cart extends ModelMethods {
     }
 
     /**
+     * 指定した利用者のカートを空っぽにする
+     */
+    public static void empty(int userId) throws SQLException {
+        final String sql ="DELETE FROM carts WHERE user_id = ?";
+        try (final PreparedStatement statement = prepareStatement(sql)) {
+            statement.setInt(1, userId);
+            statement.executeUpdate();
+        }
+    }
+
+    /**
      * @return ResultSet から Cart オブジェクトにする
      */
     public static Cart make(ResultSet resultSet) throws SQLException {
