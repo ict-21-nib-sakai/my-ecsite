@@ -1,12 +1,12 @@
 package me.megmilk.myecsite.models;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CartTest extends AbstractTest {
     /**
@@ -258,5 +258,20 @@ public class CartTest extends AbstractTest {
         final Cart cart = Cart.delete(TEST_INVALID_CART_ID);
 
         assertNull(cart);
+    }
+
+    /**
+     * 指定した利用者のカートを空っぽにする
+     */
+    @Test
+    void emptyTest1() throws SQLException, IOException {
+        seed();
+
+        final int USER_ID = 1;
+
+        // テスト対象のメソッドを実行
+        Cart.empty(USER_ID);
+
+        assertEquals(0, Cart.enumerate(USER_ID).size());
     }
 }
