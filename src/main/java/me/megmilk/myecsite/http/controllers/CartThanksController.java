@@ -1,7 +1,9 @@
 package me.megmilk.myecsite.http.controllers;
 
+import me.megmilk.myecsite.http.FlashBag;
 import me.megmilk.myecsite.models.Order;
 import me.megmilk.myecsite.services.CartService;
+import me.megmilk.myecsite.services.OrderService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -29,8 +31,27 @@ public class CartThanksController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response
     ) throws ServletException, IOException {
-        // TODO 実際の注文内容をビューに渡すこと
-        //  下記の実装はモックアップ画面です
+        Order order = null;
+
+        try {
+            order = OrderService.find(request);
+        } catch (SQLException e) {
+            // TODO ログ, エラーページ表示
+            e.printStackTrace();
+        }
+
+        // 存在しない注文IDや他者の注文は参照させない
+        if (null == order) {
+            FlashBag.setErrorTitle(request, "ご注文が見つかりませんでした。");
+
+            response.sendRedirect(
+                request.getContextPath()
+            );
+
+            return;
+        }
+
+        request.setAttribute("order", order);
 
         request
             .getRequestDispatcher("/WEB-INF/views/cart_thanks.jsp")
