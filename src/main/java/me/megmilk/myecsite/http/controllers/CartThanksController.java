@@ -45,9 +45,6 @@ public class CartThanksController extends HttpServlet {
         try {
             order = CartService.placeAnOrder(request);
         } catch (SQLException e) {
-            // TODO
-            System.out.println("aaa");
-
             // TODO ログ, エラーページ表示
             e.printStackTrace();
         }
