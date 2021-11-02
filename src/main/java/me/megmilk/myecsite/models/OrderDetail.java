@@ -129,16 +129,18 @@ public class OrderDetail extends ModelMethods {
                 + " , item_id"
                 + " , item_name"
                 + " , item_price"
+                + " , item_maker"
                 + " , quantity"
                 + " ) "
-                + " VALUES (?, ?, ?, ?, ?)";
+                + " VALUES (?, ?, ?, ?, ?, ?)";
 
             try (final PreparedStatement statement = prepareStatement(sql)) {
                 statement.setInt(1, order.getId());
                 statement.setInt(2, cart.getItem_id());
                 statement.setString(3, cart.getItem().getName());
                 statement.setInt(4, cart.getItem().getPrice());
-                statement.setInt(5, cart.getQuantity());
+                statement.setString(5, cart.getItem().getMaker());
+                statement.setInt(6, cart.getQuantity());
                 statement.executeUpdate();
             }
         }
@@ -162,6 +164,10 @@ public class OrderDetail extends ModelMethods {
 
     public int getItem_price() {
         return (int) properties.get("item_price");
+    }
+
+    public String getItem_maker() {
+        return (String) properties.get("item_maker");
     }
 
     public int getQuantity() {
