@@ -101,6 +101,7 @@ CREATE TABLE order_details
     item_name   character varying(255) NOT NULL,
     item_price  integer                NOT NULL,
     item_maker  character varying(255) NOT NULL,
+    item_color  character varying(255),
     quantity    integer                NOT NULL,
     canceled_at timestamp without time zone
 );
@@ -120,6 +121,8 @@ COMMENT ON COLUMN order_details.quantity IS '注文した数量';
 COMMENT ON COLUMN order_details.canceled_at IS 'キャンセル日時';
 
 COMMENT ON COLUMN order_details.item_maker IS '注文した当時のメーカー名';
+
+COMMENT ON COLUMN order_details.item_color IS '注文した当時の商品の色';
 
 CREATE SEQUENCE order_details_id_seq
     START WITH 1
@@ -345,17 +348,17 @@ VALUES (39, 'ギフト まるごとみかん大福 9個入り', '有限会社 �
 
 SELECT pg_catalog.setval('items_id_seq', 39, true);
 
-INSERT INTO order_details VALUES (1, 1, 9, '破滅の刃', 440, '集A社', 1, NULL);
-INSERT INTO order_details VALUES (3, 1, 18, 'ブラーバジェット m6 エイロボット', 76860, 'エイロボット', 1, NULL);
-INSERT INTO order_details VALUES (2, 1, 20, 'スチーム式加湿器', 19500, 'ZOOJIRUSHI', 1, NULL);
-INSERT INTO order_details VALUES (4, 2, 1, '週刊少林ジャンプ', 390, '集A社', 1, NULL);
-INSERT INTO order_details VALUES (5, 2, 8, 'ONE PEACH', 480, '集A社', 1, NULL);
-INSERT INTO order_details VALUES (6, 2, 17, 'ルンヴァ i3 ロボット掃除機', 99800, 'エイロボット', 1, NULL);
-INSERT INTO order_details VALUES (7, 3, 21, 'ジャンボ グレー 猫用トイレ ディープパン', 3500, 'オーエーティー', 2, NULL);
-INSERT INTO order_details VALUES (8, 3, 25, 'キャットフード インドアキャット シニア 7歳以上', 2473, 'ビルズ・菜園', 1, NULL);
-INSERT INTO order_details VALUES (9, 3, 10, 'シルバー(SV)ネックレス', 8800, '5℃', 1, NULL);
-INSERT INTO order_details VALUES (10, 3, 15, 'スキーグローブ', 102300, 'BIOR', 1, NULL);
-INSERT INTO order_details VALUES (11, 3, 24, '猫用おやつ にゃ～る グルメ まぐろ海鮮バラエティ 14グラム (x 120)', 4480, 'NYAO (ニャオ)', 2, NULL);
+INSERT INTO order_details VALUES (1, 1, 9, '破滅の刃', 440, '集A社', NULL, 1, NULL);
+INSERT INTO order_details VALUES (3, 1, 18, 'ブラーバジェット m6 エイロボット', 76860, 'エイロボット', NULL, 1, NULL);
+INSERT INTO order_details VALUES (2, 1, 20, 'スチーム式加湿器', 19500, 'ZOOJIRUSHI', NULL, 1, NULL);
+INSERT INTO order_details VALUES (4, 2, 1, '週刊少林ジャンプ', 390, '集A社', NULL, 1, NULL);
+INSERT INTO order_details VALUES (5, 2, 8, 'ONE PEACH', 480, '集A社', NULL, 1, NULL);
+INSERT INTO order_details VALUES (6, 2, 17, 'ルンヴァ i3 ロボット掃除機', 99800, 'エイロボット', NULL, 1, NULL);
+INSERT INTO order_details VALUES (7, 3, 21, 'ジャンボ グレー 猫用トイレ ディープパン', 3500, 'オーエーティー', NULL, 2, NULL);
+INSERT INTO order_details VALUES (8, 3, 25, 'キャットフード インドアキャット シニア 7歳以上', 2473, 'ビルズ・菜園', NULL, 1, NULL);
+INSERT INTO order_details VALUES (9, 3, 10, 'シルバー(SV)ネックレス', 8800, '5℃', NULL, 1, NULL);
+INSERT INTO order_details VALUES (10, 3, 15, 'スキーグローブ', 102300, 'BIOR', NULL, 1, NULL);
+INSERT INTO order_details VALUES (11, 3, 24, '猫用おやつ にゃ～る グルメ まぐろ海鮮バラエティ 14グラム (x 120)', 4480, 'NYAO (ニャオ)', NULL, 2, NULL);
 SELECT pg_catalog.setval('order_details_id_seq', 11, true);
 
 INSERT INTO orders
