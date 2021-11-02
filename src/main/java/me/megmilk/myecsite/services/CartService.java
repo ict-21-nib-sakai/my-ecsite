@@ -1,5 +1,6 @@
 package me.megmilk.myecsite.services;
 
+import me.megmilk.myecsite.base.ModelAbstract;
 import me.megmilk.myecsite.http.FlashBag;
 import me.megmilk.myecsite.http.MySession;
 import me.megmilk.myecsite.models.*;
@@ -191,8 +192,6 @@ public class CartService {
      * カート 最終確認フォームから注文確定
      */
     public static Order placeAnOrder(HttpServletRequest request) throws SQLException {
-        // TODO トランザクション処理で行うこと。
-
         final MySession session = new MySession(request);
         final String paymentMethod = session.getFormValue("payment_method");
         final String deliveryOption = session.getFormValue("delivery_option");
@@ -204,6 +203,9 @@ public class CartService {
         if (DELIVERY_OPTIONAL.equals(deliveryOption)) {
             shippingAddress = session.getFormValue("optional_address");
         }
+
+        //<editor-fold desc="トランザクション">
+        ModelAbstract.transactionBegin();
 
         // 'orders' テーブルにレコードを追加
         final Order order = Order.add(user, paymentMethod, deliveryOption, shippingAddress);
@@ -220,12 +222,16 @@ public class CartService {
             );
 
             if (null == item) {
+                ModelAbstract.transactionRollback();
                 throw new SQLException("商品ID: " + cart.getItem_id() + ". この商品は存在しません。");
             }
         }
 
         // 'carts' テーブルを空っぽにする
         Cart.empty(user.getId());
+
+        ModelAbstract.transactionCommit();
+        //</editor-fold>
 
         // セッション変数に保持していたすべての入力値を削除する
         MySession.expungeAllValue(request);
