@@ -26,7 +26,7 @@
             </h3>
 
             <time>
-                <f:formatDate value="${order.created_at}" pattern="yyyy年MM月dd日 HH:mm"/>
+                <f:formatDate value="${order.created_at}" pattern="yyyy年MM月dd日 (E) HH:mm"/>
             </time>
         </div>
 
