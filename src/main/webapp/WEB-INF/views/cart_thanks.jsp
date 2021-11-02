@@ -51,7 +51,7 @@
                     <td><c:out value="${orderDetail.item_name}"/></td>
                     <td data-title="色">
                         <span class="resp-flex-8">
-                            <c:out value="${orderDetail.item.color}"/>
+                            <c:out value="${orderDetail.item_color}"/>
                         </span>
                     </td>
                     <td data-title="メーカー">
