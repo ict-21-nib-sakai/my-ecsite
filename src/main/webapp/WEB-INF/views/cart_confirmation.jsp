@@ -111,7 +111,9 @@
         </div>
 
         <c:url value="/cart/thanks" var="cart_thanks_url"/>
-        <form action="${cart_thanks_url}" method="post">
+        <form action="${cart_thanks_url}"
+              method="post"
+              id="cart_thanks">
                 <%-- TODO CSRF トークン --%>
             <div class="d-flex justify-content-center gap-3">
                 <c:url value="/cart/payment" var="cart_payment_url"/>
@@ -119,11 +121,40 @@
                     <i class="bi bi-caret-left"></i>
                     配達先を変更する
                 </a>
-                <button type="submit" class="btn btn-primary">
+                <button type="button"
+                        class="btn btn-primary"
+                        @click="submitForm"
+                        :disabled="!submitButtonStatus">
                     <i class="bi bi-cart-check"></i>
                     注文する
                 </button>
             </div>
         </form>
+    </c:param>
+
+    <c:param name="script">
+        <script>
+            const app = new Vue({
+                el: '#app',
+                data: {
+                    // [注文する] ボタンの状態。ダブルクリックや連打防止。
+                    submitButtonStatus: true,
+                },
+                methods: {
+                    submitForm: function () {
+                        if (!this.submitButtonStatus) {
+                            return
+                        }
+
+                        // [注文する] ボタンの連打を防止。
+                        this.submitButtonStatus = false
+
+                        document
+                            .getElementById('cart_thanks')
+                            .submit()
+                    },
+                },
+            })
+        </script>
     </c:param>
 </c:import>
