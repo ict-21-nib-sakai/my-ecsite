@@ -48,7 +48,7 @@
             <tbody>
             <c:forEach var="orderDetail" items="${order.orderDetails}">
                 <tr>
-                    <td><c:out value="${orderDetail.item.name}"/></td>
+                    <td><c:out value="${orderDetail.item_name}"/></td>
                     <td data-title="色">
                         <span class="resp-flex-8">
                             <c:out value="${orderDetail.item.color}"/>
@@ -56,7 +56,7 @@
                     </td>
                     <td data-title="メーカー">
                         <span class="resp-flex-8">
-                            <c:out value="${orderDetail.item.maker}"/>
+                            <c:out value="${orderDetail.item_maker}"/>
                         </span>
                     </td>
                     <td data-title="数量" class="text-end resp-text-start">
