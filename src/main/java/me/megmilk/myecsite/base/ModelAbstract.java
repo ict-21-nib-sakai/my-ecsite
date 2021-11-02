@@ -59,6 +59,30 @@ abstract public class ModelAbstract implements AutoCloseable {
     }
 
     /**
+     * トランザクション開始
+     */
+    public static void transactionBegin() throws SQLException {
+        final Connection connection = connect();
+        connection.setAutoCommit(false);
+    }
+
+    /**
+     * トランザクション ロールバック
+     */
+    public static void transactionRollback() throws SQLException {
+        connection.rollback();
+        connection.setAutoCommit(true);
+    }
+
+    /**
+     * トランザクション コミット
+     */
+    public static void transactionCommit() throws SQLException {
+        connection.commit();
+        connection.setAutoCommit(true);
+    }
+
+    /**
      * データベース・サーバーへ接続
      */
     private static Connection connect() throws SQLException {
