@@ -15,7 +15,7 @@
         </c:if>
 
         <c:if test="${items.size() >= 1}">
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 mb-5">
                 <c:forEach var="item" items="${items}">
                     <div class="col">
                         <div class="card shadow-sm">
@@ -48,5 +48,32 @@
                 </c:forEach>
             </div>
         </c:if>
+
+        <%-- TODO ページネーション (仮のモックアップです) --%>
+        <nav aria-label="Page navigation example" class="mb-5">
+            <ul class="pagination justify-content-center">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">前へ</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#">1</a>
+                </li>
+                <li class="page-item active">
+                    <span class="page-link" href="#">2</span>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#">3</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#">4</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#">5</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#">次へ</a>
+                </li>
+            </ul>
+        </nav>
     </c:param>
 </c:import>
