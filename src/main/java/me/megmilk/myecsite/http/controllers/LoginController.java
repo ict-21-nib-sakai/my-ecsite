@@ -1,6 +1,7 @@
 package me.megmilk.myecsite.http.controllers;
 
 import me.megmilk.myecsite.http.FlashBag;
+import me.megmilk.myecsite.http.MySession;
 import me.megmilk.myecsite.models.User;
 import me.megmilk.myecsite.services.UserService;
 
@@ -92,6 +93,9 @@ public class LoginController extends HttpServlet {
 
             return;
         }
+
+        // ログイン成立後はセッションIDを再発行する
+        MySession.regenerate(request);
 
         // セッションスコープにユーザーIDを保持する
         request.getSession().setAttribute(
