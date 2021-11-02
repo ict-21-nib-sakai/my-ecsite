@@ -48,7 +48,12 @@
             <tbody>
             <c:forEach var="orderDetail" items="${order.orderDetails}">
                 <tr>
-                    <td><c:out value="${orderDetail.item_name}"/></td>
+                    <td>
+                        <c:url value="/item/${orderDetail.item_id}" var="item_url"/>
+                        <a href="<c:out value="${item_url}"/>">
+                            <c:out value="${orderDetail.item_name}"/>
+                        </a>
+                    </td>
                     <td data-title="色">
                         <span class="resp-flex-8">
                             <c:out value="${orderDetail.item_color}"/>
