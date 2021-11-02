@@ -50,6 +50,18 @@ public class MySession {
         session.setAttribute(SESS_KEY_FORM_VALUES, new HashMap<>());
     }
 
+    /**
+     * セッションIDを再発行する
+     */
+    public static void regenerate(HttpServletRequest request) {
+        request
+            .getSession()
+            .invalidate();
+
+        request
+            .getSession(true);
+    }
+
     public MySession(HttpServletRequest request) {
         this.session = request.getSession();
     }
