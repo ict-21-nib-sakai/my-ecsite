@@ -247,4 +247,35 @@ public class ItemTest extends AbstractTest {
         final Item item = Item.subtract(INVALID_ITEM_ID, TEST_SUBTRACT_QUANTITY);
         assertNull(item);
     }
+
+    /**
+     * 商品名の部分一致による商品検索結果が、全部で何件か (商品名での部分合致が1件以上あり)
+     */
+    @Test
+    void countTest1() throws SQLException, IOException {
+        seed();
+
+        final String TEST_KEYWORD = "ONE PEACH";
+        final int EXPECTED_COUNT = 101;
+
+        // テスト対象のメソッドを実行
+        final int actualCount = Item.count(TEST_KEYWORD);
+
+        assertEquals(EXPECTED_COUNT, actualCount);
+    }
+
+    /**
+     * 商品名の部分一致による商品検索結果が、全部で何件か (商品名での部分合致がまったくない)
+     */
+    @Test
+    void countTest2() throws SQLException, IOException {
+        seed();
+
+        final String INVALID_TEST_KEYWORD = "WAN PEACH";
+
+        // テスト対象のメソッドを実行
+        final int actualCount = Item.count(INVALID_TEST_KEYWORD);
+
+        assertEquals(0, actualCount);
+    }
 }
