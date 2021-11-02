@@ -131,6 +131,30 @@ public class Item extends ModelMethods {
     }
 
     /**
+     * @return 商品名の部分一致による商品検索結果が、全部で何件か
+     */
+    public static int count(String itemName) throws SQLException {
+        final String sql =
+            "SELECT count(*)"
+            + " FROM " + TABLE_NAME
+            + " INNER JOIN " + Category.TABLE_NAME
+            + " ON " + Category.TABLE_NAME + ".id = " + TABLE_NAME + ".category_id"
+            + " WHERE " + TABLE_NAME + ".deleted_at is null"
+            + " AND " + Category.TABLE_NAME + ".deleted_at is null"
+            + " AND " + TABLE_NAME + ".name LIKE ?";
+
+        try (final PreparedStatement statement = prepareStatement(sql)) {
+            statement.setString(1, "%" + itemName + "%");
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                resultSet.next();
+
+                return resultSet.getInt(1);
+            }
+        }
+    }
+
+    /**
      * @return ResultSet から Item オブジェクトにする
      */
     public static Item make(ResultSet resultSet) throws SQLException {
