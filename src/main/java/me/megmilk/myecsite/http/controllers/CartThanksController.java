@@ -37,9 +37,7 @@ public class CartThanksController extends HttpServlet {
 
         try {
             order = OrderService.find(request);
-            totalQuantity = OrderService.totalQuantity(order);
-            sum = OrderService.sum(order);
-        } catch (SQLException e) {
+        } catch (SQLException | NumberFormatException e) {
             // TODO ログ, エラーページ表示
             e.printStackTrace();
         }
@@ -53,6 +51,14 @@ public class CartThanksController extends HttpServlet {
             );
 
             return;
+        }
+
+        try {
+            totalQuantity = OrderService.totalQuantity(order);
+            sum = OrderService.sum(order);
+        } catch (SQLException e) {
+            // TODO ログ, エラーページ表示
+            e.printStackTrace();
         }
 
         request.setAttribute("order", order);
