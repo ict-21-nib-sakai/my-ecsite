@@ -318,4 +318,28 @@ public class PaginationManagerTest {
         final int EXPECTED_NUMBER = 7;
         assertEquals(EXPECTED_NUMBER, paginator.calcLastPageNumber());
     }
+
+    /**
+     * リンクとして表示する最後のページ番号を計算する
+     */
+    @Test
+    void calcLastPageNumberTest6() {
+        final int TEST_TOTAL_COUNT = 202;
+        final int TEST_ITEMS_PER_PAGE = 20;
+        // 現在閲覧中のページは「9」ページ目と想定したテスト
+        final int TEST_CURRENT_PAGE = 9;
+        final int TEST_DISPLAY_LINKS = 5;
+        final int TEST_MARGIN = 2;
+
+        PaginationManager paginator = new PaginationManager(
+            TEST_TOTAL_COUNT,
+            TEST_ITEMS_PER_PAGE,
+            TEST_CURRENT_PAGE,
+            TEST_DISPLAY_LINKS,
+            TEST_MARGIN
+        );
+
+        final int EXPECTED_NUMBER = 11;
+        assertEquals(EXPECTED_NUMBER, paginator.calcLastPageNumber());
+    }
 }
