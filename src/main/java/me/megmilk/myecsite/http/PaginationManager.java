@@ -50,4 +50,11 @@ public class PaginationManager {
 
         return currentPage - leftMargin;
     }
+
+    /**
+     * リンクとして表示する最後のページ番号を計算する
+     */
+    public int calcLastPageNumber() {
+        return calcStartPageNumber() + displayLinks - 1;
+    }
 }
