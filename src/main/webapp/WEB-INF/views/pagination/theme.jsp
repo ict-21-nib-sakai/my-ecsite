@@ -12,25 +12,31 @@
 
         <c:if test="${paginator.currentPage >= 2}">
             <li class="page-item">
-                <a class="page-link" href="#" tabindex="-1" aria-disabled="false">前へ</a>
+                <a class="page-link"
+                   href="<c:out value="${paginator.buildUrl(paginator.currentPage - 1)}"/>"
+                   tabindex="-1"
+                   aria-disabled="false">
+                    前へ
+                </a>
             </li>
         </c:if>
 
         <c:forEach begin="${paginator.calcStartPageNumber()}"
                    end="${paginator.calcLastPageNumber()}"
-                   var="currentPage">
-            <c:if test="${paginator.currentPage == currentPage}">
+                   var="pageNumber">
+            <c:if test="${paginator.currentPage == pageNumber}">
                 <li class="page-item active">
                     <span class="page-link" href="#">
-                        <c:out value="${currentPage}"/>
+                        <c:out value="${pageNumber}"/>
                     </span>
                 </li>
             </c:if>
 
-            <c:if test="${paginator.currentPage != currentPage}">
+            <c:if test="${paginator.currentPage != pageNumber}">
                 <li class="page-item">
-                    <a class="page-link" href="#">
-                        <c:out value="${currentPage}"/>
+                    <a class="page-link"
+                       href="<c:out value="${paginator.buildUrl(pageNumber)}"/>">
+                        <c:out value="${pageNumber}"/>
                     </a>
                 </li>
             </c:if>
@@ -44,7 +50,10 @@
 
         <c:if test="${paginator.currentPage != paginator.calcLastPageNumber()}">
             <li class="page-item">
-                <a class="page-link" href="#">次へ</a>
+                <a class="page-link"
+                   href="<c:out value="${paginator.buildUrl(paginator.currentPage + 1)}"/>">
+                    次へ
+                </a>
             </li>
         </c:if>
     </ul>
