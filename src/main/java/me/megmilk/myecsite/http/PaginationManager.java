@@ -33,11 +33,30 @@ public class PaginationManager {
         );
     }
 
+    public int getTotalCount() {
+        return totalCount;
+    }
+
+    public int getCurrentPage() {
+        return currentPage;
+    }
+
     /**
      * 現在のページは、開始番号N件目になるか計算する
      */
     public int itemSince() {
         return (currentPage - 1) * itemsPerPage + 1;
+    }
+
+    /**
+     * 現在のページは、終了番号N件目になるか計算する
+     */
+    public int itemUntil() {
+        if (currentPage == endOfPage) {
+            return totalCount;
+        }
+
+        return itemSince() + itemsPerPage - 1;
     }
 
     /**
@@ -48,6 +67,10 @@ public class PaginationManager {
             return 1;
         }
 
+        if (currentPage + displayLinks > endOfPage) {
+            return endOfPage - displayLinks + 1;
+        }
+
         return currentPage - leftMargin;
     }
 
@@ -55,6 +78,9 @@ public class PaginationManager {
      * リンクとして表示する最後のページ番号を計算する
      */
     public int calcLastPageNumber() {
-        return calcStartPageNumber() + displayLinks - 1;
+        return Math.min(
+            calcStartPageNumber() + displayLinks - 1,
+            endOfPage
+        );
     }
 }
