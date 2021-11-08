@@ -52,13 +52,22 @@ public class IndexService {
         } catch (NumberFormatException ignored) {
         }
 
-        return new PaginationManager(
+        // ページネーション管理用のインスタンスを作る
+        PaginationManager paginator = new PaginationManager(
             totalCount,
             ITEMS_PER_PAGE,
             currentPage,
             DISPLAY_LINKS,
             LEFT_MARGIN
         );
+
+        // ページを遷移してもパラメーターは保持する
+        paginator.setParameters(
+            request,
+            new String[]{"keyword"}
+        );
+
+        return paginator;
     }
 
     /**
