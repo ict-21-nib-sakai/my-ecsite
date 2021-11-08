@@ -125,11 +125,11 @@ public class PaginationManager {
             return 1;
         }
 
-        if (currentPage + displayLinks > endOfPage) {
-            return endOfPage - displayLinks + 1;
+        if (currentPage > leftMargin && currentPage - leftMargin + displayLinks <= endOfPage) {
+            return currentPage - leftMargin;
         }
 
-        return currentPage - leftMargin;
+        return endOfPage - displayLinks + 1;
     }
 
     /**
