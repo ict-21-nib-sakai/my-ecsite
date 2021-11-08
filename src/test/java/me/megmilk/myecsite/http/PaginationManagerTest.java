@@ -364,6 +364,54 @@ public class PaginationManagerTest {
     }
 
     /**
+     * リンクとして表示する最初のページ番号を計算する
+     */
+    @Test
+    void sincePageNumberTest8() {
+        final int TEST_TOTAL_COUNT = 174;
+        final int TEST_ITEMS_PER_PAGE = 20;
+        // 現在閲覧中のページは「5」ページ目と想定したテスト
+        final int TEST_CURRENT_PAGE = 5;
+        final int TEST_DISPLAY_LINKS = 5;
+        final int TEST_MARGIN = 2;
+
+        PaginationManager paginator = new PaginationManager(
+            TEST_TOTAL_COUNT,
+            TEST_ITEMS_PER_PAGE,
+            TEST_CURRENT_PAGE,
+            TEST_DISPLAY_LINKS,
+            TEST_MARGIN
+        );
+
+        final int EXPECTED_NUMBER = 3;
+        assertEquals(EXPECTED_NUMBER, paginator.calcStartPageNumber());
+    }
+
+    /**
+     * リンクとして表示する最初のページ番号を計算する
+     */
+    @Test
+    void sincePageNumberTest9() {
+        final int TEST_TOTAL_COUNT = 174;
+        final int TEST_ITEMS_PER_PAGE = 20;
+        // 現在閲覧中のページは「6」ページ目と想定したテスト
+        final int TEST_CURRENT_PAGE = 6;
+        final int TEST_DISPLAY_LINKS = 5;
+        final int TEST_MARGIN = 2;
+
+        PaginationManager paginator = new PaginationManager(
+            TEST_TOTAL_COUNT,
+            TEST_ITEMS_PER_PAGE,
+            TEST_CURRENT_PAGE,
+            TEST_DISPLAY_LINKS,
+            TEST_MARGIN
+        );
+
+        final int EXPECTED_NUMBER = 4;
+        assertEquals(EXPECTED_NUMBER, paginator.calcStartPageNumber());
+    }
+
+    /**
      * リンクとして表示する最後のページ番号を計算する
      */
     @Test
