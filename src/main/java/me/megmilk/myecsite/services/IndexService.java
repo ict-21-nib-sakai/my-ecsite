@@ -26,7 +26,12 @@ public class IndexService {
              keyword = "";
         }
 
-        int page = 0;
+        int page = 1;
+        try {
+            page = Integer.parseInt(request.getParameter("p"));
+        } catch (NumberFormatException ignored) {
+        }
+
         try {
             page = Integer.parseInt(
                 request.getParameter("page")
@@ -37,7 +42,7 @@ public class IndexService {
         return Item.search(
             keyword,
             ITEMS_PER_PAGE,
-            page * ITEMS_PER_PAGE
+            (page - 1) * ITEMS_PER_PAGE
         );
     }
 
